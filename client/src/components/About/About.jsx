@@ -1,5 +1,6 @@
 import React from 'react';
 import carPngPng from './Assets/carPng.png';
+import blackcar from '../../assets/bcar.png';
 
 
 const About = () => {
@@ -9,7 +10,7 @@ const About = () => {
         <div className='grid grid-cols-1 sm:grid-cols-2 place-items-center'>
           <div>
             <img
-              src={carPngPng}
+              src={blackcar}
               alt='Car'
               className='sm:scale-105 sm:translate-x-11 max-h-[300px] drop-shadow-[2px_10px_6px_rgba(0,0,0,0.50)]'
             />

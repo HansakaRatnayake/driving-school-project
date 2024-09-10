@@ -1,6 +1,6 @@
 const Trainer = require('../model/trainer.model');
 
-
+ 
      const createTrainer = async (trainer) => {
         
         try{
@@ -9,7 +9,6 @@ const Trainer = require('../model/trainer.model');
             return await newTrainer.save();
 
         }catch(error){
-            console.log("man wada whuttooo");
             throw new Error(`Error creating trainer: ${error.message}`);
         }
     }

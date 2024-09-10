@@ -46,7 +46,7 @@ const steps = [
 
 const NewLicence = () => {
   return (
-    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+    <div className='p-5 max-w-[1200px] mx-0 my-auto'style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
       <div style={{ textAlign: 'center', marginBottom: '40px', padding: '20px', backgroundColor: '#e8f0fe', borderRadius: '8px' }}>
         <h2 style={{ marginBottom: '10px', fontSize: '32px', fontWeight: 'bold', color: '#2c3e50' }}>
           Process of Obtaining a New Driving License

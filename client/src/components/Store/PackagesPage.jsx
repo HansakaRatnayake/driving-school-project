@@ -26,15 +26,15 @@ const packages = [
 
 const PackagesPage = () => {
   return (
-    <div className="bg-black py-12">
+    <div className="dark:bg-black bg-white text-black py-12 ">
       <div className="container mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-white">Our Main Packages</h2>
+          <h2 className="text-4xl font-bold dark:text-white text-black">Our Main Packages</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {packages.map((pkg) => (
-            <div key={pkg.name} className="bg-gray-800 shadow-md rounded-lg overflow-hidden">
+            <div key={pkg.name} className="bg-gray-800 shadow-xl rounded-lg overflow-hidden">
               <img src={pkg.imgSrc} alt={pkg.name} className="w-full h-48 object-cover" />
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-white">{pkg.name}</h3>

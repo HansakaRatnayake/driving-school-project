@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
+const UserStatus = require('../model/userstatus.model');
+const User = require('../model/user.model');
+const Gender = require('../model/gender.model');
+const Trainer = require('../model/trainer.model');
 
 
 const connectToMongoDB = async () => {
     try {
+      //Connect to MongoDB Using URI
       await mongoose.connect(process.env.MONGODB_URI);
       console.log("Connected to MongoDB");
     } catch (error) {
+      //log errors if not connect
       console.log("Error connecting to MongoDB", error.message);
     }
   };
