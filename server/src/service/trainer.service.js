@@ -1,7 +1,7 @@
 const trainerRepo = require('../repository/trainer.repository');
 const {createTrainer,findAllTrainers} = trainerRepo;
 
-
+ 
 const create = async (trainer) => {
 
     try{

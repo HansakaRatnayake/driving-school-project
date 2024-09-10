@@ -1,7 +1,7 @@
 const trainerService = require('../service/trainer.service');
 const {create,findAll} = trainerService;
 
-
+ 
 const saveTrainer = async (req, res, next) => {
   
       const trainerData = req.body;  

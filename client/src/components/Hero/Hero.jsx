@@ -1,6 +1,8 @@
 import React from 'react';
-import carPngPng from './Assets/carPng.png';
+import carPngPng from './Assets/carPng.png'; 
 import yellowcarPng from './Assets/yellowcar.png';
+import porsche from '../../assets/ycar.png';
+import range from '../../assets/ocar.png';
 
 
 const Hero = ({ theme }) => {
@@ -13,7 +15,7 @@ const Hero = ({ theme }) => {
           data-aos-duration="1500"
           className='order-1 sm:order-2'>
             <img
-              src={theme === 'dark' ? carPngPng : yellowcarPng}
+              src={theme === 'dark' ? range : porsche}
               alt=''
               className='relative z-10 max-h-[600px] sm:scale-125 drop-shadow-[2px_20px_6px_rgba(0,0,0,0.50)]'
             />

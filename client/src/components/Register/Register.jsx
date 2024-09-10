@@ -4,9 +4,11 @@ import axios from 'axios'
 
 function Register() {
   const [values, setValues] = useState({
-    name: '',
-    email: '',
+    firstname: '',
+    lastname: '',
+    username: '',
     password: '',
+    userstatus: '66e0ae79fedd98da0798d69f',
   });
 
   const [errors, setErrors] = useState({});
@@ -21,18 +23,17 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validation(values);
-    setErrors(validationErrors);
+    //const validationErrors = validation(values);
+    //setErrors(validationErrors);
+   console.log(values);
    
-      axios.post('http://localhost:3000/register', values)
+      axios.post('http://localhost:3000/api/users', values)
         .then(result => {
           console.log(result);
-          navigate('/login') });
+          //navigate('/login') 
+        });
           alert("Registraion Succuessful")
-       
-          
-        
-    
+           
   };
   
 
@@ -42,28 +43,41 @@ function Register() {
         <h1 className="text-3xl font-semibold text-center">Welcome to SOLID</h1><br />
         <p className="text-sm font-medium semibold text-center">DRIVING SCHOOL</p>
         <p className="font-medium text-gray-500 text-lg mt-4 text-center">Sign In</p>
+        
         <div className="mt-8">
-          <label className="text-lg font-medium">Name</label>
+          <label className="text-lg font-medium">First Name</label>
           <input
             className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
             placeholder="Enter your Name"
             type="text"
-            name="name"
+            name="firstname"
             onChange={handleChange}
           />
-          {errors.name && <span className="text-danger">{errors.name}</span>}
+          {errors.firstname && <span className="text-danger">{errors.firstname}</span>}
+        </div>
+
+        <div className="mt-8">
+          <label className="text-lg font-medium">Last Name</label>
+          <input
+            className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
+            placeholder="Enter your Name"
+            type="text"
+            name="lastname"
+            onChange={handleChange}
+          />
+          {errors.lastname && <span className="text-danger">{errors.lastname}</span>}
         </div>
 
         <div className="mt-4">
-          <label className="text-lg font-medium">Email</label>
+          <label className="text-lg font-medium">Username</label>
           <input
             className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
             placeholder="Enter your Email"
             type="email"
-            name="email"
+            name="username"
             onChange={handleChange}
           />
-          {errors.email && <span className="text-danger">{errors.email}</span>}
+          {errors.username && <span className="text-danger">{errors.username}</span>}
         </div>
 
         <div className="mt-4">

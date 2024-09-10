@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
-
 const infoItems = [
   {
     id: 1,
@@ -103,62 +101,33 @@ const Information = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#023e8a',
-        color: 'white',
-        padding: '20px',
-        borderRadius: '8px',
-        marginBottom: '20px'
-      }}>
+    <div className='p-5 bg-white dark:bg-black w-full'>
+      <div className='flex justify-between items-center bg-[#023e8a] text-white p-5 rounded-lg mb-5 w-full'>
         <div>
-          <h1 style={{ margin: 0, fontSize: '24px' }}>Information Portal</h1>
+          <h1 className='text-xl font-bold'>Information Portal</h1>
         </div>
       </div>
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '20px'
-      }}>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-4 px-8'
+      >
         {infoItems.map((item) => {
           const isExternalLink = item.path.startsWith("http");
           return isExternalLink ? (
             <div
               key={item.id}
               onClick={() => handleExternalLinkClick(item.path)}
-              style={{
-                backgroundColor: 'white',
-                padding: '15px',
-                borderRadius: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                cursor: 'pointer',
-              }}
+              className='bg-white p-4 rounded-lg flex items-center shadow-xl cursor-pointer'
             >
-              <span style={{ fontSize: '18px', fontWeight: 'bold', marginRight: '10px' }}>
+              <span className='font-bold mr-3'>
                 {item.id.toString().padStart(2, '0')}
               </span>
-              <span style={{ fontSize: '24px', marginRight: '10px' }}>{item.icon}</span>
+              <span className='mr-3 size-6'>{item.icon}</span>
               <span style={{ fontSize: '16px' }}>{item.title}</span>
             </div>
           ) : (
             <Link
               to={item.path}
               key={item.id}
-              style={{
-                textDecoration: 'none',
-                backgroundColor: 'white',
-                padding: '15px',
-                borderRadius: '8px',
-                display: 'flex',
-                alignItems: 'center',
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                cursor: 'pointer',
-              }}
+              className='bg-white p-4 rounded-md flex items-center shadow-lg cursor-pointer'
             >
               <span style={{ fontSize: '18px', fontWeight: 'bold', marginRight: '10px' }}>
                 {item.id.toString().padStart(2, '0')}

@@ -3,6 +3,7 @@ import { BiSolidSun, BiSolidMoon } from 'react-icons/bi';
 import { HiMenuAlt1, HiMenuAlt3 } from 'react-icons/hi';
 import ResponsiveMenu from './ResponsiveMenu';
 import { FaRegUser, FaUser } from 'react-icons/fa';
+import { Link } from 'react-router-dom'; 
 
 // Navigation Links Array
 export const NavLinks = [
@@ -25,19 +26,20 @@ const Navbar = ({ theme, setTheme }) => {
     <nav className="shadow-md bg-white dark:bg-dark dark:text-white duration-300">
       <div className="container mx-auto p-4 flex justify-between items-center">
         {/* Logo */}
-        <div className="text-3xl font-bold font-serif">SOLID</div>
-
+        <Link to="/home">
+          <div className="text-3xl font-bold font-serif">SOLID</div>
+        </Link>
         {/* Navigation Links (Desktop) */}
         <div className="hidden md:flex items-center space-x-8">
           <ul className="flex gap-8">
             {NavLinks.map((data) => (
               <li key={data.id}>
-                <a
+                <Link
                   className="inline-block py-2 hover:border-b-2 hover:text-primary hover:border-primary transition-colors duration-500 text-lg font-medium"
-                  href={data.link}
+                  to={data.link}
                 >
                   {data.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
