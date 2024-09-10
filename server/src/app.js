@@ -18,7 +18,7 @@ app.use(express.json());
 
 
 app.use('/api/trainers',trainerRoutes);
-// app.use('/api/genders',genderRoutes);
+app.use('/api/genders',genderRoutes);
 
 
 module.exports = app;

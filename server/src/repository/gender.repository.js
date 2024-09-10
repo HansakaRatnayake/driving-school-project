@@ -1,6 +1,4 @@
-const Gender = require('../model/Gender');
-
-
+const Gender = require("../model/gender.model");
 
     
     const findAllGenders = async() => {

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Gender = require('./gender.model')
 
 const trainerSchema = new mongoose.Schema({
 

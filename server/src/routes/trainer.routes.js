@@ -1,11 +1,12 @@
 const express = require('express');
-const postTrainer = require('../controller/trainer.controller');
+const trainerController = require('../controller/trainer.controller');
+const {saveTrainer,findAllTrainers} = trainerController;
 
-console.log("trainer-routes");
 
 const router = express.Router();
 
 
-router.post('/', postTrainer);
+router.get('/',findAllTrainers);
+router.post('/', saveTrainer);
 
 module.exports = router;

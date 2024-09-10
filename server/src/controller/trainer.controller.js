@@ -1,22 +1,21 @@
-const { createTrainer } = require("../repository/trainer.repository");
+const trainerService = require('../service/trainer.service');
+const {create,findAll} = trainerService;
 
 
-const postTrainer = async (req, res, next) => {
-    console.log("TrainerController");
-    
-    try {
-
+const saveTrainer = async (req, res, next) => {
+  
       const trainerData = req.body;  
-      const trainer = await createTrainer(trainerData); 
-      res.status(201).json(trainer);  
-
-  } catch (error) {
-
-      console.error(`Error creating trainer: ${error.message}`);
-      res.status(500);
-      next(error);  
-
-  }
+      const responceData = await create(trainerData);
+      res.status(responceData.statuscode).json(responceData.data);  
 }
 
-module.exports = postTrainer;
+
+const findAllTrainers = async (req, res, next) => {
+     const responceData = await findAll();
+     res.status(responceData.statuscode).json(responceData.data);
+}
+
+
+
+
+module.exports = {saveTrainer,findAllTrainers};

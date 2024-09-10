@@ -1,12 +1,7 @@
 const Trainer = require('../model/trainer.model');
 
 
-
-
-
      const createTrainer = async (trainer) => {
-
-        console.log("trainer awaaa");
         
         try{
 
@@ -14,6 +9,7 @@ const Trainer = require('../model/trainer.model');
             return await newTrainer.save();
 
         }catch(error){
+            console.log("man wada whuttooo");
             throw new Error(`Error creating trainer: ${error.message}`);
         }
     }
@@ -22,14 +18,14 @@ const Trainer = require('../model/trainer.model');
      const findAllTrainers = async()=>{
         try{
 
-            return await Trainer.find({}).exec();
+            return await Trainer.find({}).populate('gender').exec();
 
         }catch(error){
+            
             throw new Error(`Error fetching trainer: ${error.message}`);
         }
     }
 
-    module.exports = {
-        createTrainer,
-        findAllTrainers
-    };
+
+
+    module.exports = {createTrainer,findAllTrainers};
