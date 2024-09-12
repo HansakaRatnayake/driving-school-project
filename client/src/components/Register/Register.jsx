@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import toast from "react-hot-toast";
 
 function Register() {
   const [values, setValues] = useState({
@@ -27,12 +28,15 @@ function Register() {
     //setErrors(validationErrors);
    console.log(values);
    
-      axios.post('http://localhost:3000/api/users', values)
+      axios.post('http://localhost:3000/api/auth/signup', values)
         .then(result => {
           console.log(result);
-          //navigate('/login') 
+          navigate('/login') 
+          toast.success("Succussfully Registered");
+        })
+        .catch(error => {
+          toast.error(error.message);
         });
-          alert("Registraion Succuessful")
            
   };
   

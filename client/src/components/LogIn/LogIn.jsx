@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function LogIn() {
+
+const LogIn = () => {
   const [values, setValues] = useState({
-    email: '',
+    username: '',
     password: '',
   });
 
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,45 +18,39 @@ function LogIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add client-side validation here if needed
-
-    // Clear any previous errors
     setErrors({});
 
-    axios.post('http://localhost:3000/login', values)
+    axios.post('http://localhost:3000/api/auth/login', values)
       .then(result => {
         console.log(result);
-        if (result.data.message === "Login successful") { // Adjusted to match backend response format
-          navigate('/');
-          alert("Login Successfull")
-        } else {
-          setErrors({ ...errors, apiError: result.data.error || 'Login failed. Please try again.' });
-        }
-      })
+        localStorage.setItem("access_token",result.data.token);
+        localStorage.setItem("auth_user",JSON.stringify(result.data))
+        })
       .catch(error => {
-        console.error(error);
+        console.error(error.message);
+        toast.error(error.message);
         setErrors({ ...errors, apiError: 'Login failed. Please try again.' });
         alert('404 Error')
       });
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center bg-gray-100 h-[calc(100vh-80px)] dark:bg-black">
       <form onSubmit={handleSubmit} className="bg-white p-10 rounded-3xl border-2 border-gray-200 w-full max-w-md">
         <h1 className="text-3xl font-semibold text-center">Welcome to SOLID</h1>
         <p className="text-sm font-medium text-center">DRIVING SCHOOL</p>
         <p className="font-medium text-gray-500 text-lg mt-4 text-center">Log In</p>
         <div className="mt-8">
-          <label className="text-lg font-medium">Email</label>
+          <label className="text-lg font-medium">Username</label>
           <input
             className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"
             placeholder="Enter your Email"
             type="email"
-            name="email"
-            value={values.email}
+            name="username"
+            value={values.username}
             onChange={handleChange}
           />
-          {errors.email && <span className="text-danger">{errors.email}</span>}
+          {errors.username && <span className="text-danger">{errors.username}</span>}
         </div>
         <div className="mt-4">
           <label className="text-lg font-medium">Password</label>
@@ -77,20 +71,21 @@ function LogIn() {
         <div className="mt-4 flex justify-between items-center">
           <Link to="/forgot-password" className="font-medium text-base text-blue-600">Forgot Password?</Link>
         </div>
-        <div className="text-sm font-medium text-center mt-4">
-          New to SOLID? <Link to="/register" className="text-blue-600">Register</Link>
-        </div>
-        
+              
         <button type="submit" className="mt-6 w-full px-6 py-2 bg-blue-600 text-white rounded-xl">
           Log In
         </button>
 
-        <button  
-          className="mt-6 w-full px-6 py-2 bg-white text-blue-600 rounded-medium border-2 border-blue-600" 
+        <div className="text-sm font-medium text-center mt-4">
+          Are you new to SOLID ?<Link to="/register" className="text-blue-600"> Signup now</Link>
+        </div>
+
+        {/* <button  
+          className="mt-6 w-full px-6 py-2 bg-white text-blue-600 rounded-xl border-2 border-blue-600" 
           onClick={() => navigate('/')}
         >
           Return to Home Page
-        </button>
+        </button> */}
         
         {errors.apiError && <p className="text-danger">{errors.apiError}</p>}
       </form>

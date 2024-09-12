@@ -5,7 +5,7 @@ import backgroundImage from "./Assets/a.avif"; // Updated with the new image pat
 
 const Landing = () => {
   return (
-    <div className="relative h-screen w-full overflow-hidden">
+    <div className="relative h-[calc(100vh-76px)] w-full overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -33,7 +33,7 @@ const Landing = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
         >
-          Discover my work and projects.
+          Start your driving lessons with SOLID Learners. For more information on our courses and to book lessons, call us!
         </motion.p>
         <motion.button
           className="px-8 py-3 bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold rounded-full shadow-lg hover:from-green-500 hover:to-blue-600"
