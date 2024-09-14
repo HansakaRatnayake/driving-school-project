@@ -35,6 +35,7 @@ import Trainees from "./modules/Trainees.jsx";
 import Dashboard from "./modules/Dashboard.jsx";
 import Trainings from "./modules/Trainings.jsx";
 import Trainers from "./modules/Trainers.jsx";
+import UserForm from "./modules/UserForm.jsx";
 
 
 export const UserContext = createContext(null);
@@ -95,6 +96,7 @@ const App = () => {
         <Route path="/admin" element={ <Admin /> }>
           <Route path="" element={ <Dashboard/> }/>
           <Route path="user" element={ <User/> }/>
+          <Route path="user-add" element={ <UserForm/> }/>
           <Route path="trainee" element={ <Trainees/> }/>
           <Route path="trainings" element={ <Trainings/> }/>
           <Route path="trainers" element={ <Trainers/> }/>

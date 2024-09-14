@@ -8,7 +8,7 @@ const Admin = () => {
             <div>
                 <SideNav/>
             </div>
-            <div>
+            <div className="w-full">
                 <Outlet/>
             </div>
 
