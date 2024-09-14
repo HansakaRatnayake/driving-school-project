@@ -27,6 +27,12 @@ import Navbar from './components/Navbar/Navbar';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import ProtectedRoute from './ProtectedRoute';
+import {Toaster} from "react-hot-toast";
+import Profile from "./modules/Profile.jsx";
+import Admin from "./modules/Admin.jsx";
+import User from "./modules/User.jsx";
+import Trainees from "./modules/Trainees.jsx";
+
 
 export const UserContext = createContext(null);
 
@@ -68,6 +74,7 @@ const App = () => {
 
   return (
     <UserContext.Provider value={{user,setUser}}>
+      <Toaster position="top-right"/>
     <Router>
       <Navbar theme={theme} setTheme={setTheme} />
       <Routes>
@@ -82,6 +89,10 @@ const App = () => {
             </>
           }
         />
+        <Route path="/admin" element={ <Admin /> }>
+          <Route path="user" element={ <User/> }/>
+          <Route path="trainee" element={ <Trainees/> }/>
+        </Route>
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/register" element={<Register />} />
@@ -91,9 +102,7 @@ const App = () => {
         <Route path="/storepage" element={<StorePage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/about1" element={<About1 />} />
-        <Route path="/booking" element={
-          <ProtectedRoute><Booking /></ProtectedRoute>
-          } />
+        <Route path="/booking" element={<ProtectedRoute><Booking /></ProtectedRoute>} />
         <Route path="/newlicence" element={<NewLicence />} />
         <Route path="/drivingrules" element={<DrivingRules />} />
         <Route path="/drivinginfo" element={<DrivingInfo />} />
@@ -105,6 +114,8 @@ const App = () => {
         <Route path="/oldlicence" element={<OldLicence />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/assesment" element={<Assesment />} />
+        <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>} />
+
       </Routes>
     </Router>
     </UserContext.Provider>

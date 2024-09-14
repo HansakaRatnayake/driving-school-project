@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../../App';
+import toast from "react-hot-toast";
 
 
 const LogIn = () => {
@@ -10,6 +11,7 @@ const LogIn = () => {
     password: '',
   });
 
+  const navigate = useNavigate();
   const {user,setUser} = useContext(UserContext);
   const [errors, setErrors] = useState({});
 
@@ -22,12 +24,16 @@ const LogIn = () => {
     e.preventDefault();
     setErrors({});
 
+
     axios.post('http://localhost:3000/api/auth/login', values)
       .then(result => {
-        console.log(result);
-        localStorage.setItem("access_token",result.data.token);
+        console.log(result.headers['jwt_token']);
+        localStorage.setItem("access_token",result.headers['jwt_token']);
         localStorage.setItem("auth_user",JSON.stringify(result.data))
-        setUser(JSON.stringify(result.data))
+        setUser(JSON.stringify(result.data));
+        navigate('/');
+        toast.success("Welcome Back " + result.data.firstname + "!");
+
         })
       .catch(error => {
         console.error(error.message);
