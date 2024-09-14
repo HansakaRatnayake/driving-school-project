@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { BiSolidSun, BiSolidMoon } from 'react-icons/bi';
 import { HiMenuAlt1, HiMenuAlt3 } from 'react-icons/hi';
 import ResponsiveMenu from './ResponsiveMenu';
 import { FaRegUser, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom'; 
+import { UserContext } from '../../App';
+
 
 // Navigation Links Array
 export const NavLinks = [
@@ -17,6 +19,9 @@ export const NavLinks = [
 
 const Navbar = ({ theme, setTheme }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const {user} = useContext(UserContext);
+
+  const loggeduser = JSON.parse(localStorage.getItem("auth_user"));
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -56,9 +61,18 @@ const Navbar = ({ theme, setTheme }) => {
           </button>
 
           {/* User Login Icon */}
-          <a href="./login" className="text-2xl">
+          {user ? 
+          <div className='text-orange-500'>
+            <div className='bg-black size-6 rounded-full'>
+            {/* {loggeduser.username} */}
+            </div>
+            
+          </div>:
+          <Link to="/login" className="text-2xl">
             {theme === 'dark' ? <FaRegUser /> : <FaUser />}
-          </a>
+          </Link>
+          }
+          
 
           {/* Mobile Menu Toggle Icon */}
           <button onClick={toggleMenu} className="md:hidden text-2xl">
