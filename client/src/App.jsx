@@ -32,6 +32,9 @@ import Profile from "./modules/Profile.jsx";
 import Admin from "./modules/Admin.jsx";
 import User from "./modules/User.jsx";
 import Trainees from "./modules/Trainees.jsx";
+import Dashboard from "./modules/Dashboard.jsx";
+import Trainings from "./modules/Trainings.jsx";
+import Trainers from "./modules/Trainers.jsx";
 
 
 export const UserContext = createContext(null);
@@ -90,8 +93,11 @@ const App = () => {
           }
         />
         <Route path="/admin" element={ <Admin /> }>
+          <Route path="" element={ <Dashboard/> }/>
           <Route path="user" element={ <User/> }/>
           <Route path="trainee" element={ <Trainees/> }/>
+          <Route path="trainings" element={ <Trainings/> }/>
+          <Route path="trainers" element={ <Trainers/> }/>
         </Route>
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
