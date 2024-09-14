@@ -46,7 +46,7 @@ const trainerSchema = new mongoose.Schema({
     },
     booking:[{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Booking",
+        ref:"Booking"
     }]
 
 })

@@ -9,7 +9,7 @@ const bookingSchema = new mongoose.Schema({
         type: Date,
          default: Date.now 
     },
-    bookingdata:{
+    bookingdate:{
         type:Date
     },
     user:{

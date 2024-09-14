@@ -36,15 +36,9 @@ const User = require('../model/user.model');
     }
 
     const updateUser = async(user)=> {
+        const {firstname, lastname ,username,photo,userstatus,training} = user;
         try{
-            return await User.updateOne({_id:user._id},{$set: {
-                firstname:user.firstname,
-                lastname:user.lastname,
-                username:user.username,
-                photo:user.photo,
-                userstatus:user.userstatus,
-                training:user.training
-            }});
+            return await User.updateOne({_id:user._id},{$set: {firstname,lastname,username,photo,userstatus,training}});
         }catch(error){
             throw new Error(`Error while updating user: ${error.message}`);
         }
