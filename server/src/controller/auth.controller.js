@@ -1,81 +1,82 @@
-const User = require('../model/user.model');
 const bcrypt = require("bcryptjs");
-const {generateToken} = require("../utils/generateToken.js");
+const User = require('../model/user.model');
+const { generateToken } = require('../utils/token.generator');
+
 
 const login = async (req, res) => {
     try{
         const { username, password } = req.body;
-        const user = await User.findOne({ username });
-        const isPasswordValid = await bcrypt.compare(
-            password,
-            user?.password || ""
-        );
 
-        if(!user || !isPasswordValid){
-            return res.status(400).json({error: "Invalid Username of Password"});
-        }
+        const user = await User.findOne({ username });
+    
+        if(!user) return res.status(401).json({ message: "Email doesn't exist" });
+
+        if(!(await bcrypt.compare(password, user.password))) return res.status(401).json({ message: "Incorrect Password" });
 
         const token = generateToken(user._id,res);
 
+        if (!token) res.status(200).json({message:"Error while generating te token.Try to login"});
+
+        res.setHeader("jwt_token", `${process.env.JWT_TOKEN_PREFIX} ${token}`);
+
         res.status(200).json({
-            token,
             _id:user._id,
             firstname: user.firstname,
             lastname: user.lastname,
             username: user.username,
-            photo: user.photo,
+            photo: user.photo
         });
+
     }catch(error){
-        console.log("Error in Login Controller",error.message);
+        console.log("Error in Login Controller ",error.message);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }
 
 const signup = async(req,res) => {
     try{
-
-        const { firstname,lastname,username,password,userstatus } = req.body;
+        const { firstname,lastname,username,password } = req.body;
 
         const user = await User.findOne({username});
 
-        if(user){
-            return res.status(400).json({ error: "Username already exists" });
-        }
+        if(user) return res.status(400).json({ error: "Username already exists" });
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password,salt);
+        // const salt = await bcrypt.genSalt();
+        // const hashedPassword = await bcrypt.hash(password,salt);
 
-        const newUser = new User({
-            firstname,
-            lastname,
-            username,
-            password: hashedPassword,
-            userstatus,
-            photo: "aaa",
+        const newUser = await new User({firstname, lastname, username, password}).save();
+        
+
+        if(!newUser) res.status(400).json({ error: "Invalid user data" });
+  
+        const token = generateToken(newUser._id,res);
+
+        res.setHeader("jwt_token", `${process.env.JWT_TOKEN_PREFIX} ${token}`);
+
+        res.status(201).json({
+            _id:newUser._id,
+            firstname: newUser.firstname,
+            lastname: newUser.lastname,
+            username: newUser.username,
+            photo: newUser.photo
         });
-
-        if(newUser){
-            console.log(newUser._id);
-            
-            const token = generateToken(newUser._id,res);
-            await newUser.save();
-
-            res.status(200).json({
-                token,
-                _id:newUser._id,
-                firstname: newUser.firstname,
-                lastname: newUser.lastname,
-                username: newUser.username,
-                photo: newUser.photo,
-            });
-        }else {
-            res.status(400).json({ error: "Invalid user data" });
-          }
-
+     
     }catch(error){
         console.log("Error in Signup Controller: ",error.message);
         res.status(500).json({error:"Internal Server Error"});
     }
 }
 
-module.exports = {login,signup};
+const logout = async (req, res) => {
+    try{
+        res.cookie("jwt_token", "", {maxAge:0});
+        res.status(200).json({ message: "Logged out successfully" });
+
+
+    }catch(err){
+        console.log("Server error in logout", err.message);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}   
+
+module.exports = {login,signup,logout};

@@ -1,5 +1,6 @@
+const Trainer = require('../model/trainer.model');
 const trainerRepo = require('../repository/trainer.repository');
-const {createTrainer,findAllTrainers} = trainerRepo;
+const {createTrainer,findAllTrainers,deleteTrainer,updateTrainer} = trainerRepo;
 
  
 const create = async (trainer) => {
@@ -18,10 +19,18 @@ const create = async (trainer) => {
     }
 }
 
-const findAll = async () => {
+const findAll = async (queryparamobject) => {
+
+    const {name, email, nic} = queryparamobject;
+
+    const query = {};
+
+    if(name && name.trim() !== '') query.name = { $regex: name, $options: 'i' };
+    if(email && email.trim() !== '') query.email = { $regex: email, $options: 'i' };
+    if(nic && nic.trim() !== '') query.nic = { $regex: nic, $options: 'i' };
 
     try{
-        const resData = await findAllTrainers();
+        const resData = await findAllTrainers(query);
         return {
             data:resData,
             statuscode:201
@@ -29,7 +38,47 @@ const findAll = async () => {
 
     }catch(err){
         return {
-            data:"Error while fetching trainers",
+            data:"Error while fetching trainers: "+err.message,
+            statuscode:500
+           }
+    }
+
+}
+
+const update = async (trainer) => {
+
+    try{
+        const resData = await updateTrainer(trainer);
+        return {
+            data:resData,
+            statuscode:201
+        }
+
+    }catch(err){
+        return {
+            data:"Error while updating trainers: "+err.message,
+            statuscode:500
+           }
+    }
+
+}
+
+const remove = async (trainerEmail) => {
+
+    try{
+        if(!await Trainer.findOne({email:trainerEmail})) return {
+            data:"Triner Not Found, Input a valid trainer",
+            statuscode:404
+        }
+        const resData = await deleteTrainer(trainerEmail);
+        return {
+            data:resData,
+            statuscode:204
+        }
+
+    }catch(err){
+        return {
+            data:"Error while deleting trainers: "+err.message,
             statuscode:500
            }
     }
@@ -38,5 +87,7 @@ const findAll = async () => {
 
 module.exports = {
     create,
-    findAll
+    findAll,
+    update,
+    remove
 }

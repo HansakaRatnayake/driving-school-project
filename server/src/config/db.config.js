@@ -3,6 +3,10 @@ const UserStatus = require('../model/userstatus.model');
 const User = require('../model/user.model');
 const Gender = require('../model/gender.model');
 const Trainer = require('../model/trainer.model');
+const Training = require('../model/training.model');
+const ContactUs = require('../model/contactus.model');
+const Booking = require('../model/booking.model');
+
 
 
 const connectToMongoDB = async () => {

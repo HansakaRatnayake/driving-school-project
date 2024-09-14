@@ -13,6 +13,4 @@ const UserStatus = require("../model/userstatus.model");
     }
 
 //export all the dao methods
-module.exports = {
-    findAllUserStatuses
-}
+module.exports = {findAllUserStatuses}

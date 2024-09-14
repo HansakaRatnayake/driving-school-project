@@ -15,10 +15,11 @@ const User = require('../model/user.model');
     }
 
 
-     const findAllUsers = async()=>{
+     const findAllUsers = async(searchQuery)=>{
+       
         try{
-
-            return await User.find({}).populate('userstatus').exec();
+            console.log(searchQuery);
+            return await User.find(searchQuery).select('-password').populate('userstatus').populate('training').exec();
 
         }catch(error){
             
@@ -34,6 +35,36 @@ const User = require('../model/user.model');
         }
     }
 
+    const updateUser = async(user)=> {
+        try{
+            return await User.updateOne({_id:user._id},{$set: {
+                firstname:user.firstname,
+                lastname:user.lastname,
+                username:user.username,
+                photo:user.photo,
+                userstatus:user.userstatus,
+                training:user.training
+            }});
+        }catch(error){
+            throw new Error(`Error while updating user: ${error.message}`);
+        }
+    }
+    
+
+    const deleteUser = async(username)=> {
+        try{
+            return await User.findOneAndDelete({username});
+        }catch(error){
+            throw new Error(`Error while delete a user: ${error.message}`);
+        }
+    }
 
 
-    module.exports = {createUser,findAllUsers,findUserByUsername};
+
+    module.exports = {
+        createUser,
+        findAllUsers,
+        findUserByUsername,
+        updateUser,
+        deleteUser
+    };

@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Training = require('./training.model');
+
 
 const trainerSchema = new mongoose.Schema({
 
@@ -22,7 +24,7 @@ const trainerSchema = new mongoose.Schema({
         lowercase:true
     },
     mobile:{
-        type:Number,
+        type:String,
         required:true,
         trim:true,
         unique:true
@@ -34,14 +36,36 @@ const trainerSchema = new mongoose.Schema({
     },
     profileimage:{
         type:Buffer,
+        default:""
         
     },
     gender:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Gender",
         required: true
-    }
+    },
+    booking:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Booking",
+    }]
 
+})
+
+trainerSchema.post('findOneAndDelete', async function(trainer) {
+    if(trainer){
+        try{
+            Training.updateMany(
+            {trainer:trainer._id},
+            {$pull:{trainer:trainer._id}}
+         )
+         .then(data => {
+            console.log(data)
+        });
+    
+        }catch(err){
+            console.error('Error removing trainer references from trainings:', err);
+        }
+    }
 })
 
 const Trainer = mongoose.model("Trainer",trainerSchema);

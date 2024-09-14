@@ -13,7 +13,7 @@ const findAll = async () =>{
 
     }catch(err){
         return {
-            data : "Gender Fetching Error",
+            data : "Gender Fetching Error: "+err.message,
             statuscode : 500
         }
     }

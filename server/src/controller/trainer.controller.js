@@ -1,21 +1,37 @@
 const trainerService = require('../service/trainer.service');
-const {create,findAll} = trainerService;
+const {create,findAll,update,remove} = trainerService;
 
  
 const saveTrainer = async (req, res, next) => {
   
       const trainerData = req.body;  
-      const responceData = await create(trainerData);
-      res.status(responceData.statuscode).json(responceData.data);  
+      const responseData = await create(trainerData);
+      res.status(responseData.statuscode).json(responseData.data);  
 }
 
 
 const findAllTrainers = async (req, res, next) => {
-     const responceData = await findAll();
-     res.status(responceData.statuscode).json(responceData.data);
+     
+     const responseData = await findAll(req.query);
+     res.status(responseData.statuscode).json(responseData.data);
 }
 
+  const updateTrainer = async (req, res) => {
+      const updatedTrainer = req.body;
+      const responseData = await update(updatedTrainer);
+      res.status(responseData.statuscode).json(responseData.data);
+ 
+  }
+ 
+  const deleteTrainer = async (req, res) => {
+ 
+      const {email} = req.params;      
+      const responseData = await remove(email);
+      res.status(responseData.statuscode).json(responseData.data);
+ 
+  }
+ 
 
 
 
-module.exports = {saveTrainer,findAllTrainers};
+module.exports = {saveTrainer,findAllTrainers,updateTrainer,deleteTrainer};
