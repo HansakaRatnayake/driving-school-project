@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { createContext, useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
@@ -26,10 +26,16 @@ import Assesment from './components/Information/Assesment/Assesment';
 import Navbar from './components/Navbar/Navbar'; 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import ProtectedRoute from './ProtectedRoute';
+
+export const UserContext = createContext(null);
 
 const App = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [user,setUser] = useState();
   const element = document.documentElement;
+
+  
 
   // AOS Initialization
   useEffect(() => {
@@ -51,9 +57,17 @@ const App = () => {
       element.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
+
+    if(localStorage.getItem("auth_user")){
+      setUser(JSON.parse(localStorage.getItem("auth_user")));
+  }
+
   }, [theme]);
 
+  
+
   return (
+    <UserContext.Provider value={{user,setUser}}>
     <Router>
       <Navbar theme={theme} setTheme={setTheme} />
       <Routes>
@@ -77,7 +91,9 @@ const App = () => {
         <Route path="/storepage" element={<StorePage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/about1" element={<About1 />} />
-        <Route path="/booking" element={<Booking />} />
+        <Route path="/booking" element={
+          <ProtectedRoute><Booking /></ProtectedRoute>
+          } />
         <Route path="/newlicence" element={<NewLicence />} />
         <Route path="/drivingrules" element={<DrivingRules />} />
         <Route path="/drivinginfo" element={<DrivingInfo />} />
@@ -91,6 +107,7 @@ const App = () => {
         <Route path="/assesment" element={<Assesment />} />
       </Routes>
     </Router>
+    </UserContext.Provider>
   );
 };
 

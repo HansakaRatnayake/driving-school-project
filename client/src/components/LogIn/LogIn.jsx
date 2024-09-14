@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../../App';
 
 
 const LogIn = () => {
@@ -9,6 +10,7 @@ const LogIn = () => {
     password: '',
   });
 
+  const {user,setUser} = useContext(UserContext);
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -25,6 +27,7 @@ const LogIn = () => {
         console.log(result);
         localStorage.setItem("access_token",result.data.token);
         localStorage.setItem("auth_user",JSON.stringify(result.data))
+        setUser(JSON.stringify(result.data))
         })
       .catch(error => {
         console.error(error.message);
