@@ -1,4 +1,4 @@
-const bookingService = require('../service/booking.service');
+const bookingService = require('../service/booking.service ');
 const {create,findAll,update,remove} = bookingService;
 
  
@@ -31,6 +31,7 @@ const findAllBookings = async (req, res, next) => {
  
   }
  
+  
 
 
 

@@ -46,7 +46,8 @@ const trainerSchema = new mongoose.Schema({
     },
     booking:[{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Booking"
+        ref:"Booking",
+        unique:true
     }]
 
 })
@@ -54,7 +55,7 @@ const trainerSchema = new mongoose.Schema({
 trainerSchema.post('findOneAndDelete', async function(trainer) {
     if(trainer){
         try{
-            Training.updateMany(
+            await Training.updateMany(
             {trainer:trainer._id},
             {$pull:{trainer:trainer._id}}
          )
@@ -66,7 +67,9 @@ trainerSchema.post('findOneAndDelete', async function(trainer) {
             console.error('Error removing trainer references from trainings:', err);
         }
     }
-})
+});
+
+
 
 const Trainer = mongoose.model("Trainer",trainerSchema);
 

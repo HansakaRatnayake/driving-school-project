@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const User = require('../model/user.model');
+const Role = require('../model/role.model')
 const { generateToken } = require('../utils/token.generator');
 
 
@@ -12,8 +13,10 @@ const login = async (req, res) => {
         if(!user) return res.status(401).json({ message: "Email doesn't exist" });
 
         if(!(await bcrypt.compare(password, user.password))) return res.status(401).json({ message: "Incorrect Password" });
+        
+        const role = await Role.findById(user.role);
 
-        const token = generateToken(user._id,res);
+        const token = generateToken(user._id,role.name,res);
 
         if (!token) res.status(200).json({message:"Error while generating te token.Try to login"});
 
@@ -24,6 +27,8 @@ const login = async (req, res) => {
             firstname: user.firstname,
             lastname: user.lastname,
             username: user.username,
+            role:role,
+            userstatus:user.userstatus,
             photo: user.photo
         });
 
@@ -48,8 +53,10 @@ const signup = async(req,res) => {
         
 
         if(!newUser) res.status(400).json({ error: "Invalid user data" });
+
+        const role = await Role.findById(newUser.role);
   
-        const token = generateToken(newUser._id,res);
+        const token = generateToken(newUser._id,role.name,res);
 
         res.setHeader("jwt_token", `${process.env.JWT_TOKEN_PREFIX} ${token}`);
 
@@ -58,7 +65,10 @@ const signup = async(req,res) => {
             firstname: newUser.firstname,
             lastname: newUser.lastname,
             username: newUser.username,
+            role:role,
+            userstatus:newUser.userstatus,
             photo: newUser.photo
+            
         });
      
     }catch(error){

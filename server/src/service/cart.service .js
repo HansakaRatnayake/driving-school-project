@@ -1,5 +1,5 @@
 const Cart = require('../model/cart.model');
-const cartRepo = require('../repository/cart.repository ');
+const cartRepo = require('../repository/cart.repository');
 const {createCart,findAllCarts,deleteCart} = cartRepo;
 
  

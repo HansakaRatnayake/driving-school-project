@@ -18,7 +18,7 @@ const Cart = require('../model/cart.model');
      const findAllCarts = async(searchQuery) => {
         try{
 
-            return await Cart.find(searchQuery).exec();
+            return await Cart.find(searchQuery).populate('training','name').populate('user', 'username').exec();
 
         }catch(error){
             
