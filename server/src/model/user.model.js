@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
     userstatus:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"UserStatus",
-        default:"66e41c9efd8cf9b5783215b7"
+        default:"66e0ae79fedd98da0798d69f"
         
     },
     training:[{

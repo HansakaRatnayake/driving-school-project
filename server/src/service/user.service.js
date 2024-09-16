@@ -77,6 +77,10 @@ const update = async (user) => {
 
 
 const remove = async (username) => {
+
+    console.log(username);
+    
+
     try {
         const user = await User.findOne({username});
         if(!user) return {
