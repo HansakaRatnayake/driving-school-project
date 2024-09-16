@@ -18,7 +18,7 @@ const User = require('../model/user.model');
      const findAllUsers = async(searchQuery)=>{
        
         try{
-            console.log(searchQuery);
+            //console.log(searchQuery);
             return await User.find(searchQuery).select('-password').populate('userstatus').populate('training').exec();
 
         }catch(error){
@@ -36,7 +36,7 @@ const User = require('../model/user.model');
     }
 
     const updateUser = async(user)=> {
-        const {firstname, lastname ,username,photo,userstatus,training} = user;
+        const {firstname, lastname ,username,photo,userstatus,training,_id} = user;
         try{
             return await User.updateOne({_id:user._id},{$set: {firstname,lastname,username,photo,userstatus,training}});
         }catch(error){

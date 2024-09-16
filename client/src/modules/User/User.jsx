@@ -12,13 +12,7 @@ const User = () => {
     const [users, setUsers] = useState([]);
     const [isUpdate,setUpdate] = useState(false);
 
-    const [values, setValues] = useState({
-        firstname: '',
-        lastname: '',
-        username: '',
-        password: '',
-        userstatus: ''
-    });
+    const [usernames, setUsername] = useState('');
 
     const handleFormStatus = () =>{
         setUpdate(!isUpdate);
@@ -71,7 +65,7 @@ const User = () => {
                 <div className="w-full flex bg-white shadow-xl px-4 py-5 rounded-lg">
 
                     <div className="w-1/3">
-                        {isUpdate ? <UserUpdateForm updVal={values}/>  : <UserForm/> }
+                        {isUpdate ? <UserUpdateForm data={usernames}/>  : <UserForm/> }
 
                     </div>
 
@@ -121,7 +115,7 @@ const User = () => {
                                                  strokeWidth={1.5} stroke="currentColor"
                                                  className="size-6 text-blue-600 cursor-pointer"
                                                  onClick={() => {
-                                                     setValues(dta);
+                                                     setUsername(dta['username']);
                                                      handleFormStatus();
                                                  }}
                                             >

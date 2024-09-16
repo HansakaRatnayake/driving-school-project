@@ -30,6 +30,11 @@ const UserForm = () => {
             })
     }
 
+    //Clear Form
+    const clearForm = () => {
+        setValues([]);
+    }
+
     useEffect(() => {
         axios.get("http://localhost:3000/api/userstatuses")
             .then(res => {
@@ -116,7 +121,7 @@ const UserForm = () => {
 
                                 <div className="flex gap-2 w-full mt-5 justify-center items-center">
                                     <button className="btn w-1/2 bg-green-500" type="submit">Add</button>
-                                    <button className="btn w-1/2 bg-black text-white">Clear</button>
+                                    <button className="btn w-1/2 bg-black text-white" type="reset" onClick={clearForm}>Clear</button>
                                 </div>
 
                             </div>
