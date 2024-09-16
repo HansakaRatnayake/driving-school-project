@@ -6,10 +6,10 @@ const {saveTrainer,findAllTrainers,updateTrainer,deleteTrainer} = trainerControl
 const router = express.Router();
 
 
-router.get('/',findAllTrainers);
-router.post('/', saveTrainer);
-router.put('/', updateTrainer);
-router.delete('/:email', deleteTrainer);
+router.get('/',authenticate, permission('trainer:READ'),findAllTrainers);
+router.post('/',authenticate, permission('trainer:CREATE'), saveTrainer);
+router.put('/', authenticate, permission('trainer:UPDATE'), updateTrainer);
+router.delete('/:email', authenticate, permission('trainer:DELETE'), deleteTrainer);
 
 
 

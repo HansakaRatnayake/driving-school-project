@@ -6,6 +6,12 @@ const Trainer = require('../model/trainer.model');
 const Training = require('../model/training.model');
 const ContactUs = require('../model/contactus.model');
 const Booking = require('../model/booking.model');
+const Cart = require('../model/cart.model');
+const Role = require('../model/role.model');
+const Permission = require('../model/permission.model');
+
+
+
 
 
 

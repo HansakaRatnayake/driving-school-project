@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken";
-import User from "../model/user.model";
+const jwt = require("jsonwebtoken");
+const User = require( "../model/user.model");
 
-const protect = async(req, res, next) => {
+const authenticate = async (req, res, next) => {
 
     try{
         const authHeader = req.headers.authorization;
@@ -14,9 +14,14 @@ const protect = async(req, res, next) => {
 
         if(!decoded) return res.status(401).json({error: "Unauthorized - Invalid Token" });
 
-        const user = await User.findById(decoded.userId).select("-password");
+        const user = await User.findById(decoded.userId).populate({path:'role',populate:{path:'permission'}}).select("-password");
 
         if(!user) return res.status(404).json({error: "User Not Found"});
+
+        const role = decoded.role;
+        
+        if(!role && user.role.name !== role) return res.status(403).json({error: "Unauthorized Access, Role Not Found" });
+
     
         req.user = user;
         next();
@@ -27,4 +32,4 @@ const protect = async(req, res, next) => {
     }
 };
 
-export default protect;
+module.exports =  authenticate;

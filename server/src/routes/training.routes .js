@@ -6,10 +6,10 @@ const {saveTraining,findAllTrainings,updateTraining,deleteTraining} = trainingCo
 const router = express.Router();
 
 
-router.get('/',findAllTrainings);
-router.post('/', saveTraining);
-router.put('/', updateTraining);
-router.delete('/:trainingId', deleteTraining);
+router.get('/', authenticate, permission('training:READ'),findAllTrainings);
+router.post('/', authenticate, permission('training:CREATE'),saveTraining);
+router.put('/', authenticate, permission('training:UPDATE'), updateTraining);
+router.delete('/:trainingId', authenticate, permission('training:DELETE'), deleteTraining);
 
 
 module.exports = router;

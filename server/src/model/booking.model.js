@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-
+const User = require('./user.model');
+const Trainer = require('./trainer.model');
 
 const bookingSchema = new mongoose.Schema({
 
@@ -9,8 +10,9 @@ const bookingSchema = new mongoose.Schema({
         type: Date,
          default: Date.now 
     },
-    bookingdata:{
-        type:Date
+    bookingdate:{
+        type:Date,
+        require:true
     },
     user:{
         type:mongoose.Schema.Types.ObjectId,
@@ -25,6 +27,28 @@ const bookingSchema = new mongoose.Schema({
     }
 
 });
+
+
+bookingSchema.post('save', async function(booking) {
+    try{
+        await User.updateOne({_id:booking.user},{$push:{booking:booking._id}});
+        await Trainer.updateOne({_id:booking.trainer},{$push:{booking:booking._id}});
+    }catch(err){
+        console.error("Error in updating the User.booking field: "+err)
+    }
+});
+
+
+
+bookingSchema.post('findOneAndDelete', async function(booking) {
+    try{
+        await User.updateOne({_id:booking.user},{$pull:{booking:booking._id}});
+        await Trainer.updateOne({_id:booking.trainer},{$pull:{booking:booking._id}});
+    }catch(err){
+        console.error("Error in updating the User.booking field: "+err)
+    }
+});
+
 
 
 

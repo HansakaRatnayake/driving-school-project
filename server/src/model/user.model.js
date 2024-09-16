@@ -38,6 +38,13 @@ const userSchema = new mongoose.Schema({
     booking:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Booking"
+
+    },
+    role:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Role",
+        required:true,
+        default:"66e733607dc2e9cf3b4e3cec"
     }
 
 });
