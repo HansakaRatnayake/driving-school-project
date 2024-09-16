@@ -82,10 +82,17 @@ const remove = async (username) => {
     
 
     try {
-        if(!await User.findOne({username})) return {
+        const user = await User.findOne({username});
+        if(!user) return {
             data:"User Not Found, Input a valid Training",
             statuscode:404
         }
+
+        if(!user.canDelete) return {
+            data: "Cannot delete super user",
+            statuscode: 403
+        }
+
         const resData = await deleteUser(username);
         return {
             data: resData,

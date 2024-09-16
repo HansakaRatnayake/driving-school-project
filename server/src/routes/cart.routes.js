@@ -1,5 +1,7 @@
 const express = require('express');
 const cartController = require('../controller/cart.controller');
+const authenticate = require('../middleware/auth.middleware');
+const permission = require('../middleware/permisson.middleware');
 const {saveCart,findAllCarts,updateCart,deleteCart} = cartController;
 const authenticate = require('../middleware/auth.middleware');
 const permission = require('../middleware/permisson.middleware');

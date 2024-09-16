@@ -1,5 +1,7 @@
 const express = require('express');
 const trainerController = require('../controller/trainer.controller');
+const authenticate = require('../middleware/auth.middleware');
+const permission = require('../middleware/permisson.middleware');
 const {saveTrainer,findAllTrainers,updateTrainer,deleteTrainer} = trainerController;
 const authenticate = require('../middleware/auth.middleware');
 const permission = require('../middleware/permisson.middleware');

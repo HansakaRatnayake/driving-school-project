@@ -26,10 +26,6 @@ app.use(cors({
 app.use(express.json());
 
 
-// app.use('/api', (req,res,next) => {
-    
-//     next();
-// });
 
 //Middlewares
 app.use('/api/cart', cartRoutes);

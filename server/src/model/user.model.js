@@ -45,6 +45,10 @@ const userSchema = new mongoose.Schema({
         ref:"Role",
         required:true,
         default:"66e733607dc2e9cf3b4e3cec"
+    },
+    canDelete:{
+        type:Boolean,
+        default:true
     }
 
 });
@@ -65,10 +69,16 @@ userSchema.pre('updateOne', async function (next) {
     if (update.password) {
         update.password = await bcrypt.hash(update.password, 12);
     }
-
     next();
 });
 
+userSchema.pre('findOneAndDelete', async function(user) {
+    const deleteuser = await User.findById(user._id).populate('role');
+    if (deleteuser && deleteuser.role.name === 'SUPER_ADMIN') {
+        return res.status(403).json({ message: 'Super Admin cannot be deleted' });
+    }
+    next();
+})
 const User = mongoose.model("User",userSchema);
 
 module.exports = User;
