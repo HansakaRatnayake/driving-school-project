@@ -34,6 +34,7 @@ const findUserByUsername = async (req, res) => {
  const deleteUser = async (req, res) => {
 
      const {username} = req.params;
+
      const responseData = await remove(username);
      res.status(responseData.statuscode).json(responseData.data);
 

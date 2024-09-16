@@ -77,6 +77,10 @@ const update = async (user) => {
 
 
 const remove = async (username) => {
+
+    console.log(username);
+    
+
     try {
         if(!await User.findOne({username})) return {
             data:"User Not Found, Input a valid Training",

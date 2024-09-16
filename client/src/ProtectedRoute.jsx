@@ -1,21 +1,10 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const isAuthenticated = !!localStorage.getItem('token'); // Check if the user is authenticated
+const ProtectedRoute = ({ children }) => {
+  const isAuthenticated = localStorage.getItem('access_token'); // Check if the user is authenticated
 
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        isAuthenticated ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
-    />
-  );
+  return isAuthenticated ? children : <Navigate to="/login" replace/>
 };
 
 export default ProtectedRoute;

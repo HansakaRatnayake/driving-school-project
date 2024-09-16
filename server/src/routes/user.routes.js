@@ -8,9 +8,11 @@ const {saveUser,findAllUsers,updateUser,deleteUser} = userController;
 const router = express.Router();
 
 //define routes
+
 router.get('/', authenticate, permission('users:READ'), findAllUsers);
 router.post('/', authenticate, permission('users:CREATE'),  saveUser);
 router.put('/', authenticate, permission('users:UPDATE'),  updateUser);
 router.delete('/:username', authenticate, permission('users:DELETE'),  deleteUser);
+
 
 module.exports = router;
