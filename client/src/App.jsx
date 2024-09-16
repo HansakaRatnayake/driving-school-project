@@ -30,12 +30,12 @@ import ProtectedRoute from './ProtectedRoute';
 import {Toaster} from "react-hot-toast";
 import Profile from "./modules/Profile.jsx";
 import Admin from "./modules/Admin.jsx";
-import User from "./modules/User.jsx";
+import User from "./modules/User/User.jsx";
 import Trainees from "./modules/Trainees.jsx";
 import Dashboard from "./modules/Dashboard.jsx";
 import Trainings from "./modules/Trainings.jsx";
 import Trainers from "./modules/Trainers.jsx";
-import UserForm from "./modules/UserForm.jsx";
+import UserForm from "./modules/User/UserForm.jsx";
 
 
 export const UserContext = createContext(null);

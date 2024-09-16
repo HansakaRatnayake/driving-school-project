@@ -8,10 +8,15 @@ const {saveBooking,findAllBookings,updateBooking,deleteBooking} = bookingControl
 const router = express.Router();
 
 
-router.get('/', authenticate, permission('booking:READ'), findAllBookings);
-router.post('/', authenticate, permission('booking:CREATE'), saveBooking);
-router.put('/', authenticate, permission('booking:UPDATE'), updateBooking);
-router.delete('/:bookingId', authenticate, permission('booking:DELETE'), deleteBooking);
+// router.get('/', authenticate, permission('booking:READ'), findAllBookings);
+// router.post('/', authenticate, permission('booking:CREATE'), saveBooking);
+// router.put('/', authenticate, permission('booking:UPDATE'), updateBooking);
+// router.delete('/:bookingId', authenticate, permission('booking:DELETE'), deleteBooking);
+
+router.get('/',  findAllBookings);
+router.post('/',  saveBooking);
+router.put('/',  updateBooking);
+router.delete('/:bookingId', deleteBooking);
 
 
 
