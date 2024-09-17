@@ -73,7 +73,7 @@ const User = () => {
 
                     {/*Table*/}
                     <div className="shadow-xl w-2/3 mt-5 border-t-8 rounded-md">
-                    <div className="overflow-auto  ">
+                    <div className="overflow-auto h-[30rem]">
                         <table className="table">
                             {/* head */}
                             <thead>
@@ -99,9 +99,15 @@ const User = () => {
                                         <div className="flex items-center gap-3">
                                             <div className="avatar">
                                                 <div className="mask mask-squircle h-12 w-12">
-                                                    <img
-                                                        src={`data:image/jpeg;base64,${dta['photo']}`}
-                                                        alt="Avatar Tailwind CSS Component"/>
+                                                    {dta['photo'] ?
+                                                        <img
+                                                            src={`data:image/png;base64,${dta['photo']}`}
+                                                            alt="Avatar Tailwind CSS Component"/>
+                                                        : <img
+                                                            src="../../assets/default.png"
+                                                            alt="Avatar Tailwind CSS Component"/>
+
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
