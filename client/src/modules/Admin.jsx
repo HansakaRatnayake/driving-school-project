@@ -11,7 +11,6 @@ const Admin = () => {
             <div className="w-full">
                 <Outlet/>
             </div>
-
         </div>
     )
 }
