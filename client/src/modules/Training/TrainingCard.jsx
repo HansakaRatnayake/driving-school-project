@@ -3,7 +3,13 @@ import Person4Icon from '@mui/icons-material/Person4';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-function TrainingCard() {
+
+
+
+
+function TrainingCard(props) {
+
+    const {name, price, duration, iamge,  trainers, description} = props;
   return (
     <div className=' flex w-full h-auto p-4 shadow-md'>
         <TrainingImage/>
@@ -13,7 +19,7 @@ function TrainingCard() {
   )
 }
 
-function TrainingImage() {
+function TrainingImage(props) {
     return (
         <div className="w-[15%] h-[180px] border-blue-500 border-2 flex">
             <img src=''/>
@@ -22,7 +28,7 @@ function TrainingImage() {
 }
 
 
-function TrainingData() {
+function TrainingData(props) {
     return (
         <div className="flex flex-col w-[60%] h-[180px] pl-6 gap-3">
              <div className="font-bold text-xl ">Manual Car Training</div>

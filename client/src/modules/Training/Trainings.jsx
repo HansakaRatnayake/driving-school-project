@@ -4,9 +4,23 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import TrainingCard from './TrainingCard';
+import Dialog from '@mui/material/Dialog';
+import TrainingForm from './TrainingForm';
 
 
 const Trainings = () => {
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+
     return (
         <div className='p-10'>
             <div className="w-full flex-col">
@@ -26,7 +40,7 @@ const Trainings = () => {
                     </div>
                     
                     <div className="flex w-2/4 justify-end  items-center ">
-                        <Button className='h-12' variant="contained" startIcon={<AddCircleRoundedIcon />}>
+                        <Button onClick={handleClickOpen} className='h-12' variant="contained" startIcon={<AddCircleRoundedIcon />}>
                             Add New Training
                         </Button>
                     </div>
@@ -40,6 +54,24 @@ const Trainings = () => {
                 </div>
 
             </div>
+
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                component: 'form',
+                onSubmit: (event) => {
+                    event.preventDefault();
+                    const formData = new FormData(event.currentTarget);
+                    const formJson = Object.fromEntries(formData.entries());
+                    const email = formJson.email;
+                    console.log(email);
+                    handleClose();
+                },
+                }}
+            >
+                <TrainingForm/>
+            </Dialog>
         </div>
     )
 }
