@@ -33,7 +33,7 @@ import Admin from "./modules/Admin.jsx";
 import User from "./modules/User/User.jsx";
 import Trainees from "./modules/Trainees.jsx";
 import Dashboard from "./modules/Dashboard.jsx";
-import Trainings from "./modules/Trainings.jsx";
+import Trainings from "./modules/Training/Trainings.jsx";
 import Trainers from "./modules/Trainers.jsx";
 import UserForm from "./modules/User/UserForm.jsx";
 
@@ -126,7 +126,7 @@ const App = () => {
 
       </Routes>
     </Router>
-    </UserContext.Provider>
+    </UserContext.Provider> 
   );
 };
 
