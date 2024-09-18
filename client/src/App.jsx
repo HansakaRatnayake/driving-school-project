@@ -35,7 +35,7 @@ import Trainees from "./modules/Trainees/Trainees.jsx";
 import Dashboard from "./modules/Dashboard.jsx";
 
 import Trainings from "./modules/Training/Trainings.jsx";
-import Trainers from "./modules/Trainers.jsx";
+import Trainers from "./modules/Trainers/Trainers.jsx";
 
 import UserForm from "./modules/User/UserForm.jsx";
 

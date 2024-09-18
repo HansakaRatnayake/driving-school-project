@@ -101,7 +101,7 @@ const Information = () => {
   };
 
   return (
-    <div className='p-5 bg-white dark:bg-black w-full'>
+    <div className='p-5 bg-white dark:bg-black w-full py-6 px-56'>
       <div className='flex justify-between items-center bg-[#023e8a] text-white p-5 rounded-lg mb-5 w-full'>
         <div>
           <h1 className='text-xl font-bold'>Information Portal</h1>
