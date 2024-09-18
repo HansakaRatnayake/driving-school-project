@@ -30,7 +30,7 @@ const trainerSchema = new mongoose.Schema({
         unique:true
     },
     yoexperience:{
-        type:Number,
+        type:String,
         required:true,
         trim:true,
     },
@@ -47,7 +47,6 @@ const trainerSchema = new mongoose.Schema({
     booking:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Booking",
-        unique:true
     }]
 
 })

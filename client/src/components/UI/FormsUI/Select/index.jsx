@@ -11,9 +11,9 @@ const SelectCustom = ({
 }) => {
 
     const { setFieldValue } = useFormikContext();
-    const [field, mata] = useField(name);
-
-    const handleChange = (event) => {
+    const [field, meta] = useField(name);
+    
+  const handleChange = event => {
         const { value } = event.target;
         setFieldValue(name, value);
     };
@@ -22,23 +22,24 @@ const SelectCustom = ({
         ...field,
         ...otherProps,
         select: true,
-        varient: "outlined",
+        variant: 'outlined',
         fullWidth: true,
         onChange: handleChange,
         size: "small"
     }
 
-    if (mata && mata.touched && mata.error) {
+
+    if (meta && meta.touched && meta.error) {
         configSelect.error = true;
         configSelect.helperText = mata.error;
     }
 
     return (
         <TextField {...configSelect}>
-            
+
             {Array.isArray(options) && options.length > 0 ? (
                 options.map((option,i) => (
-                    <MenuItem key={i} value={option.id}>
+                    <MenuItem key={i} value={option}>
                         {option.name}
                     </MenuItem>
                 ))

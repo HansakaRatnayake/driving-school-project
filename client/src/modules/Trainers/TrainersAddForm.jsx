@@ -1,60 +1,94 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import * as Yup from 'yup';
 import {Form, Formik} from "formik";
 import {Grid2} from "@mui/material";
 import TextFieldCustom from "../../components/UI/FormsUI/TextField/index.jsx";
-import SelectCustom from "../../components/UI/FormsUI/Select/index.jsx";
 import ButtonCustom from "../../components/UI/FormsUI/Button/index.jsx";
+import axios from "axios";
+import SelectCustom from "../../components/UI/FormsUI/Select/index.jsx";
+import toast from "react-hot-toast";
+import {useNavigate} from "react-router-dom";
 
+const BaseUrl = "http://localhost:3000/api/trainers";
 
-const initialFormState = {
-    name: "",
-    email: "",
-    nic: "",
-    mobile: "",
-    yoexperience: "",
-    profileimage: "",
-    gender: "",
-    booking: ""
+const INITIAL_FORM_STATE = {
+    name: '',
+    email: '',
+    nic: '',
+    mobile: '',
+    yoexperience: '',
+    // profileimage: '',
+    // gender: '',
+    // booking: '',
 };
 
 const FORM_VALIDATION = Yup.object().shape({
-    name: Yup.string().required('Required'),
-    email: Yup.string().email("Invalid Email").required('Required'),
-    nic: Yup.string().required('Required'),
-    mobile: Yup.number().integer().typeError("Please Enter Valid Phone Number").required("Required"),
-    yoexperience: Yup.number().integer().required('Required'),
-    profileimage: "",
-    gender: "",
-    booking: ""
+    name: Yup.string()
+        .matches(/^[A-Z][a-z]*(?: [A-Z][a-z]*)*$/,"Invalid Name")
+        .required('Required'),
+    email: Yup.string()
+        .email("Invalid Email").required('Required'),
+    nic: Yup.string()
+        .matches(/^(\d{10}[VvXx]|\d{12})$/,"Invalid NIC")
+        .required('Required'),
+    mobile: Yup.string()
+        .matches(/^\d{10}$/, "Invalid Mobile")
+        .required("Required"),
+    yoexperience: Yup.number().integer()
+        .typeError("Invalid Years")
+        .required('Required'),
+    // profileimage: "",
+    gender:"",
+        // Yup.string().required('Required'),
 });
 
 const TrainersAddForm = () => {
 
-    const [trainer,setTrainer] = useState({
-        name: "",
-        email: "",
-        nic: "",
-        mobile: "",
-        yoexperience: "",
-        profileimage: "",
-        gender: "",
-        booking: ""
-    });
+    const {navigate} = useNavigate();
+    // const [trainer,setTrainer] = useState({
+    //     name: "",
+    //     email: "",
+    //     nic: "",
+    //     mobile: "",
+    //     yoexperience: "",
+    //     profileimage: "",
+    //     gender: "",
+    //     booking: ""
+    // });
 
     const [genders,setGenders] = useState({
         _id:"",
         name:""
     });
 
+    useEffect(() => {
+        axios.get(`http://localhost:3000/api/genders`)
+            .then(res => {
+                setGenders(res.data);
+            }).catch(err => console.log(err))
+    }, []);
+
+    const handleSubmit = (values) => {
+        console.log(values);
+        axios.post(`${BaseUrl}`,values)
+            .then(res => {
+                console.log(res);
+                navigate("trainers")
+                toast.success("Trainer Successfully Saved");
+            })
+            .catch(err => {
+                console.log(err);
+                toast.error(err.message);
+            });
+    }
+
     return (
         <div className="p-3">
             <Formik
-                initialValues={{ ...initialFormState }}
+                initialValues={{ ...INITIAL_FORM_STATE }}
                 validationSchema={FORM_VALIDATION}
                 onSubmit={values => {
-                    console.log(values);
-
+                    handleSubmit(values);
                 }}
             >
                 <Form>

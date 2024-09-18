@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import backgroundImage from "./Assets/a.avif"; // Updated with the new image path
+import backgroundImage from "./Assets/a.avif";
+import {Link} from "react-router-dom"; // Updated with the new image path
 
 
 const Landing = () => {
@@ -40,7 +41,7 @@ const Landing = () => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          <a href = "./home">Get Started</a>
+          <Link to="/home">Get Started</Link>
         </motion.button>
       </div>
     </div>
