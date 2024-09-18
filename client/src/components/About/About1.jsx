@@ -50,11 +50,11 @@ const About1 = () => {
   ];
 
   return (
-    <div className='bg-gray-50 dark:bg-gray-900 dark:text-gray-200 duration-300 min-h-screen p-6'>
+    <div className='bg-gray-50 dark:bg-gray-900 dark:text-gray-200 duration-300 min-h-screen  py-10  px-56'>
       {/* Who We Are Section */}
       <div className="text-center mb-16">
         <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
-          Who We Are
+          Who We Are ?
         </h3>
         <p className="text-lg text-gray-700 dark:text-gray-300 mt-4">
           Rathna Diving School started in 1960 by Mr. Karunadasa Hewawaduge. Soon after it became a very trusted Government Registered Driving School in Colombo area as well as the country. All our professional & qualified instructors are always with us in this journey. As a leading driving school in Colombo, we provide exceptional training to pass your driving test and make you a disciplined & responsible driver.
@@ -64,7 +64,7 @@ const About1 = () => {
       {/* Why We Are Special Section */}
       <div className="text-center mb-16">
         <h3 className="text-3xl font-semibold text-gray-900 dark:text-gray-100">
-          Why We Are Special
+          Why We Are Special ?
         </h3>
         <p className="text-lg text-gray-700 dark:text-gray-300 mt-4">
           Getting your driving license is a milestone in your life. From the moment you sit in the driver's seat, we focus on training and improving your driving skills. We have a great squad of instructors who will teach you easy tips to pass your driving practical test on the first attempt. Whether you are just turning 18 or have a busy schedule, we offer flexible training hours. All vehicles are comfortable & well-maintained, and training occurs on public streets to ensure you become a road-ready driver.

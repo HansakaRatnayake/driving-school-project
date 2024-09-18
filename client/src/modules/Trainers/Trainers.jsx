@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
 import toast from "react-hot-toast";
-<<<<<<< Updated upstream
-=======
 import {Link} from "react-router-dom";
 import TrainingForm from "../Training/TrainingForm.jsx";
 import Dialog from "@mui/material/Dialog";
 import TrainersAddForm from "./TrainersAddForm.jsx";
->>>>>>> Stashed changes
 
 const BaseUrl = "http://localhost:3000/api/trainers";
 
@@ -58,11 +55,7 @@ const Trainers = () => {
 
                 <div className="flex gap-10">
                     <span className="font-bold text-3xl">Trainers</span>
-<<<<<<< Updated upstream
-                    <button className="btn btn-sm bg-green-500 mt-1">+ Add</button>
-=======
                     <button className="btn btn-sm bg-green-500 mt-1" onClick={handleClickOpen}>+ Add</button>
->>>>>>> Stashed changes
                 </div>
 
                 <div className="w-full">

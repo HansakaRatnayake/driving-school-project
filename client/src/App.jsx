@@ -33,9 +33,12 @@ import Admin from "./modules/Admin.jsx";
 import User from "./modules/User/User.jsx";
 import Trainees from "./modules/Trainees/Trainees.jsx";
 import Dashboard from "./modules/Dashboard.jsx";
-import Trainings from "./modules/Trainings.jsx";
+import Trainings from "./modules/Training/Trainings.jsx";
 import Trainers from "./modules/Trainers/Trainers.jsx";
 import UserForm from "./modules/User/UserForm.jsx";
+import TraineesAddForm from "./modules/Trainees/TraineesAddForm.jsx";
+import TraineesUpdateForm from "./modules/Trainees/TraineesUpdateForm.jsx";
+import TrainersAddForm from "./modules/Trainers/TrainersAddForm.jsx";
 
 
 export const UserContext = createContext(null);
@@ -93,14 +96,23 @@ const App = () => {
             </>
           }
         />
+        {/*Admin Routes*/}
         <Route path="/admin" element={ <Admin /> }>
           <Route path="" element={ <Dashboard/> }/>
           <Route path="user" element={ <User/> }/>
           <Route path="user-add" element={ <UserForm/> }/>
+
           <Route path="trainee" element={ <Trainees/> }/>
+          <Route path="trainee-add" element={ <TraineesAddForm/> }/>
+          <Route path="trainee-update/:username" element={ <TraineesUpdateForm/> }/>
+
           <Route path="trainings" element={ <Trainings/> }/>
+
           <Route path="trainers" element={ <Trainers/> }/>
+          <Route path="trainers-add" element={ <TrainersAddForm/> }/>
+
         </Route>
+
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/register" element={<Register />} />
@@ -126,7 +138,7 @@ const App = () => {
 
       </Routes>
     </Router>
-    </UserContext.Provider>
+    </UserContext.Provider> 
   );
 };
 

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
 import toast from "react-hot-toast";
+import {Link} from "react-router-dom";
 
 const BaseUrl = "http://localhost:3000/api/users";
 
@@ -11,7 +12,7 @@ const Trainees = () => {
     const columns = ['Profile', 'Full Name', 'Username', 'UserStatus', 'Action']
 
     useEffect(() => {
-        axios.get(`${BaseUrl}`)
+        axios.get(`${BaseUrl}?role=66e733607dc2e9cf3b4e3cec`)
             .then(res => {
                 setUsers(res.data);
                 ///console.log(res.data);
@@ -37,11 +38,11 @@ const Trainees = () => {
 
     return (
         <div className="p-6">
-            <div className="w-full h-[49rem] shadow-2xl rounded-lg p-4">
+            <div className="w-full h-[49rem] rounded-lg p-4">
 
                 <div className="flex gap-10">
                     <span className="font-bold text-3xl">Trainees</span>
-                        <button className="btn btn-sm bg-green-500 mt-1">+ Add</button>
+                        <Link to="../trainee-add"><button className="btn btn-sm bg-green-500 mt-1">+ Add</button></Link>
                 </div>
 
                 <div className="w-full">
@@ -93,16 +94,15 @@ const Trainees = () => {
 
                                         <td>
                                             <div className="flex gap-2">
+                                                <Link to={`../trainee-update/${dta['username']}`}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                      strokeWidth={1.5} stroke="currentColor"
                                                      className="size-6 text-blue-600 cursor-pointer"
-                                                     onClick={() => {
-                                                         setUsername(dta['username']);
-                                                     }}
                                                 >
                                                     <path strokeLinecap="round" strokeLinejoin="round"
                                                           d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
                                                 </svg>
+                                                </Link>
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                      strokeWidth={1.5} stroke="currentColor"
                                                      className="size-6 text-red-500 cursor-pointer"

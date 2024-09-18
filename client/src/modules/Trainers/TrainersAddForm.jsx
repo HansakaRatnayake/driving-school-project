@@ -1,10 +1,3 @@
-<<<<<<< Updated upstream
-import React from 'react'
-
-const TrainersAddForm = () => {
-    return (
-        <div>TrainersAddForm</div>
-=======
 import React, {useEffect, useState} from 'react'
 import * as Yup from 'yup';
 import {Form, Formik} from "formik";
@@ -141,7 +134,6 @@ const TrainersAddForm = () => {
                 </Form>
             </Formik>
         </div>
->>>>>>> Stashed changes
     )
 }
 export default TrainersAddForm

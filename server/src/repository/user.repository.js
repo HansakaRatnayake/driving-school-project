@@ -18,7 +18,6 @@ const User = require('../model/user.model');
      const findAllUsers = async(searchQuery)=>{
        
         try{
-            //console.log(searchQuery);
             return await User.find(searchQuery).select('-password').populate('userstatus').populate('training').exec();
 
         }catch(error){

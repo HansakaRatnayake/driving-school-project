@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import UserForm from "./UserForm.jsx";
 import UserUpdateForm from "./UserUpdateForm.jsx";
 
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+
 const BaseUrl = "http://localhost:3000/api/users";
 
 const User = () => {
@@ -49,13 +51,13 @@ const User = () => {
 
 
     return (
-        <div className="p-6">
+        <div className="p-10">
 
             <div className="w-full">
                 <div className="flex gap-10">
-                    <span className="font-bold text-3xl">Users</span>
+                    <span className="font-bold text-3xl">User Details</span>
                     {isUpdate ?
-                        <button className="btn btn-sm bg-green-500 mt-1" onClick={handleFormStatus}>+ Add</button>
+                        <button className="btn btn-sm bg-green-500 mt-1" onClick={handleFormStatus}><AddCircleOutlineOutlinedIcon/> <span>Add New User</span></button>
                         :
                         <></>
                     }

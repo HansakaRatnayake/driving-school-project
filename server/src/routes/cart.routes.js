@@ -4,7 +4,6 @@ const authenticate = require('../middleware/auth.middleware');
 const permission = require('../middleware/permisson.middleware');
 const {saveCart,findAllCarts,updateCart,deleteCart} = cartController;
 
- 
 const router = express.Router();
 
 

@@ -12,8 +12,8 @@ const SelectCustom = ({
 
     const { setFieldValue } = useFormikContext();
     const [field, meta] = useField(name);
-
-    const handleChange = event => {
+    
+  const handleChange = event => {
         const { value } = event.target;
         setFieldValue(name, value);
     };
@@ -27,6 +27,7 @@ const SelectCustom = ({
         onChange: handleChange,
         size: "small"
     }
+
 
     if (meta && meta.touched && meta.error) {
         configSelect.error = true;
