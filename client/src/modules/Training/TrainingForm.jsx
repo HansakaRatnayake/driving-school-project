@@ -46,7 +46,6 @@ const names = [
     };
   }
 
-
 function TrainingForm() {
     const theme = useTheme();
     const [personName, setPersonName] = React.useState([]);

@@ -47,7 +47,7 @@ const trainerSchema = new mongoose.Schema({
     booking:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Booking",
-        unique:true
+        required:false
     }]
 
 })

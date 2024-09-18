@@ -5,7 +5,8 @@ const {create,findAll,update,remove} = trainingService;
 const saveTraining = async (req, res, next) => {
   
       const trainingData = req.body;  
-      const responseData = await create(trainingData);
+      const imagefile = req.file;
+      const responseData = await create(trainingData, imagefile);
       res.status(responseData.statuscode).json(responseData.data);  
 }
 

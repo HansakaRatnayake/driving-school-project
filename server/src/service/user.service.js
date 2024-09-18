@@ -4,10 +4,10 @@ const User = require('../model/user.model');
 const userRepo = require('../repository/user.repository');
 const { createUser, findAllUsers, findUserByUsername, updateUser, deleteUser } = userRepo;
 
-const create = async (user) => {
+const create = async (user, image) => {
 
     try {
-        const resData = await createUser(user);
+        const resData = await createUser({...user, photo:{data:image.buffer,contentType:image.mimetype}});
         return {
             data: "User Successfully Registerd",
             statuscode: 201

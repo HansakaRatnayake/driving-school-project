@@ -10,13 +10,13 @@ import EditIcon from '@mui/icons-material/Edit';
 function TrainingCard(props) {
 
     const {name, price, duration, iamge,  trainers, description} = props;
-  return (
-    <div className=' flex w-full h-auto p-4 shadow-md'>
-        <TrainingImage/>
-        <TrainingData/>
-        <ActionButtons/>
-    </div>
-  )
+    return (
+        <div className=' flex w-full h-auto p-4 shadow-md'>
+            <TrainingImage/>
+            <TrainingData/>
+            <ActionButtons/>
+        </div>
+    )
 }
 
 function TrainingImage(props) {

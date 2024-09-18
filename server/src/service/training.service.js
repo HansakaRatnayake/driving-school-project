@@ -3,10 +3,11 @@ const trainingRepo = require('../repository/training.repository');
 const {createTraining,findAllTrainings,deleteTraining,updateTraining} = trainingRepo;
 
  
-const create = async (training) => {
+const create = async (training, image) => {
 
     try{
-        const resData = await createTraining(training);
+
+        const resData = await createTraining({...training,image:{data:image.buffer,contentType:image.mimetype}});
         return {
             data:"Training Successfully Registerd",
             statuscode:201

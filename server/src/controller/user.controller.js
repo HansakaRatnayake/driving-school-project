@@ -4,8 +4,9 @@ const {create,findAll,findByUsername,update, remove} = userService;
  
 const saveUser = async (req, res) => {
   
-      const userData = req.body;  
-      const responseData = await create(userData);
+      const userData = req.body; 
+      const image = req.file; 
+      const responseData = await create(userData, image);
       res.status(responseData.statuscode).json(responseData.data);  
 }
 

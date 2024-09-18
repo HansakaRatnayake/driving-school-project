@@ -3,6 +3,11 @@ const userController = require('../controller/user.controller');
 const authenticate = require('../middleware/auth.middleware');
 const permission = require('../middleware/permisson.middleware');
 const {saveUser,findAllUsers,updateUser,deleteUser} = userController;
+const multer = require('multer');
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
 
  
 const router = express.Router();
@@ -10,7 +15,7 @@ const router = express.Router();
 //define routes
 
 router.get('/', findAllUsers);
-router.post('/',  saveUser);
+router.post('/', upload.single('image'),  saveUser);
 router.put('/',  updateUser);
 router.delete('/:username', deleteUser);
 
