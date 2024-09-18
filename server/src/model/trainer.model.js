@@ -30,7 +30,7 @@ const trainerSchema = new mongoose.Schema({
         unique:true
     },
     yoexperience:{
-        type:Number,
+        type:String,
         required:true,
         trim:true,
     },

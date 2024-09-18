@@ -4,7 +4,7 @@ const {create,findAll,update,remove} = trainerService;
  
 const saveTrainer = async (req, res, next) => {
   
-      const trainerData = req.body;  
+      const trainerData = req.body;        
       const responseData = await create(trainerData);
       res.status(responseData.statuscode).json(responseData.data);  
 }
