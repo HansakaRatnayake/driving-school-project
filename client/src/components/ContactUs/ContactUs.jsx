@@ -35,7 +35,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 py-12 px-4 lg:px-12">
+    <div className="bg-gray-100 dark:bg-gray-900   py-6 px-56">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
           Get in Touch with Us
