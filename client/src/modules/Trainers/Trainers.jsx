@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
 import toast from "react-hot-toast";
+import {Link} from "react-router-dom";
 
 const BaseUrl = "http://localhost:3000/api/trainers";
 
@@ -41,7 +42,7 @@ const Trainers = () => {
 
                 <div className="flex gap-10">
                     <span className="font-bold text-3xl">Trainers</span>
-                    <button className="btn btn-sm bg-green-500 mt-1">+ Add</button>
+                    <Link to="../trainers-add"><button className="btn btn-sm bg-green-500 mt-1">+ Add</button></Link>
                 </div>
 
                 <div className="w-full">
