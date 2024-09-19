@@ -92,8 +92,13 @@ const User = () => {
                             {users.map((dta, index) => {
                                 
                                 let imgurl;
-                                if(dta['photo']['data'].length > 0) {
-                                    const imagedata =  btoa(String.fromCharCode(...new Uint8Array(dta['photo']['data'])));
+                                if(dta && dta['photo'] && dta['photo']['data'] && dta['photo']['data'].length > 0) {
+                                    const uintArray = new Uint8Array(dta['photo']['data']);
+                                    let binary = '';
+                                    for (let i = 0; i < uintArray.length; i++) {
+                                        binary += String.fromCharCode(uintArray[i]);
+                                    }
+                                    const imagedata = btoa(binary);
                                     imgurl = `data:image/jpeg;base64,${imagedata}`
                                 }
 
