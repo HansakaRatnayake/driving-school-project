@@ -13,7 +13,7 @@ const CustomDialog = ({open, onClose, title, onConfirm}) => {
 
 
                     <div className="flex gap-4 mt-7">
-                        <button className="btn bg-red-400 hover:bg-red-500" onClick={() => onConfirm(true)}>Logout</button>
+                        <button className="btn bg-blue-200 hover:bg-blue-300" onClick={() => onConfirm(true)}>Confirm</button>
                         <button className="btn" onClick={onClose}>Cancel</button>
                     </div>
                 </div>
