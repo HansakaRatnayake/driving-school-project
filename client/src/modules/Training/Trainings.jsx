@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -6,11 +6,15 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import TrainingCard from './TrainingCard';
 import Dialog from '@mui/material/Dialog';
 import TrainingForm from './TrainingForm';
+import axios from "axios";
+
+const BaseUrl = "http://localhost:3000/api/trainings";
 
 
 const Trainings = () => {
 
     const [open, setOpen] = React.useState(false);
+    const [training, setTraining] = useState([]);
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -19,6 +23,17 @@ const Trainings = () => {
     const handleClose = () => {
       setOpen(false);
     };
+
+    useEffect(() => {
+        axios.get(`${BaseUrl}`)
+            .then(res => {
+                setTraining(res.data);
+                console.log(res.data);
+            })
+            .catch(err => console.log(err))
+    }, []);
+
+
 
 
     return (
@@ -48,9 +63,9 @@ const Trainings = () => {
                 </div>
 
                 <div className="w-full mt-5 pl-14 pr-14">
-                    <TrainingCard/>
-                    <TrainingCard/>
-                    <TrainingCard/>
+                    {training.map((data, i) => (
+                        <TrainingCard key={i} {...data} />
+                    ))}
                 </div>
 
             </div>
