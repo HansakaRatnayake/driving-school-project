@@ -10,7 +10,7 @@ const User = require('../model/user.model');
 
         }catch(error){
             //throw error if error
-            throw new Error(`Error creating trainer: ${error.message}`);
+            throw new Error(`Error creating users: ${error.message}`);
         }
     }
 

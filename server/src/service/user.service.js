@@ -7,7 +7,7 @@ const { createUser, findAllUsers, findUserByUsername, updateUser, deleteUser } =
 const create = async (user, image) => {
 
     try {
-        const resData = await createUser({...user, photo:{data:image.buffer,contentType:image.mimetype}});
+        const resData = await createUser({...user, photo:image?image.buffer:''});
         return {
             data: "User Successfully Registerd",
             statuscode: 201

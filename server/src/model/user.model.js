@@ -22,13 +22,11 @@ const userSchema = new mongoose.Schema({
         unique:true
     },
     photo:{
-        type:Buffer,
-        default:"",
+        type:Buffer
     },
     userstatus:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"UserStatus",
-        default:"66e0ae79fedd98da0798d69f"
+        ref:"UserStatus"
         
     },
     training:[{

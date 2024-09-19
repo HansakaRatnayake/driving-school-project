@@ -28,8 +28,7 @@ const User = () => {
             }).catch(err => console.log(err))
     }, []);
 
-
-
+   
     const handleDelete = username => {
         const confirm = window.confirm("Are you sure you want to delete?")
         if (confirm) {
@@ -89,6 +88,13 @@ const User = () => {
                             <tbody>
                             {/* row 1 */}
                             {users.map((dta, index) => {
+                                
+                                let imgurl;
+                                if(dta['photo']['data'].length > 0) {
+                                    const imagedata =  btoa(String.fromCharCode(...new Uint8Array(dta['photo']['data'])));
+                                    imgurl = `data:image/jpeg;base64,${imagedata}`
+                                }
+
                                 return <tr key={index}>
                                     <th>
                                         <label>
@@ -99,9 +105,10 @@ const User = () => {
                                         <div className="flex items-center gap-3">
                                             <div className="avatar">
                                                 <div className="mask mask-squircle h-12 w-12">
-                                                    {dta['photo'] ?
+                                                    {dta['photo']['data'].length > 0 ?
+                        
                                                         <img
-                                                            src={`data:image/png;base64,${dta['photo']}`}
+                                                            src={imgurl}
                                                             alt="Avatar Tailwind CSS Component"/>
                                                         : <img
                                                             src="../../assets/default.png"

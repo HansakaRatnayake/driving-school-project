@@ -16,18 +16,46 @@ const UserForm = () => {
         userstatus: ''
     });
 
+    const [image,setImage] = useState(null);
+
+
+    const handleInputDataChange = (event) => {
+        setValues({
+            ...values,
+            [event.target.name] : event.target.value
+        });
+    }
+
+    const handleImageChange = (event) => {
+        setImage(event.target.files[0]);
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`${BaseUrl}`,values)
-            .then(res => {
-                console.log(res);
-                window.location.reload();
-                toast.success("User Successfully Saved");
-            })
-            .catch(err => {
-                console.log(err);
-                toast.error(err.message);
-            })
+
+        const formdata = new FormData();
+        formdata.append('firstname',values.firstname);
+        formdata.append('lastname',values.lastname);
+        formdata.append('username',values.username);
+        formdata.append('password',values.password);
+        formdata.append('userstatus',values.userstatus);
+        formdata.append('image',image);
+
+
+
+
+        axios.post(`${BaseUrl}`,formdata, {
+            headers: {'Content-Type': 'multipart/form-data',}
+        })
+        .then(res => {
+            console.log(res);
+            window.location.reload();
+            toast.success("User Successfully Saved");
+        })
+        .catch(err => {
+            console.log(err);
+            toast.error(err.message);
+        });
     }
 
     //Clear Form
@@ -69,7 +97,7 @@ const UserForm = () => {
                                     </div>
                                     <input type="text" placeholder="Firstname" name="firstname"
                                            className="input input-bordered w-full max-w-xs"
-                                           onChange={e => setValues({...values, firstname: e.target.value})}
+                                           onChange={handleInputDataChange}
                                     />
                                 </label>
 
@@ -79,7 +107,7 @@ const UserForm = () => {
                                     </div>
                                     <input type="text" placeholder="LastName" name="lastname"
                                            className="input input-bordered w-full max-w-xs"
-                                           onChange={e => setValues({...values, lastname: e.target.value})}
+                                           onChange={handleInputDataChange}
                                     />
                                 </label>
 
@@ -89,7 +117,7 @@ const UserForm = () => {
                                     </div>
                                     <input type="text" placeholder="Username" name="username"
                                            className="input input-bordered w-full max-w-xs"
-                                           onChange={e => setValues({...values, username: e.target.value})}
+                                           onChange={handleInputDataChange}
                                     />
                                 </label>
 
@@ -99,7 +127,7 @@ const UserForm = () => {
                                     </div>
                                     <input type="password" placeholder="Passowrd" name="password"
                                            className="input input-bordered w-full max-w-xs"
-                                           onChange={e => setValues({...values, password: e.target.value})}
+                                           onChange={handleInputDataChange}
                                     />
                                 </label>
 
@@ -108,7 +136,7 @@ const UserForm = () => {
                                         <span className="font-bold">UserStatus</span>
                                     </div>
                                     <select className="select select-bordered" name="userstatus"
-                                            onChange={e => setValues({...values, userstatus: e.target.value})}
+                                            onChange={handleInputDataChange}
                                     >
                                         <option disabled selected value="">Select UserStatus</option>
                                         {userstatuses.map((data, i) => {
@@ -118,6 +146,19 @@ const UserForm = () => {
 
                                     </select>
                                 </label>
+
+                                <label className="form-control w-full max-w-xs">
+                                    <div className="label">
+                                        <span className="font-bold">Profile Picture</span>
+                                    </div>
+                                    <input type="file" name="image"
+                                           className="input input-bordered w-full max-w-xs"
+                                           onChange={handleImageChange}
+                                    />
+                                </label>
+
+
+
 
                                 <div className="flex gap-2 w-full mt-5 justify-center items-center">
                                     <button className="btn w-1/2 bg-green-500" type="submit">Add</button>
