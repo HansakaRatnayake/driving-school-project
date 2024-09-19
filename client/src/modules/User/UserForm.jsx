@@ -14,7 +14,8 @@ const UserForm = () => {
         lastname: '',
         username: '',
         password: '',
-        userstatus: ''
+        userstatus: '',
+        image: '',
     });
 
     const [image,setImage] = useState(null);
@@ -78,7 +79,6 @@ const UserForm = () => {
         axios.get("http://localhost:3000/api/userstatuses")
             .then(res => {
                 setUserStatus(res.data);
-                console.log(res.data);
             })
             .catch(err => {
                 console.log(err.message)
