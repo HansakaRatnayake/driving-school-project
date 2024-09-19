@@ -17,9 +17,9 @@ const INITIAL_FORM_STATE = {
     nic: '',
     mobile: '',
     yoexperience: '',
-    // profileimage: '',
-    // gender: '',
-    // booking: '',
+    profileimage: '',
+    gender: '',
+    //booking: '',
 };
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -44,7 +44,7 @@ const FORM_VALIDATION = Yup.object().shape({
 
 const TrainersAddForm = () => {
 
-    const {navigate} = useNavigate();
+    const navigate = useNavigate();
     // const [trainer,setTrainer] = useState({
     //     name: "",
     //     email: "",
@@ -73,7 +73,8 @@ const TrainersAddForm = () => {
         axios.post(`${BaseUrl}`,values)
             .then(res => {
                 console.log(res);
-                navigate("trainers")
+                window.location.reload();
+                navigate("../trainers");
                 toast.success("Trainer Successfully Saved");
             })
             .catch(err => {

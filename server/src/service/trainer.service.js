@@ -13,7 +13,7 @@ const create = async (trainer) => {
            }
     }catch(err){
         return {
-            data:"Trainer Registraion Error",
+            data:"Trainer Registraion Error" + err,
             statuscode:500
            }
     }

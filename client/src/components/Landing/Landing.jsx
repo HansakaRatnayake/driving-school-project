@@ -36,13 +36,13 @@ const Landing = () => {
         >
           Start your driving lessons with SOLID Learners. For more information on our courses and to book lessons, call us!
         </motion.p>
-        <motion.button
+        <Link to="/home"><motion.button
           className="px-8 py-3 bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold rounded-full shadow-lg hover:from-green-500 hover:to-blue-600"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          <Link to="/home">Get Started</Link>
-        </motion.button>
+          Get Started
+        </motion.button></Link>
       </div>
     </div>
   );

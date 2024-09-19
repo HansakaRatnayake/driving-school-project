@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Link} from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import defaults from '../../assets/default.png';
 
 const BaseUrl = "http://localhost:3000/api/users";
 
@@ -17,6 +18,7 @@ const UserForm = () => {
     });
 
     const [image,setImage] = useState(null);
+    const [imagePreview,setImagePreview] = useState(null);
 
 
     const handleInputDataChange = (event) => {
@@ -28,6 +30,15 @@ const UserForm = () => {
 
     const handleImageChange = (event) => {
         setImage(event.target.files[0]);
+        handleImagePreview(event.target.files[0])
+    }
+
+    const handleImagePreview = (file) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result)
+        };
+        reader.readAsDataURL(file);
     }
 
     const handleSubmit = (event) => {
@@ -40,8 +51,6 @@ const UserForm = () => {
         formdata.append('password',values.password);
         formdata.append('userstatus',values.userstatus);
         formdata.append('image',image);
-
-
 
 
         axios.post(`${BaseUrl}`,formdata, {
@@ -61,6 +70,8 @@ const UserForm = () => {
     //Clear Form
     const clearForm = () => {
         setValues([]);
+        setImage(null);
+        setImagePreview(null);
     }
 
     useEffect(() => {
@@ -90,7 +101,30 @@ const UserForm = () => {
 
                     <div className="w-full mt-5 px-3 py-5 shadow-xl border-t-8 rounded-md">
                         <form onSubmit={handleSubmit}>
+
                             <div className="flex flex-col justify-center items-center">
+
+                                <div className="w-full flex flex-col">
+                                    <div className="size-32 bg-black rounded-full overflow-hidden">
+                                        {image ? (
+                                            <img src={imagePreview} alt="profilepic"/>
+                                        ) : (
+                                            <img src={defaults} alt="profilepic"/>
+                                        )}
+                                    </div>
+
+                                    <label className="form-control w-full max-w-xs">
+                                        <div className="label">
+                                            <span className="font-bold">Profile Picture</span>
+                                        </div>
+                                        <input type="file" name="image"
+                                               className="input input-bordered w-full max-w-xs"
+                                               onChange={handleImageChange}
+                                        />
+                                    </label>
+
+                                </div>
+
                                 <label className="form-control w-full max-w-xs">
                                     <div className="label">
                                         <span className="font-bold">FirstName</span>
@@ -147,22 +181,11 @@ const UserForm = () => {
                                     </select>
                                 </label>
 
-                                <label className="form-control w-full max-w-xs">
-                                    <div className="label">
-                                        <span className="font-bold">Profile Picture</span>
-                                    </div>
-                                    <input type="file" name="image"
-                                           className="input input-bordered w-full max-w-xs"
-                                           onChange={handleImageChange}
-                                    />
-                                </label>
-
-
-
-
                                 <div className="flex gap-2 w-full mt-5 justify-center items-center">
                                     <button className="btn w-1/2 bg-green-500" type="submit">Add</button>
-                                    <button className="btn w-1/2 bg-black text-white" type="reset" onClick={clearForm}>Clear</button>
+                                    <button className="btn w-1/2 bg-black text-white" type="reset"
+                                            onClick={clearForm}>Clear
+                                    </button>
                                 </div>
 
                             </div>
