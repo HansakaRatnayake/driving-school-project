@@ -73,8 +73,8 @@ const User = () => {
                     </div>
 
                     {/*Table*/}
-                    <div className="shadow-xl w-2/3  border-t-8 rounded-md ">
-                    <div className="h-[43rem] overflow-y-auto scrollbar-thin scrollbar-webkit">
+                    <div className="shadow-xl w-2/3 h-[43rem] border-t-8 rounded-md overflow-y-auto scrollbar-thin scrollbar-webkit">
+                    <div className=" w-full px-3 py-5 ">
                         <table className="table">
                             {/* head */}
                             <thead>
@@ -93,7 +93,12 @@ const User = () => {
                                 
                                 let imgurl;
                                 if(dta['photo']['data'].length > 0) {
-                                    const imagedata =  btoa(String.fromCharCode(...new Uint8Array(dta['photo']['data'])));
+                                    const uintArray = new Uint8Array(dta['photo']['data']);
+                                    let binary = '';
+                                    for (let i = 0; i < uintArray.length; i++) {
+                                        binary += String.fromCharCode(uintArray[i]);
+                                    }
+                                    const imagedata = btoa(binary);
                                     imgurl = `data:image/jpeg;base64,${imagedata}`
                                 }
 

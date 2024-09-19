@@ -7,7 +7,7 @@ const create = async (training, image) => {
 
     try{
 
-        const resData = await createTraining({...training,image:{data:image.buffer,contentType:image.mimetype}});
+        const resData = await createTraining({...training,image:image?image.buffer:''});
         return {
             data:"Training Successfully Registerd",
             statuscode:201
