@@ -5,10 +5,10 @@ import {Outlet} from "react-router-dom";
 const Admin = () => {
     return (
         <div className="flex">
-            <div>
+            <div className='fixed'>
                 <SideNav/>
             </div>
-            <div className="w-full">
+            <div className="w-full ml-[256px]">
                 <Outlet/>
             </div>
         </div>

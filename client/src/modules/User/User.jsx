@@ -50,11 +50,12 @@ const User = () => {
 
 
     return (
-        <div className="p-10">
+        <div className="p-6">
 
-            <div className="w-full">
+            <div className="w-full h-[49rem] bg-white shadow-2xl  p-4">
+                
                 <div className="flex gap-10">
-                    <span className="font-bold text-3xl">User Details</span>
+                    <span className="font-bold text-3xl">User Details Managment</span>
                     {isUpdate ?
                         <button className="btn btn-sm bg-green-500 mt-1" onClick={handleFormStatus}><AddCircleOutlineOutlinedIcon/> <span>Add New User</span></button>
                         :
@@ -63,16 +64,17 @@ const User = () => {
 
                 </div>
 
-                <div className="w-full flex bg-white shadow-xl px-4 py-5 rounded-lg">
+                <div className="w-full h-[44rem] flex bg-white px-4 py-5 rounded-lg">
 
-                    <div className="w-1/3">
+                    <div className="flex justify-center items-center w-1/3 ">
+                       
                         {isUpdate ? <UserUpdateForm data={usernames}/>  : <UserForm/> }
-
+                      
                     </div>
 
                     {/*Table*/}
-                    <div className="shadow-xl w-2/3 mt-5 border-t-8 rounded-md">
-                    <div className="overflow-auto h-[30rem]">
+                    <div className="shadow-xl w-2/3  border-t-8 rounded-md ">
+                    <div className="h-[43rem] overflow-y-auto scrollbar-thin scrollbar-webkit">
                         <table className="table">
                             {/* head */}
                             <thead>

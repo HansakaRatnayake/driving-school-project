@@ -75,7 +75,6 @@ userSchema.pre('findOneAndDelete', async function(user) {
     if (deleteuser && deleteuser.role.name === 'SUPER_ADMIN') {
         return res.status(403).json({ message: 'Super Admin cannot be deleted' });
     }
-    
 })
 const User = mongoose.model("User",userSchema);
 
