@@ -84,7 +84,9 @@ const App = () => {
       <Toaster position="top-right"/>
     <Router>
       <Navbar theme={theme} setTheme={setTheme} />
+
       <Routes>
+
         <Route path='/' element={<Landing />} />
         <Route
           path="/home"
@@ -135,7 +137,7 @@ const App = () => {
         <Route path="/landing" element={<Landing />} />
         <Route path="/assesment" element={<Assesment />} />
         <Route path="/profile" element={<ProtectedRoute><Profile/></ProtectedRoute>} />
-
+        
       </Routes>
     </Router>
     </UserContext.Provider> 

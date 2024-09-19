@@ -118,8 +118,6 @@ const remove = async (username) => {
     }
 }
 
-
-
 module.exports = {
     create,
     findAll,

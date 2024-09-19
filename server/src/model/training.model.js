@@ -30,8 +30,7 @@ const trainingSchema = new mongoose.Schema({
 });
 
 trainingSchema.post('findOneAndDelete', async function(training) {
-    console.log('helloo');
-    
+
     if(training){
         try{
            await User.updateMany(
