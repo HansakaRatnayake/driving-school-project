@@ -2,10 +2,7 @@ import React from 'react'
 import { useField } from 'formik';
 import {TextField} from "@mui/material";
 
-const TextFieldCustom = ({
-    name,
-    ...otherProps
-}) => {
+const TextFieldCustom = ({name,...otherProps}) => {
 
     const [field, mata] = useField(name);
 
@@ -13,8 +10,15 @@ const TextFieldCustom = ({
         ...field,
         ...otherProps,
         fullWidth: true,
-        varient: 'outlined',
-        size:"small"
+        variant: 'outlined',
+        size:"medium",
+        margin:"dense"
+        // InputProps: {
+        //   style: {
+        //     height: '50px', // Set your custom height here
+        //   },
+        // }
+        
     }
 
     if(mata && mata.touched && mata.error){

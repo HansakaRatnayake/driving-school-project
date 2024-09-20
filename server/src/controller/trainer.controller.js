@@ -5,7 +5,8 @@ const {create,findAll,update,remove} = trainerService;
 const saveTrainer = async (req, res, next) => {
   
       const trainerData = req.body;        
-      const responseData = await create(trainerData);
+      const image = req.file;
+      const responseData = await create(trainerData, image);
       res.status(responseData.statuscode).json(responseData.data);  
 }
 
@@ -18,7 +19,8 @@ const findAllTrainers = async (req, res, next) => {
 
   const updateTrainer = async (req, res) => {
       const updatedTrainer = req.body;
-      const responseData = await update(updatedTrainer);
+      const image = req.file; 
+      const responseData = await update(updatedTrainer, image);
       res.status(responseData.statuscode).json(responseData.data);
  
   }

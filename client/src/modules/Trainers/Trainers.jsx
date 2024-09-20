@@ -16,7 +16,7 @@ const Trainers = () => {
     const [usernames, setUsername] = useState('');
     const columns = ['Profile', 'Name', 'Email', 'Nic','Mobile', 'Gender','Action']
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -50,6 +50,19 @@ const Trainers = () => {
             console.log(`${BaseUrl}/${username}`);
         }
     }
+
+    const handleTrainerAdd = (newtrainer) => {
+        console.log(newtrainer);
+        setTrainers([...trainers, newtrainer]);
+        setOpen(false);
+        
+    }
+
+    const handleTrainerCancel = (trainer) => {
+       setOpen(trainer);
+    }
+
+    
 
     return (
         <div className="p-6">
@@ -89,9 +102,9 @@ const Trainers = () => {
                                             <div className="flex items-center gap-3">
                                                 <div className="avatar">
                                                     <div className="mask mask-squircle h-12 w-12">
-                                                        {dta['profileimage'] ?
+                                                        {dta['photo'] ?
                                                             <img
-                                                                src={`data:image/png;base64,${dta['photo']}`}
+                                                                src={dta['photo'].startsWith('data:image')?dta['photo']:`data:image/png;base64,${dta['photo']}`}
                                                                 alt="Avatar Tailwind CSS Component"/>
                                                             : <img
                                                                 src="../../assets/default.png"
@@ -159,7 +172,7 @@ const Trainers = () => {
                     },
                 }}
             >
-                <TrainersAddForm/>
+                <TrainersAddForm onTrainerAdd={handleTrainerAdd} onTrainerCancel={handleTrainerCancel}/>
             </Dialog>
 
         </div>

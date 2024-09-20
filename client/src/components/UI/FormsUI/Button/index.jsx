@@ -15,11 +15,11 @@ const ButtonCustom = ({
 
     const configButton = {
         ...otherProps,
-        variant: 'contained',
+        variant: 'outlined',
         color: 'primary',
-        fullWidth: true,
         onClick: handleSubmit,
-        size:"small"
+        size:"medium",
+        margin:"dense"
     }
     
   return (

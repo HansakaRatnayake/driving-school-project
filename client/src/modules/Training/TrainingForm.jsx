@@ -72,7 +72,7 @@ function TrainingForm() {
                         handleSubmit(values);
                     }}
                 >
-                    <Form>
+                    <Form >
 
                         <Grid2 container spacing={2} className="mt-2">
 

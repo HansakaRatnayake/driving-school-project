@@ -3,10 +3,10 @@ const trainerRepo = require('../repository/trainer.repository');
 const {createTrainer,findAllTrainers,deleteTrainer,updateTrainer} = trainerRepo;
 
  
-const create = async (trainer) => {
+const create = async (trainer, image) => {
 
     try{
-        const resData = await createTrainer(trainer);
+        const resData = await createTrainer({...trainer, photo:image?image.buffer:''});
         return {
             data:"Trainer Successfully Registerd",
             statuscode:201
@@ -30,7 +30,19 @@ const findAll = async (queryparamobject) => {
     if(nic && nic.trim() !== '') query.nic = { $regex: nic, $options: 'i' };
 
     try{
-        const resData = await findAllTrainers(query);
+        const temp = await findAllTrainers(query)
+        
+        const resData = temp.map(datum => {
+            return{
+                 name:datum.name,
+                 email:datum.email,
+                 nic:datum.email,
+                 mobile:datum.mobile,
+                 yoexperience:datum.yoexperience,
+                 photo:datum.photo.toString('base64'),
+                 gender:datum.gender
+             };
+        });
         return {
             data:resData,
             statuscode:201
@@ -45,10 +57,10 @@ const findAll = async (queryparamobject) => {
 
 }
 
-const update = async (trainer) => {
+const update = async (trainer, image) => {
 
     try{
-        const resData = await updateTrainer(trainer);
+        const resData = await updateTrainer({...trainer, photo:image?image.buffer:''});
         return {
             data:resData,
             statuscode:201

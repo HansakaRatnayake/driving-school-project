@@ -18,7 +18,7 @@ const router = express.Router();
 // router.delete('/:trainingId', authenticate, permission('training:DELETE'), deleteTraining);
 
 router.get('/', findAllTrainings);
-router.post('/',upload.single('image'), saveTraining);
+router.post('/',upload.single('photo'), saveTraining);
 router.put('/',  updateTraining);
 router.delete('/:trainingId',  deleteTraining);
 

@@ -25,7 +25,8 @@ const SelectCustom = ({
         variant: 'outlined',
         fullWidth: true,
         onChange: handleChange,
-        size: "small"
+        size: "medium",
+        margin:"dense"
     }
 
 
