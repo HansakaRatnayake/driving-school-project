@@ -10,6 +10,8 @@ const usersRoutes = require('./routes/user.routes');
 const authRoutes = require('./routes/auth.routes');
 const bookingRoutes = require('./routes/booking.routes');
 const cartRoutes = require('./routes/cart.routes');
+const roleRoutes = require('./routes/role.routes');
+
 
 
 
@@ -28,6 +30,7 @@ app.use(express.json());
 
 
 //Middlewares
+app.use('/api/roles', roleRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/contactus', contactusRoutes);
