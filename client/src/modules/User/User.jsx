@@ -128,7 +128,7 @@ const User = () => {
                                         binary += String.fromCharCode(uintArray[i]);
                                     }
                                     const imagedata = btoa(binary);
-                                    imgurl = `data:image/jpeg;base64,${imagedata}`
+                                    imgurl = imagedata;
                                 }
 
                                 return <tr key={index}>
@@ -144,7 +144,7 @@ const User = () => {
                                                     {dta['photo']?
                         
                                                         <img
-                                                            src={imgurl}
+                                                            src={`data:image/jpeg;base64,${imgurl}`}
                                                             alt="Avatar Tailwind CSS Component"/>
                                                         : <img
                                                             src="../../assets/default.png"
