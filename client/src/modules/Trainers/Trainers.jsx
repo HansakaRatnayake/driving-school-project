@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 import TrainingForm from "../Training/TrainingForm.jsx";
 import Dialog from "@mui/material/Dialog";
 import TrainersAddForm from "./TrainersAddForm.jsx";
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+
 
 const BaseUrl = "http://localhost:3000/api/trainers";
 
@@ -55,13 +57,13 @@ const Trainers = () => {
 
                 <div className="flex gap-10">
                     <span className="font-bold text-3xl">Trainers</span>
-                    <button className="btn btn-sm bg-green-500 mt-1" onClick={handleClickOpen}>+ Add</button>
+                    <button className="btn btn-sm bg-green-500 mt-1" onClick={handleClickOpen}><AddCircleOutlineOutlinedIcon/> <span>Add New Trainer</span></button>
                 </div>
 
-                <div className="w-full">
+                <div className="w-full px-10">
                     {/*Table*/}
-                    <div className="shadow-xl mt-5 border-t-8 rounded-md">
-                        <div className="overflow-auto h-[30rem]">
+                    <div className="shadow-lg mt-10 border-t-8 rounded-md h-[40rem] overflow-y-auto">
+                        <div className="overflow-auto ">
                             <table className="table">
                                 {/* head */}
                                 <thead>

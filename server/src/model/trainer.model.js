@@ -35,9 +35,7 @@ const trainerSchema = new mongoose.Schema({
         trim:true,
     },
     profileimage:{
-        type:Buffer,
-        default:""
-        
+        type:Buffer
     },
     gender:{
         type:mongoose.Schema.Types.ObjectId,
