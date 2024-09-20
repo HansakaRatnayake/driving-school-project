@@ -34,7 +34,7 @@ const trainerSchema = new mongoose.Schema({
         required:true,
         trim:true,
     },
-    profileimage:{
+    photo:{
         type:Buffer
     },
     gender:{

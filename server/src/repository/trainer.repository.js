@@ -21,14 +21,14 @@ const Trainer = require('../model/trainer.model');
 
         }catch(error){
             
-            throw new Error(`Error while fetching trainer: ${error.message}`);
+            throw new Error(`Error while fetching trainer in Repo: ${error.message}`);
         }
     }
 
     const updateTrainer = async (trainer) => {
         try{
-            const {_id,name,email,nic,mobile,yoexperience,profileimage,gender} = trainer 
-            return await Trainer.updateOne({_id}, {$set:{name,email,nic,mobile,yoexperience,profileimage,gender}});
+            const {_id,name,email,nic,mobile,yoexperience,photo,gender} = trainer 
+            return await Trainer.updateOne({_id}, {$set:{name,email,nic,mobile,yoexperience,photo,gender}});
 
         }catch(error){
             throw new Error(`Error while updating trainer: ${error.message}`);
