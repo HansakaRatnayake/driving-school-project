@@ -121,7 +121,9 @@ const User = () => {
                             {users.map((dta, index) => {
                                 let imgurl = dta['photo'];
                                 
+
                                 if(typeof dta['photo'] === "object" && dta['photo']['data'].length > 0) {
+
                                     const uintArray = new Uint8Array(dta['photo']['data']);
                                     let binary = '';
                                     for (let i = 0; i < uintArray.length; i++) {
