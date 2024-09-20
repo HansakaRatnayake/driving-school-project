@@ -46,6 +46,35 @@ const User = () => {
         }
     }
 
+    const handleUserAdd = (newUserData) => {
+        
+        setUsers([...users, newUserData]);
+      
+        
+    }
+    const handleUserUpdate = (updatedUserData) => {
+        console.log(updatedUserData);
+        
+        
+        const updateduser = users.find(user => user._id === updatedUserData._id );
+        console.log(updateduser);
+        
+        updateduser.firstname = updatedUserData.firstname;
+        updateduser.lastname = updatedUserData.lastname;
+        updateduser.username = updatedUserData.username;
+        updateduser.userstatus = updatedUserData.userstatus;
+        updateduser._id = updatedUserData._id;
+        updateduser.photo = updatedUserData.photo;
+
+        const temp = users;
+        setUsers([]);
+        setUsers(temp);
+        setUpdate(false);
+
+      
+        
+    }
+
     const columns = ['Profile', 'Full Name', 'Username', 'UserStatus', 'Action']
 
 
@@ -68,7 +97,7 @@ const User = () => {
 
                     <div className="flex justify-center items-center w-1/3 ">
                        
-                        {isUpdate ? <UserUpdateForm data={usernames}/>  : <UserForm/> }
+                        {isUpdate ? <UserUpdateForm onUserUpdate={handleUserUpdate} username={usernames}/>  : <UserForm onUserAdd={handleUserAdd}/> }
                       
                     </div>
 
@@ -90,9 +119,9 @@ const User = () => {
                             <tbody>
                             {/* row 1 */}
                             {users.map((dta, index) => {
+                                let imgurl = dta['photo'];
                                 
-                                let imgurl;
-                                if(dta['photo']['data'].length > 0) {
+                                if(typeof dta['photo'] === "object" && dta['photo']['data'].length > 0) {
                                     const uintArray = new Uint8Array(dta['photo']['data']);
                                     let binary = '';
                                     for (let i = 0; i < uintArray.length; i++) {
@@ -112,7 +141,7 @@ const User = () => {
                                         <div className="flex items-center gap-3">
                                             <div className="avatar">
                                                 <div className="mask mask-squircle h-12 w-12">
-                                                    {dta['photo']['data'].length > 0 ?
+                                                    {dta['photo']?
                         
                                                         <img
                                                             src={imgurl}
