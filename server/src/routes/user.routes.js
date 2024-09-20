@@ -16,7 +16,7 @@ const router = express.Router();
 
 router.get('/', findAllUsers);
 router.post('/', upload.single('image'),  saveUser);
-router.put('/',  updateUser);
+router.put('/', upload.single('image'), updateUser);
 router.delete('/:username', deleteUser);
 
 // router.get('/', authenticate, permission('users:READ'), findAllUsers);

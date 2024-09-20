@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import axios from "axios";
 import toast from "react-hot-toast";
 import CustomDialog from "../../components/UI/CustomDialog/CustomDialog.jsx";
@@ -7,10 +7,15 @@ import defaults from "../../assets/default.png";
 
 const BaseUrl = "http://localhost:3000/api/users";
 
-const UserUpdateForm = (username) => {
+const UserUpdateForm = ({onUserUpdate, username}) => {
+    console.log(username);
+    
 
     const [image,setImage] = useState(null);
     const [imagePreview,setImagePreview] = useState(null);
+    const  [showUpload, setshowUpload] = useState(true);
+    const formRef = useRef(null);
+
 
     const [userstatuses, setUserStatus] = useState([]);
     const [values, setValues] = useState({
@@ -38,6 +43,9 @@ const UserUpdateForm = (username) => {
 
         const file = event.target.files[0];
         setImage(file);
+      
+        
+        
         const reader = new FileReader();
         reader.onload = (e) => {
             const base64String = e.target.result.split(',')[1]; // Extract the base64 part
@@ -56,47 +64,82 @@ const UserUpdateForm = (username) => {
         setDialogOpen(true);
     }
 
+    useEffect(() => {
+        if (image) {
+          console.log('Image updated:', image);
+        }
+      }, [image]); // This will log whenever 'image' is updated
+
+      
     //Update Function
     const update = () => {
-
+        let imageToSend = image;  // Local variable to handle image
+    
+        // If there's no image set but we have data in values.photo, create a Blob
+        if (!imageToSend && values.photo && values.photo.data) {
+            const bufferData = new Uint8Array(values.photo.data);
+            const blob = new Blob([bufferData], { type: 'application/octet-stream' });
+            imageToSend = blob;  // Assign blob to the local image variable
+        }
+    
+        // Now, proceed with the update logic, ensuring the imageToSend is correctly set
         const formdata = new FormData();
-        formdata.append('firstname',values.firstname);
-        formdata.append('_id',values._id);
-        formdata.append('lastname',values.lastname);
-        formdata.append('username',values.username);
-        formdata.append('password',values.password);
-        formdata.append('userstatus',values.userstatus);
-        formdata.append('image',image);
+        formdata.append('firstname', values.firstname);
+        formdata.append('_id', values._id);
+        formdata.append('lastname', values.lastname);
+        formdata.append('username', values.username);
+        formdata.append('password', values.password);
+        formdata.append('userstatus', values.userstatus._id);
+        !(image)?
+            formdata.append('image', imageToSend) : formdata.append('image', image)
+      
+            const obj = {
+                _id:values._id,
+                firstname:values.firstname, 
+                lastname:values.lastname, 
+                username:values.username,
+                userstatus:values.userstatus,
+                photo:imagePreview, 
+                password:values.password
+            }
+            onUserUpdate(obj);
 
-        //Send to Server
-        axios.put(`${BaseUrl}`,formdata, {
-            headers: {'Content-Type': 'multipart/form-data',}
+            clearForm();
+    
+        // Send to the server
+        axios.put(`${BaseUrl}`, formdata, {
+            headers: { 'Content-Type': 'multipart/form-data' }
         })
-            .then(res => {
-                console.log(res);
-                window.location.reload();
-                toast.success("User Successfully Updated");
-            })
-            .catch(err => {
-                console.log(err);
-                toast.error(err.message);
-            })
-
+        .then(res => {
+            console.log(res);
+            toast.success("User Successfully Updated");
+        })
+        .catch(err => {
+            console.log(err);
+            toast.error(err.message);
+        });
+    
         console.log(formdata);
-    }
+    };
+    
 
     //Clear Form
     const clearForm = () => {
+        formRef.current.reset();
         setValues([]);
         setImage(null);
         setImagePreview(null);
+        setshowUpload(true);
     }
 
     useEffect(() => {
         //Load User to Form
-        axios.get(`${BaseUrl}?username=${username['data']}`)
+        axios.get(`${BaseUrl}?username=${username}`)
             .then(res => {
+                console.log(res);
+                
                 setValues(res.data[0]);
+                setshowUpload(false);
                 setImagePreview(btoa(String.fromCharCode(...new Uint8Array(res.data[0].photo.data))))
             })
             .catch(err => {
@@ -124,26 +167,45 @@ const UserUpdateForm = (username) => {
 
                 <div className="w-full">
 
-                    <div className="w-full mt-5 px-3 py-5 shadow-xl border-t-8 rounded-md">
-                        <form onSubmit={handleUpdate}>
+                    <div className="w-full mt-5 px-3 py-5 shadow-xl border-t-8 rounded-md h-[43rem] overflow-y-auto scrollbar-thin scrollbar-webkit">
+                        
+                        <form ref={formRef}  >
                             <div className="flex flex-col justify-center items-center">
 
-                                <div className="w-full flex flex-col">
-                                    <div className="size-32 bg-black rounded-full overflow-hidden">
-                                        {imagePreview ? (
-                                            <img src={`data:image/jpeg;base64,${imagePreview}`} alt="profilepic"/>
-                                        ) : (
-                                            <img src={defaults} alt="profilepic"/>
-                                        )}
-                                    </div>
+                                <div className="w-full flex flex-col justify-center items-center">
+                                   
 
                                     <label className="form-control w-full max-w-xs">
                                         <div className="label">
                                             <span className="font-bold">Profile Picture</span>
                                         </div>
+                                        
+                                        <div className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                            {showUpload?(
+                                                <div className="w-full flex justify-center items-center flex-col">
+                                                <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                                </svg>
+                                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                                                <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                                                </div>
+                                            ):(
+                                                <div className="size-40 bg-black rounded-full overflow-hidden flex">
+                                                {imagePreview ? (
+                                                    <img src={`data:image/jpeg;base64,${imagePreview}`} alt="profilepic"/>
+                                                ) : (
+                                                    <img src={defaults} alt="profilepic"/>
+                                                )}
+                                            </div>
+                                            )}
+                                            
+                                        </div>
+                                      
+                                        
                                         <input type="file" name="image"
                                                className="input input-bordered w-full max-w-xs"
                                                onChange={handleImageChange}
+                                               hidden
                                         />
                                     </label>
 
@@ -209,8 +271,8 @@ const UserUpdateForm = (username) => {
                                 </label>
 
                                 <div className="flex gap-2 w-full mt-5 justify-center items-center">
-                                    <button className="btn w-1/2 bg-warning" type="submit">Update</button>
-                                    <button className="btn w-1/2 bg-black text-white" type="reset"
+                                    <button className="btn w-1/2 bg-warning" type="button" onClick={handleUpdate}>Update</button>
+                                    <button className="btn w-1/2 bg-black text-white" type="button"
                                             onClick={clearForm}>Clear
                                     </button>
                                 </div>

@@ -57,24 +57,12 @@ const findAll = async (queryparamobject) => {
 
 }
 
-// const findByUsername = async (username) => {
-//     try {
-//         const resData = await findAllUsers(username);
-//         return {
-//             data: resData,
-//             statuscode: 200
-//         }
-//     } catch (err) {
-//         return {
-//             data: "Error while fetching Users",
-//             statuscode: 500
-//         }
-//     }
-// }
 
-const update = async (user) => {
+const update = async (user, image) => {
+    console.log(image);
+    
     try {
-        const resData = await updateUser(user);
+        const resData = await updateUser({...user, photo:image?image.buffer:''});
         return {
             data: resData,
             statuscode: 201

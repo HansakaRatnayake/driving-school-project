@@ -27,7 +27,8 @@ const findUserByUsername = async (req, res) => {
  const updateUser = async (req, res) => {
 
      const updatedUser = req.body;
-     const responseData = await update(updatedUser);
+     const image = req.file; 
+     const responseData = await update(updatedUser, image);
      res.status(responseData.statuscode).json(responseData.data);
 
  }

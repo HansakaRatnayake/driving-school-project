@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Link} from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -6,7 +6,7 @@ import defaults from '../../assets/default.png';
 
 const BaseUrl = "http://localhost:3000/api/users";
 
-const UserForm = () => {
+const UserForm = ({onUserAdd}) => {
 
     const [userstatuses, setUserStatus] = useState([]);
     const [values, setValues] = useState({
@@ -21,6 +21,7 @@ const UserForm = () => {
     const [image,setImage] = useState(null);
     const [imagePreview,setImagePreview] = useState(null);
     const  [showUpload, setshowUpload] = useState(true);
+    const formRef = useRef(null);
 
 
     const handleInputDataChange = (event) => {
@@ -55,14 +56,22 @@ const UserForm = () => {
         formdata.append('userstatus',values.userstatus);
         formdata.append('image',image);
 
+        const obj = {firstname:values.firstname, lastname:values.lastname, username:values.username,userstatus:values.userstatus,photo:imagePreview}
+        clearForm();
+        onUserAdd(obj);
+
+       
 
         axios.post(`${BaseUrl}`,formdata, {
             headers: {'Content-Type': 'multipart/form-data',}
         })
         .then(res => {
             console.log(res);
-            window.location.reload();
+            // window.location.reload();
+           
             toast.success("User Successfully Saved");
+            
+
         })
         .catch(err => {
             console.log(err);
@@ -71,8 +80,8 @@ const UserForm = () => {
     }
 
     //Clear Form
-    const clearForm = () => {
-        setValues([]);
+    const clearForm = () => { 
+        formRef.current.reset();
         setImage(null);
         setImagePreview(null);
         setshowUpload(true);
@@ -92,7 +101,7 @@ const UserForm = () => {
     return (
         <div className="flex justify-center items-center">
 
-            <div className="w-96  ">
+            <div className="w-96">
 
                 <div className="w-full ">
                 {/*    <div className="flex gap-10">*/}
@@ -103,7 +112,7 @@ const UserForm = () => {
                 {/*    </div>*/}
 
                     <div className="w-full mt-5 px-3 py-5 shadow-xl border-t-8 rounded-md h-[43rem] overflow-y-auto scrollbar-thin scrollbar-webkit">
-                        <form onSubmit={handleSubmit}>
+                        <form  ref={formRef}>
 
                             <div className="flex flex-col justify-center items-center">
 
@@ -206,8 +215,8 @@ const UserForm = () => {
                                 </label>
 
                                 <div className="flex gap-2 w-full mt-5 justify-center items-center">
-                                    <button className="btn w-1/2 bg-green-500" type="submit">Add</button>
-                                    <button className="btn w-1/2 bg-black text-white" type="reset"
+                                    <button className="btn w-1/2 bg-green-500" type="button" onClick={handleSubmit}>Add</button>
+                                    <button className="btn w-1/2 bg-black text-white" type="button"
                                             onClick={clearForm}>Clear
                                     </button>
                                 </div>
