@@ -64,6 +64,20 @@ const Trainees = () => {
                                 <tbody>
                                 {/* row 1 */}
                                 {users.map((dta, index) => {
+
+                                    let imgurl = dta['photo'];
+
+                                    if(typeof dta['photo'] === "object" && dta['photo']['data'].length > 0) {
+
+                                        const uintArray = new Uint8Array(dta['photo']['data']);
+                                        let binary = '';
+                                        for (let i = 0; i < uintArray.length; i++) {
+                                            binary += String.fromCharCode(uintArray[i]);
+                                        }
+                                        const imagedata = btoa(binary);
+                                        imgurl = `data:image/jpeg;base64,${imagedata}`
+                                    }
+
                                     return <tr key={index}>
                                         <th>
                                             <label>
@@ -76,7 +90,7 @@ const Trainees = () => {
                                                     <div className="mask mask-squircle h-12 w-12">
                                                         {dta['photo'] ?
                                                             <img
-                                                                src={`data:image/png;base64,${dta['photo']}`}
+                                                                src={imgurl}
                                                                 alt="Avatar Tailwind CSS Component"/>
                                                             : <img
                                                                 src="../../assets/default.png"

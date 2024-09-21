@@ -37,7 +37,7 @@ const FORM_VALIDATION = Yup.object().shape({
 });
 
 function TrainingForm() {
-    
+
     const [trainers,setTrainers] = useState([]);
 
     useEffect(() => {
@@ -77,7 +77,7 @@ function TrainingForm() {
                         <Grid2 container spacing={2} className="mt-2">
 
                             <Grid2 item size={12}>
-                                <TextFieldCustom name="name" label="Name"/>
+                                <TextFieldCustom name="name" label="Name" />
                             </Grid2>
 
                             <Grid2 item size={12}>

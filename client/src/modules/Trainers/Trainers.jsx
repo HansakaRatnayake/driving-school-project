@@ -6,6 +6,7 @@ import TrainingForm from "../Training/TrainingForm.jsx";
 import Dialog from "@mui/material/Dialog";
 import TrainersAddForm from "./TrainersAddForm.jsx";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import TrainersUpdateForm from "./TrainersUpdateForm.jsx";
 
 
 const BaseUrl = "http://localhost:3000/api/trainers";
@@ -13,14 +14,19 @@ const BaseUrl = "http://localhost:3000/api/trainers";
 const Trainers = () => {
 
     const [trainers, setTrainers] = useState([]);
-    const [usernames, setUsername] = useState('');
+    const [trainerob, setTrainerob] = useState('');
     const columns = ['Profile', 'Name', 'Email', 'Nic','Mobile', 'Gender','Action']
 
     const [open, setOpen] = useState(false);
+    const [update, setUpdate] = useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
     };
+
+    const handleClickUpdate = () => {
+        setUpdate(true);
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -56,6 +62,13 @@ const Trainers = () => {
         setTrainers([...trainers, newtrainer]);
         setOpen(false);
         
+    }
+
+    const handleTrainerUpdate = (newtrainer) => {
+        console.log(newtrainer);
+        setTrainers([...trainers, newtrainer]);
+        setOpen(false);
+
     }
 
     const handleTrainerCancel = (trainer) => {
@@ -127,9 +140,12 @@ const Trainers = () => {
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                      strokeWidth={1.5} stroke="currentColor"
                                                      className="size-6 text-blue-600 cursor-pointer"
-                                                     onClick={() => {
-                                                         setUsername(dta['username']);
-                                                     }}
+                                                     onClick={() =>{
+                                                         setTrainerob(dta)
+                                                         handleClickUpdate();
+                                                     }
+
+                                                }
                                                 >
                                                     <path strokeLinecap="round" strokeLinejoin="round"
                                                           d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
@@ -173,6 +189,24 @@ const Trainers = () => {
                 }}
             >
                 <TrainersAddForm onTrainerAdd={handleTrainerAdd} onTrainerCancel={handleTrainerCancel}/>
+            </Dialog>
+
+            <Dialog
+                open={update}
+                onClose={handleClose}
+                PaperProps={{
+                    component: 'form',
+                    onSubmit: (event) => {
+                        event.preventDefault();
+                        const formData = new FormData(event.currentTarget);
+                        const formJson = Object.fromEntries(formData.entries());
+                        const email = formJson.email;
+                        console.log(email);
+                        handleClose();
+                    },
+                }}
+            >
+                <TrainersUpdateForm trainerob={trainerob} onTrainerUpdate={handleTrainerUpdate} onTrainerCancel={handleTrainerCancel}/>
             </Dialog>
 
         </div>
