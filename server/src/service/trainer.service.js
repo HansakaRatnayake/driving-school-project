@@ -34,9 +34,10 @@ const findAll = async (queryparamobject) => {
         
         const resData = temp.map(datum => {
             return{
+                _id:datum._id,
                  name:datum.name,
                  email:datum.email,
-                 nic:datum.email,
+                 nic:datum.nic,
                  mobile:datum.mobile,
                  yoexperience:datum.yoexperience,
                  photo:datum.photo.toString('base64'),

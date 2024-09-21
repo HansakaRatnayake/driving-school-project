@@ -14,7 +14,7 @@ const User = () => {
     const [users, setUsers] = useState([]);
     const [isUpdate,setUpdate] = useState(false);
 
-    const [usernames, setUsername] = useState('');
+    const [usernames, setUsername] = useState({});
 
     const handleFormStatus = () =>{
         setUpdate(!isUpdate);
@@ -24,7 +24,7 @@ const User = () => {
         axios.get(`${BaseUrl}`)
             .then(res => {
                 setUsers(res.data);
-                ///console.log(res.data);
+                // console.log(res.data);
             }).catch(err => console.log(err))
     }, []);
 
@@ -97,7 +97,7 @@ const User = () => {
 
                     <div className="flex justify-center items-center w-1/3 ">
                        
-                        {isUpdate ? <UserUpdateForm onUserUpdate={handleUserUpdate} username={usernames}/>  : <UserForm onUserAdd={handleUserAdd}/> }
+                        {isUpdate ? <UserUpdateForm onUserUpdate={handleUserUpdate} user={usernames}/>  : <UserForm onUserAdd={handleUserAdd}/> }
                       
                     </div>
 
@@ -119,19 +119,21 @@ const User = () => {
                             <tbody>
                             {/* row 1 */}
                             {users.map((dta, index) => {
-                                let imgurl = dta['photo'];
+                        
+                        
+                                // let imgurl = dta['photo'];
                                 
 
-                                if(typeof dta['photo'] === "object" && dta['photo']['data'].length > 0) {
+                                // if(typeof dta['photo'] === "object" && dta['photo']['data'].length > 0) {
 
-                                    const uintArray = new Uint8Array(dta['photo']['data']);
-                                    let binary = '';
-                                    for (let i = 0; i < uintArray.length; i++) {
-                                        binary += String.fromCharCode(uintArray[i]);
-                                    }
-                                    const imagedata = btoa(binary);
-                                    imgurl = imagedata;
-                                }
+                                //     const uintArray = new Uint8Array(dta['photo']['data']);
+                                //     let binary = '';
+                                //     for (let i = 0; i < uintArray.length; i++) {
+                                //         binary += String.fromCharCode(uintArray[i]);
+                                //     }
+                                //     const imagedata = btoa(binary);
+                                //     imgurl = imagedata;
+                                // }
 
                                 return <tr key={index}>
                                     <th>
@@ -146,7 +148,7 @@ const User = () => {
                                                     {dta['photo']?
                         
                                                         <img
-                                                            src={`data:image/jpeg;base64,${imgurl}`}
+                                                            src={dta['photo'].startsWith('data:image')?dta['photo'] : `data:image/jpeg;base64,${dta['photo']}`}
                                                             alt="Avatar Tailwind CSS Component"/>
                                                         : <img
                                                             src="../../assets/default.png"
@@ -168,7 +170,7 @@ const User = () => {
                                                  strokeWidth={1.5} stroke="currentColor"
                                                  className="size-6 text-blue-600 cursor-pointer"
                                                  onClick={() => {
-                                                     setUsername(dta['username']);
+                                                     setUsername(dta);
                                                      handleFormStatus();
                                                  }}
                                             >

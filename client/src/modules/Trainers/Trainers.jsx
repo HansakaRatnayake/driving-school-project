@@ -69,14 +69,14 @@ const Trainers = () => {
             <div className="w-full h-[49rem] shadow-2xl rounded-lg p-4">
 
                 <div className="flex gap-10">
-                    <span className="font-bold text-3xl">Trainers</span>
+                    <span className="font-bold text-3xl">Trainer Details Managment</span>
                     <button className="btn btn-sm bg-green-500 mt-1" onClick={handleClickOpen}><AddCircleOutlineOutlinedIcon/> <span>Add New Trainer</span></button>
                 </div>
 
                 <div className="w-full px-10">
                     {/*Table*/}
-                    <div className="shadow-lg mt-10 border-t-8 rounded-md h-[40rem] overflow-y-auto">
-                        <div className="overflow-auto ">
+                    <div className="shadow-lg mt-10 border-t-8 rounded-md h-[40rem] overflow-y-auto scrollbar-thin scrollbar-webkit">
+                       
                             <table className="table">
                                 {/* head */}
                                 <thead>
@@ -150,7 +150,7 @@ const Trainers = () => {
                                 })}
                                 </tbody>
                             </table>
-                        </div>
+                
                     </div>
                     {/*Table End*/}
                 </div>
