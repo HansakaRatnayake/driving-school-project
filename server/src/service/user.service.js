@@ -42,7 +42,23 @@ const findAll = async (queryparamobject) => {
     }
 
     try {
-        const resData = await findAllUsers(query);
+        const temp = await findAllUsers(query);
+
+        const resData = temp.map(user => {
+            return{
+                _id:user._id,
+                firstname : user.firstname,
+                lastname:user.lastname,
+                username:user.username,
+                photo:user.photo.toString('base64'),
+                userstatus:user.userstatus,
+                training:user.training,
+                booking:user.booking,
+                role:user.role,
+                canDelete:user.canDelete
+            };
+        });
+
         return {
             data: resData,
             statuscode: 200

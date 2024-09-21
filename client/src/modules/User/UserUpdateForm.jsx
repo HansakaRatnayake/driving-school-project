@@ -7,10 +7,10 @@ import defaults from "../../assets/default.png";
 
 const BaseUrl = "http://localhost:3000/api/users";
 
-const UserUpdateForm = ({onUserUpdate, username}) => {
-    console.log(username);
+const UserUpdateForm = ({onUserUpdate, user}) => {
+    console.log(user);
     
-
+    
     const [image,setImage] = useState(null);
     const [imagePreview,setImagePreview] = useState(null);
     const  [showUpload, setshowUpload] = useState(true);
@@ -42,14 +42,16 @@ const UserUpdateForm = ({onUserUpdate, username}) => {
     const handleImageChange = (event) => {
 
         const file = event.target.files[0];
+       
         setImage(file);
-      
-        
-        
+    
         const reader = new FileReader();
         reader.onload = (e) => {
-            const base64String = e.target.result.split(',')[1]; // Extract the base64 part
-            setImagePreview(base64String);
+            // const base64String = e.target.result.split(',')[1]; // Extract the base64 part
+            setImagePreview(e.target.result);
+            // event.target.src = `data:image/jpeg;base64,${e.target.result}`;
+      
+
         };
         if (file) {
             reader.readAsDataURL(file);
@@ -133,31 +135,31 @@ const UserUpdateForm = ({onUserUpdate, username}) => {
     }
 
     useEffect(() => {
-        //Load User to Form
-        axios.get(`${BaseUrl}?username=${username}`)
-            .then(res => {
-                console.log(res);
-                
-                setValues(res.data[0]);
-                setshowUpload(false);
-                setImagePreview(btoa(String.fromCharCode(...new Uint8Array(res.data[0].photo.data))))
-            })
-            .catch(err => {
-                console.log(err.message)
-                toast(err.message);
-            })
 
-        //Load Userstatus to SelectBox
-        axios.get("http://localhost:3000/api/userstatuses")
-            .then(res => {
-                setUserStatus(res.data);
-                //console.log(res.data);
-            })
-            .catch(err => {
-                console.log(err.message)
-                toast(err.message);
-            })
-    }, []);
+        if(user){
+
+            setValues({
+                ...user,
+                photo:user.photo || ''
+            });
+            setshowUpload(false);
+            setImagePreview(user.photo);
+            
+
+            //Load Userstatus to SelectBox
+            axios.get("http://localhost:3000/api/userstatuses")
+                .then(res => {
+                    setUserStatus(res.data);
+                    //console.log(res.data);
+                })
+                .catch(err => {
+                    console.log(err.message)
+                    toast(err.message);
+                })
+        }
+       
+        
+    }, [user]);
 
 
     return (
@@ -190,9 +192,9 @@ const UserUpdateForm = ({onUserUpdate, username}) => {
                                                 <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                                                 </div>
                                             ):(
-                                                <div className="size-40 bg-black rounded-full overflow-hidden flex">
-                                                {imagePreview ? (
-                                                    <img src={`data:image/jpeg;base64,${imagePreview}`} alt="profilepic"/>
+                                                <div className="size-40 bg-black rounded-full overflow-hidden flex justify-center items-center">
+                                                {imagePreview? (
+                                                    <img src={imagePreview.startsWith('data:image')? imagePreview : `data:image/jpeg;base64,${imagePreview}`} alt="profilepic"/>
                                                 ) : (
                                                     <img src={defaults} alt="profilepic"/>
                                                 )}
