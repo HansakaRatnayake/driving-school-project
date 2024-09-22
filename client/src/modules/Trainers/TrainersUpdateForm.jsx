@@ -35,8 +35,8 @@ const FORM_VALIDATION = Yup.object().shape({
     // Yup.string().required('Required'),
 });
 const TrainersUpdateForm = ({trainerob,onTrainerUpdate, onTrainerCancel}) => {
-
-    const {name,email,nic,mobile,yoexperience,gender} = trainerob;
+  
+    const {name,email,nic,mobile,yoexperience,gender,photo} = trainerob;
 
     const navigate = useNavigate();
     const [trainer,setTrainer] = useState({
@@ -53,31 +53,40 @@ const TrainersUpdateForm = ({trainerob,onTrainerUpdate, onTrainerCancel}) => {
     const [genders,setGenders] = useState([]);
 
     const INITIAL_FORM_STATE = {
-        //name: name,
+        name: name,
         email: email,
         nic: nic,
         mobile: mobile,
         yoexperience: yoexperience,
         photo: '',
-        gender: gender,
+        gender: gender
         //booking: '',
     };
 
-    const [photo,setPhoto] = useState(null);
+    const [image,setImage] = useState(null);
     const [photoPreview,setPhotoPreview] = useState(null);
     const  [showUpload, setshowUpload] = useState(true);
 
     useEffect(() => {
+        if(trainerob){
+
+            console.log(photo);
+        
+            setPhotoPreview(photo);
+            setshowUpload(false);
+
+        }
 
         axios.get(`http://localhost:3000/api/genders`)
-            .then(res => {
-                setGenders(res.data);
-            }).catch(err => console.log(err))
+        .then(res => {
+            setGenders(res.data);
+        }).catch(err => console.log(err))
+     
 
     }, []);
 
     const handlePhotoChange = (event) => {
-        setPhoto(event.target.files[0]);
+        setImage(event.target.files[0]);
         setshowUpload(!showUpload);
         handlePhotoPreview(event.target.files[0])
     }
@@ -188,7 +197,7 @@ const TrainersUpdateForm = ({trainerob,onTrainerUpdate, onTrainerCancel}) => {
                                 ) : (
                                     <div className="size-40 bg-black rounded-full overflow-hidden">
 
-                                        <img src={photoPreview} alt="profilepic"/>
+                                        <img src={photoPreview.split(',')[0] > 0 ? photoPreview : `data:image/png;base64,${photoPreview}` } alt="profilepic"/>
 
                                     </div>
                                 )
