@@ -15,7 +15,9 @@ const SelectCustom = ({
     
   const handleChange = event => {
         const { value } = event.target;
-        setFieldValue(name, value);
+        const selectedOption = options.find(option => option._id === value); 
+        setFieldValue(name, selectedOption);
+
     };
 
     const configSelect = {
@@ -26,8 +28,9 @@ const SelectCustom = ({
         fullWidth: true,
         onChange: handleChange,
         size: "medium",
-        margin:"dense"
-    }
+        margin:"dense",
+        value:field.value?._id || '' 
+    };
 
 
     if (meta && meta.touched && meta.error) {
@@ -40,7 +43,7 @@ const SelectCustom = ({
 
             {Array.isArray(options) && options.length > 0 ? (
                 options.map((option,i) => (
-                    <MenuItem key={i} value={option}>
+                    <MenuItem key={i} value={option._id}>
                         {option.name}
                     </MenuItem>
                 ))
