@@ -16,7 +16,9 @@ const UserForm = ({onUserAdd}) => {
         password: '',
         userstatus: '',
         image: '',
+        role:''
     });
+    const [role, setRole] = useState([]);
 
     const [image,setImage] = useState(null);
     const [imagePreview,setImagePreview] = useState(null);
@@ -54,9 +56,10 @@ const UserForm = ({onUserAdd}) => {
         formdata.append('username',values.username);
         formdata.append('password',values.password);
         formdata.append('userstatus',values.userstatus);
+        formdata.append('role',values.role);
         formdata.append('image',image);
 
-        const obj = {firstname:values.firstname, lastname:values.lastname, username:values.username,userstatus:values.userstatus,photo:imagePreview}
+        const obj = {firstname:values.firstname, lastname:values.lastname, username:values.username,userstatus:values.userstatus,role:values.role,photo:imagePreview}
         clearForm();
         onUserAdd(obj);
 
@@ -88,6 +91,19 @@ const UserForm = ({onUserAdd}) => {
     }
 
     useEffect(() => {
+        axios.get("http://localhost:3000/api/roles")
+            .then(res => {
+                const roledata = res.data.filter(r => r.name !== "SUPER_ADMIN");
+                setRole(roledata);
+            })
+            .catch(err => {
+                console.log(err.message)
+                toast(err.message);
+            })
+    }, []);
+
+
+    useEffect(() => {
         axios.get("http://localhost:3000/api/userstatuses")
             .then(res => {
                 setUserStatus(res.data);
@@ -97,6 +113,8 @@ const UserForm = ({onUserAdd}) => {
                 toast(err.message);
             })
     }, []);
+
+
 
     return (
         <div className="flex justify-center items-center">
@@ -148,7 +166,7 @@ const UserForm = ({onUserAdd}) => {
                                                 
                                             <input 
                                                 type="file" name="image"
-                                                className="hidden input input-bordered w-full max-w-xs flex justify-center items-center"
+                                                w        className="hidden input input-bordered w-full max-w-xs flex justify-center items-center"
                                                 onChange={handleImageChange}  
                                             />
 
@@ -207,6 +225,22 @@ const UserForm = ({onUserAdd}) => {
                                     >
                                         <option disabled selected value="">Select UserStatus</option>
                                         {userstatuses.map((data, i) => {
+                                            return <option key={i} value={data['_id']}>{data['name']}</option>
+                                        })}
+
+
+                                    </select>
+                                </label>
+
+                                <label className="form-control w-full max-w-xs">
+                                    <div className="label">
+                                        <span className="font-bold">Role</span>
+                                    </div>
+                                    <select className="select select-bordered" name="role"
+                                            onChange={handleInputDataChange}
+                                    >
+                                        <option disabled selected value="">Select Role</option>
+                                        {role.map((data, i) => {
                                             return <option key={i} value={data['_id']}>{data['name']}</option>
                                         })}
 

@@ -1,7 +1,7 @@
 const User = require('../model/user.model');
 
  
-     const createUser = async (user) => {
+     const createUser = async (user) => {        
         
         try{
 
@@ -18,7 +18,7 @@ const User = require('../model/user.model');
      const findAllUsers = async(searchQuery)=>{
        
         try{
-            return await User.find(searchQuery).select('-password').populate('userstatus').populate('training').exec();
+            return await User.find(searchQuery).select('-password').populate('userstatus').populate('training').populate('role').exec();
 
         }catch(error){
             
@@ -37,9 +37,9 @@ const User = require('../model/user.model');
     const updateUser = async(user)=> {
         console.log(user);
         
-        const {firstname, lastname ,username,photo,userstatus,training,_id,password} = user;
+        const {firstname, lastname ,username,photo,userstatus,training,_id,password,role} = user;
         try{
-            return await User.updateOne({_id},{$set: {firstname,lastname,username,photo,userstatus,training,password}});
+            return await User.updateOne({_id},{$set: {firstname,lastname,username,photo,userstatus,training,password,role}});
         }catch(error){
             throw new Error(`Error while updating user: ${error.message}`);
         }
