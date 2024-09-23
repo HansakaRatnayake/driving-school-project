@@ -15,6 +15,8 @@ const UserUpdateForm = ({onUserUpdate, user}) => {
     const [imagePreview,setImagePreview] = useState(null);
     const  [showUpload, setshowUpload] = useState(true);
     const formRef = useRef(null);
+    const [role, setRole] = useState([]);
+
 
 
     const [userstatuses, setUserStatus] = useState([]);
@@ -26,6 +28,7 @@ const UserUpdateForm = ({onUserUpdate, user}) => {
         userstatus: '',
         _id: '',
         photo: '',
+        role:''
     });
     const [dialogOpen, setDialogOpen] = useState(false);
     const [dialogData, setDialogData] = useState({
@@ -49,8 +52,6 @@ const UserUpdateForm = ({onUserUpdate, user}) => {
         reader.onload = (e) => {
             // const base64String = e.target.result.split(',')[1]; // Extract the base64 part
             setImagePreview(e.target.result);
-            // event.target.src = `data:image/jpeg;base64,${e.target.result}`;
-      
 
         };
         if (file) {
@@ -66,23 +67,19 @@ const UserUpdateForm = ({onUserUpdate, user}) => {
         setDialogOpen(true);
     }
 
-    useEffect(() => {
-        if (image) {
-          console.log('Image updated:', image);
-        }
-      }, [image]); // This will log whenever 'image' is updated
-
       
     //Update Function
     const update = () => {
-        let imageToSend = image;  // Local variable to handle image
+        // let imageToSend = image;  // Local variable to handle image
     
-        // If there's no image set but we have data in values.photo, create a Blob
-        if (!imageToSend && values.photo && values.photo.data) {
-            const bufferData = new Uint8Array(values.photo.data);
-            const blob = new Blob([bufferData], { type: 'application/octet-stream' });
-            imageToSend = blob;  // Assign blob to the local image variable
-        }
+        // // If there's no image set but we have data in values.photo, create a Blob
+        // if (!imageToSend && values.photo) {
+        //     console.log(values.photo);
+            
+        //     const bufferData = new Uint8Array(values.photo);
+        //     const blob = new Blob([bufferData], { type: 'application/octet-stream' });
+        //     imageToSend = blob;  // Assign blob to the local image variable
+        // }
     
         // Now, proceed with the update logic, ensuring the imageToSend is correctly set
         const formdata = new FormData();
@@ -91,23 +88,24 @@ const UserUpdateForm = ({onUserUpdate, user}) => {
         formdata.append('lastname', values.lastname);
         formdata.append('username', values.username);
         formdata.append('password', values.password);
-        formdata.append('userstatus', values.userstatus._id);
-        !(image)?
-            formdata.append('image', imageToSend) : formdata.append('image', image)
+        formdata.append('userstatus', values.userstatus);
+        formdata.append('role', values.role);
+        formdata.append('photo', image);
       
             const obj = {
                 _id:values._id,
                 firstname:values.firstname, 
                 lastname:values.lastname, 
                 username:values.username,
-                userstatus:values.userstatus,
+                userstatus:userstatuses.find(us=>us._id === values.userstatus),
+                role:role.find(r=>r._id === values.role),
                 photo:imagePreview, 
                 password:values.password
             }
             onUserUpdate(obj);
 
             clearForm();
-    
+        
         // Send to the server
         axios.put(`${BaseUrl}`, formdata, {
             headers: { 'Content-Type': 'multipart/form-data' }
@@ -138,28 +136,45 @@ const UserUpdateForm = ({onUserUpdate, user}) => {
 
         if(user){
 
-            setValues({
-                ...user,
-                photo:user.photo || ''
-            });
+            setValues({...user,userstatus:user.userstatus._id,role:user.role._id});
             setshowUpload(false);
             setImagePreview(user.photo);
-            
-
-            //Load Userstatus to SelectBox
-            axios.get("http://localhost:3000/api/userstatuses")
-                .then(res => {
-                    setUserStatus(res.data);
-                    //console.log(res.data);
-                })
-                .catch(err => {
-                    console.log(err.message)
-                    toast(err.message);
-                })
+            setImage(user.photo);
         }
-       
+          //Load Userstatus to SelectBox
+          axios.get("http://localhost:3000/api/userstatuses")
+          .then(res => {
+              setUserStatus(res.data);
+              //console.log(res.data);
+          })
+          .catch(err => {
+              console.log(err.message)
+              toast(err.message);
+          })
+
+          axios.get("http://localhost:3000/api/roles")
+          .then(res => {
+              setRole(res.data);
+              //console.log(res.data);
+          })
+          .catch(err => {
+              console.log(err.message)
+              toast(err.message);
+          })
         
     }, [user]);
+
+    useEffect(() => {
+        axios.get("http://localhost:3000/api/roles")
+            .then(res => {
+                const roledata = res.data.filter(r => r.name !== "SUPER_ADMIN");
+                setRole(roledata);
+            })
+            .catch(err => {
+                console.log(err.message)
+                toast(err.message);
+            })
+    }, []);
 
 
     return (
@@ -265,6 +280,23 @@ const UserUpdateForm = ({onUserUpdate, user}) => {
                                     >
                                         <option disabled selected value="">Select UserStatus</option>
                                         {userstatuses.map((data, i) => {
+                                            return <option key={i} value={data['_id']}>{data['name']}</option>
+                                        })}
+
+
+                                    </select>
+                                </label>
+
+                                <label className="form-control w-full max-w-xs">
+                                    <div className="label">
+                                        <span className="font-bold">Role</span>
+                                    </div>
+                                    <select className="select select-bordered" name="role"
+                                            value={values.role}
+                                            onChange={handleInputDataChange}
+                                    >
+                                        <option disabled selected value="">Select Role</option>
+                                        {role.map((data, i) => {
                                             return <option key={i} value={data['_id']}>{data['name']}</option>
                                         })}
 

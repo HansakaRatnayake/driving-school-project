@@ -3,7 +3,7 @@ const {findAll} = roleService;
 
 const findAllRoles = async (req, res, next) =>{
    
-    const responseData = await findAll();
+    const responseData = await findAll(req.query);
     res.status(responseData.statuscode).json(responseData.data);  
     
 }

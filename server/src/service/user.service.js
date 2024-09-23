@@ -75,7 +75,15 @@ const findAll = async (queryparamobject) => {
 
 
 const update = async (user, image) => {
-    console.log(image);
+  
+
+    if(typeof image != 'object'){
+        console.log(typeof user.photo);
+        
+
+        const base64Data = user.photo.replace(/^data:image\/\w+;base64,/, '');
+        image = Buffer.from(base64Data, 'base64').toString('binary');
+    }
     
     try {
         const resData = await updateUser({...user, photo:image?image.buffer:''});

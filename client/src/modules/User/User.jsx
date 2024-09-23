@@ -24,7 +24,7 @@ const User = () => {
         axios.get(`${BaseUrl}`)
             .then(res => {
                 setUsers(res.data);
-                // console.log(res.data);
+                //  console.log(res.data);
             }).catch(err => console.log(err))
     }, []);
 
@@ -63,6 +63,7 @@ const User = () => {
         updateduser.lastname = updatedUserData.lastname;
         updateduser.username = updatedUserData.username;
         updateduser.userstatus = updatedUserData.userstatus;
+        updateduser.role = updatedUserData.role;
         updateduser._id = updatedUserData._id;
         updateduser.photo = updatedUserData.photo;
 
@@ -75,7 +76,7 @@ const User = () => {
         
     }
 
-    const columns = ['Profile', 'Full Name', 'Username', 'UserStatus', 'Action']
+    const columns = ['Profile', 'Full Name', 'Username', 'Role', 'User Status', 'Action']
 
 
     return (
@@ -162,6 +163,7 @@ const User = () => {
 
                                     <td>{dta['firstname'] + " " + dta['lastname']}</td>
                                     <td>{dta['username']}</td>
+                                    <td>{dta['role']['name']}</td>
                                     <td>{dta['userstatus']['name']}</td>
 
                                     <td>
