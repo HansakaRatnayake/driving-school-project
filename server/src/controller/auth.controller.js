@@ -2,6 +2,8 @@ const bcrypt = require("bcryptjs");
 const User = require('../model/user.model');
 const Role = require('../model/role.model')
 const { generateToken } = require('../utils/token.generator');
+const UserStatus = require('../model/userstatus.model');
+
 
 
 const login = async (req, res) => {
@@ -40,7 +42,7 @@ const login = async (req, res) => {
 
 const signup = async(req,res) => {
     try{
-        const { firstname,lastname,username,password } = req.body;
+        const { firstname,lastname,username,password} = req.body;
 
         const user = await User.findOne({username});
 
@@ -49,7 +51,11 @@ const signup = async(req,res) => {
         // const salt = await bcrypt.genSalt();
         // const hashedPassword = await bcrypt.hash(password,salt);
 
-        const newUser = await new User({firstname, lastname, username, password}).save();
+        const userstatus = await UserStatus.findOne({name:"Active"});
+        const userrole = await Role.findOne({name:"USER"});
+
+
+        const newUser = await new User({firstname, lastname, username, password, userstatus:userstatus._id, role:userrole._id}).save();
         
 
         if(!newUser) res.status(400).json({ error: "Invalid user data" });
