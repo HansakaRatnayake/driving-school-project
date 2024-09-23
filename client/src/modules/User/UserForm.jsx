@@ -57,9 +57,18 @@ const UserForm = ({onUserAdd}) => {
         formdata.append('password',values.password);
         formdata.append('userstatus',values.userstatus);
         formdata.append('role',values.role);
-        formdata.append('image',image);
+        formdata.append('photo',image);
 
-        const obj = {firstname:values.firstname, lastname:values.lastname, username:values.username,userstatus:values.userstatus,role:values.role,photo:imagePreview}
+        const obj = {
+            _id:values._id,
+            firstname:values.firstname, 
+            lastname:values.lastname, 
+            username:values.username,
+            userstatus:userstatuses.find(us=>us._id === values.userstatus),
+            role:role.find(r=>r._id === values.role),
+            photo:imagePreview, 
+            password:values.password
+        }
         clearForm();
         onUserAdd(obj);
 
@@ -221,6 +230,7 @@ const UserForm = ({onUserAdd}) => {
                                         <span className="font-bold">UserStatus</span>
                                     </div>
                                     <select className="select select-bordered" name="userstatus"
+                                            value={values.userstatus}
                                             onChange={handleInputDataChange}
                                     >
                                         <option disabled selected value="">Select UserStatus</option>
@@ -237,6 +247,7 @@ const UserForm = ({onUserAdd}) => {
                                         <span className="font-bold">Role</span>
                                     </div>
                                     <select className="select select-bordered" name="role"
+                                            value={values.role}
                                             onChange={handleInputDataChange}
                                     >
                                         <option disabled selected value="">Select Role</option>
