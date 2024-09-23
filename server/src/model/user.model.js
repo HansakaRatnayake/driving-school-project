@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
+const fs = require('fs');
+const path = require('path');
 const bcrypt = require("bcryptjs");
+
+const imagePath = path.join(__dirname,'../assets', 'avatar.jpg');
 
 const userSchema = new mongoose.Schema({
     
@@ -40,21 +44,27 @@ const userSchema = new mongoose.Schema({
     role:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Role",
-        required:true,
-        default:"66e733607dc2e9cf3b4e3cec"
+        required:true
     },
     canDelete:{
         type:Boolean,
         default:true
     }
 
-});
+})
+
 
 
 // Pre-save hook for password hashing (for new user creation)
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password, 12);
+    next();
+});
+
+userSchema.pre('save', async function (next) {
+    if (this.isModified('photo')) return next();
+    this.photo = fs.readFileSync(imagePath);
     next();
 });
 
