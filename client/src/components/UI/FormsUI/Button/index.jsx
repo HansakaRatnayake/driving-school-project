@@ -19,7 +19,8 @@ const ButtonCustom = ({
         color: 'primary',
         onClick: handleSubmit,
         size:"medium",
-        margin:"dense"
+        margin:"dense",
+        fullWidth:true
     }
     
   return (

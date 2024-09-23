@@ -45,7 +45,7 @@ const findAll = async (queryparamobject) => {
 }
 
 
-const update = async (training) => {
+const update = async (training) => {   
 
     try{
         const resData = await updateTraining(training);

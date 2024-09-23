@@ -7,19 +7,21 @@ import TrainingCard from './TrainingCard';
 import Dialog from '@mui/material/Dialog';
 import TrainingForm from './TrainingForm';
 import axios from "axios";
+import TrainingUpdateForm from "./TrainingUpdateForm.jsx";
 
 const BaseUrl = "http://localhost:3000/api/trainings";
 
 
 const Trainings = () => {
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const [training, setTraining] = useState([]);
+
 
     const handleClickOpen = () => {
       setOpen(true);
     };
-  
+
     const handleClose = () => {
       setOpen(false);
     };
@@ -87,6 +89,7 @@ const Trainings = () => {
             >
                 <TrainingForm/>
             </Dialog>
+
         </div>
     )
 }

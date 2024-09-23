@@ -107,10 +107,12 @@ const Information = () => {
           <h1 className='text-xl font-bold'>Information Portal</h1>
         </div>
       </div>
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-4 px-8'
-      >
+
+      <div className='grid grid-cols-1 md:grid-cols-1 gap-4 px-8'>
+        
         {infoItems.map((item) => {
           const isExternalLink = item.path.startsWith("http");
+
           return isExternalLink ? (
             <div
               key={item.id}
@@ -124,6 +126,7 @@ const Information = () => {
               <span style={{ fontSize: '16px' }}>{item.title}</span>
             </div>
           ) : (
+            
             <Link
               to={item.path}
               key={item.id}

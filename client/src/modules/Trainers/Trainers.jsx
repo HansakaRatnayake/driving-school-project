@@ -210,7 +210,7 @@ const Trainers = () => {
                         const formJson = Object.fromEntries(formData.entries());
                         const email = formJson.email;
                         console.log(email);
-                        handleClose();
+                        handleUpdateClose();
                     },
                 }}
             >

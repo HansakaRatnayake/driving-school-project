@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Person4Icon from '@mui/icons-material/Person4';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from "axios";
 import toast from "react-hot-toast";
+import TrainingUpdateForm from "./TrainingUpdateForm.jsx";
+import Dialog from "@mui/material/Dialog";
 
 const BaseUrl = "http://localhost:3000/api/trainings";
 
@@ -25,11 +27,12 @@ const handleDelete = trainingId => {
 }
 
 function TrainingCard({ _id, name, price, duration, image, trainers, description}) {
+
     return (
         <div className='flex w-full h-auto p-4 shadow-md'>
             <TrainingImage image={image}/>
             <TrainingData name={name} price={price} duration={duration} trainers={trainers} description={description}/>
-            <ActionButtons _id={_id}/>
+            <ActionButtons _id={_id} name={name}/>
         </div>
     );
 }
@@ -76,7 +79,29 @@ function TrainingData({name, price, duration, description, trainers}) {
     )
 }
 
-function ActionButtons({_id}) {
+function ActionButtons({_id,name}) {
+
+    const [updateOpen, setUpdateOpen] = useState(false);
+    const [trainingob, setTrainingOb] = useState(null);
+
+    const handleUpdateOpen = () => {
+        setUpdateOpen(true);
+    };
+
+    const handleUpdateClose = () => {
+        setUpdateOpen(false);
+    };
+
+    useEffect(() => {
+        axios.get(`${BaseUrl}?name=${name}`)
+            .then(res =>{
+                setTrainingOb(res.data[0]);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+    },[])
+
     return (
         <div className="flex flex-col space-y-4 h-[180px] w-[25%] items-center justify-center">
             <div className="w-full flex items-center justify-center ">
@@ -89,10 +114,28 @@ function ActionButtons({_id}) {
                 </Button>
             </div>
             <div className="w-full flex items-center justify-center ">
-                <Button className='w-32' variant="contained" color='success' startIcon={<EditIcon/>}>
+                <Button className='w-32' variant="contained" color='success' startIcon={<EditIcon/>}
+                onClick={() => handleUpdateOpen()}
+                >
                     Edit
                 </Button>
             </div>
+
+            <Dialog
+                open={updateOpen}
+                onClose={handleUpdateClose}
+                PaperProps={{
+                    component: 'form',
+                    onSubmit: (event) => {
+                        event.preventDefault();
+                        const formData = new FormData(event.currentTarget);
+                        const formJson = Object.fromEntries(formData.entries());
+                        handleUpdateClose();
+                    },
+                }}
+            >
+                <TrainingUpdateForm trainingob={trainingob}/>
+            </Dialog>
 
 
         </div>
