@@ -35,7 +35,7 @@ const SelectCustom = ({
 
     if (meta && meta.touched && meta.error) {
         configSelect.error = true;
-        configSelect.helperText = mata.error;
+        configSelect.helperText = meta.error;
     }
 
     return (

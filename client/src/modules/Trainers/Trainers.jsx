@@ -32,6 +32,10 @@ const Trainers = () => {
         setOpen(false);
     };
 
+    const handleUpdateClose = () => {
+        setUpdate(false);
+    };
+
     useEffect(() => {
         axios.get(`${BaseUrl}`)
             .then(res => {
@@ -66,13 +70,17 @@ const Trainers = () => {
 
     const handleTrainerUpdate = (newtrainer) => {
         console.log(newtrainer);
-        setTrainers([...trainers, newtrainer]);
+        //setTrainers([...trainers, newtrainer]);
         setOpen(false);
 
     }
 
     const handleTrainerCancel = (trainer) => {
        setOpen(trainer);
+    }
+
+    const handleTrainerUpdateCancel = (trainer) => {
+        setUpdate(trainer);
     }
 
     
@@ -193,7 +201,7 @@ const Trainers = () => {
 
             <Dialog
                 open={update}
-                onClose={handleClose}
+                onClose={handleUpdateClose}
                 PaperProps={{
                     component: 'form',
                     onSubmit: (event) => {
@@ -206,7 +214,7 @@ const Trainers = () => {
                     },
                 }}
             >
-                <TrainersUpdateForm trainerob={trainerob} onTrainerUpdate={handleTrainerUpdate} onTrainerCancel={handleTrainerCancel}/>
+                <TrainersUpdateForm trainerob={trainerob} onTrainerUpdate={handleTrainerUpdate} onTrainerCancel={handleTrainerUpdateCancel}/>
             </Dialog>
 
         </div>

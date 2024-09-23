@@ -36,7 +36,7 @@ const FORM_VALIDATION = Yup.object().shape({
 });
 const TrainersUpdateForm = ({trainerob,onTrainerUpdate, onTrainerCancel}) => {
   
-    const {name,email,nic,mobile,yoexperience,gender,photo} = trainerob;
+    const {_id,name,email,nic,mobile,yoexperience,gender,photo} = trainerob;
 
     const navigate = useNavigate();
     const [trainer,setTrainer] = useState({
@@ -100,9 +100,9 @@ const TrainersUpdateForm = ({trainerob,onTrainerUpdate, onTrainerCancel}) => {
     }
 
     const handleSubmit = (values, {resetForm}) => {
-        console.log(values);
 
         const formdata = new FormData();
+        formdata.append('_id',_id);
         formdata.append('name',values.name);
         formdata.append('email',values.email);
         formdata.append('nic',values.nic);
@@ -121,16 +121,16 @@ const TrainersUpdateForm = ({trainerob,onTrainerUpdate, onTrainerCancel}) => {
             photo:photoPreview
         }
 
-        onTrainerAdd(obj);
+        onTrainerUpdate(obj);
         resetForm();
         setshowUpload(!showUpload);
 
-        axios.post(`${BaseUrl}`,formdata)
+        axios.put(`${BaseUrl}`,formdata)
             .then(res => {
                 console.log(res);
                 // window.location.reload();
                 // navigate("../trainers");
-                toast.success("Trainer Successfully Saved");
+                toast.success("Trainer Successfully Updated");
             })
             .catch(err => {
                     console.log(err);
