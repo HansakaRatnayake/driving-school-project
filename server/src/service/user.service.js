@@ -77,7 +77,7 @@ const findAll = async (queryparamobject) => {
 const update = async (user, image) => {
   
 
-    if(typeof image != 'object'){
+    if(typeof user.photo == 'string'){
         console.log(typeof user.photo);
         
 

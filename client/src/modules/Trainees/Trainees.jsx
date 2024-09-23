@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import {Link} from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import TraineesUpdateForm from "./TraineesUpdateForm.jsx";
 
 
 const BaseUrl = "http://localhost:3000/api/users";
@@ -11,23 +12,18 @@ const BaseUrl = "http://localhost:3000/api/users";
 const Trainees = () => {
 
     const [trainers, setTrainers] = useState([]);
-    const [trainerob, setTrainerob] = useState('');
+    const [traineeob, setTraineeob] = useState('');
     const [role, setRole] = useState([null]);
     const columns = ['Profile', 'Full Name', 'Username', 'User Status','Action']
-
-    const [open, setOpen] = useState(false);
     const [update, setUpdate] = useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
 
     const handleClickUpdate = () => {
         setUpdate(true);
     }
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleUpdateClose = () => {
+        setUpdate(false);
     };
 
     useEffect(() => {
@@ -75,33 +71,12 @@ const Trainees = () => {
         }
     }
 
-    const handleTrainerAdd = (newtrainer) => {
-        console.log(newtrainer);
-        setTrainers([...trainers, newtrainer]);
-        setOpen(false);
-        
-    }
-
-    const handleTrainerUpdate = (newtrainer) => {
-        console.log(newtrainer);
-        setTrainers([...trainers, newtrainer]);
-        setOpen(false);
-
-    }
-
-    const handleTrainerCancel = (trainer) => {
-       setOpen(trainer);
-    }
-
-    
-
     return (
         <div className="p-6">
             <div className="w-full h-[49rem] shadow-2xl rounded-lg p-4">
 
                 <div className="flex gap-10">
                     <span className="font-bold text-3xl">Trainee Details Managment</span>
-                    <button className="btn btn-sm bg-green-500 mt-1" onClick={handleClickOpen}><AddCircleOutlineOutlinedIcon/> <span>Add New Trainer</span></button>
                 </div>
 
                 <div className="w-full px-10">
@@ -158,7 +133,7 @@ const Trainees = () => {
                                                      strokeWidth={1.5} stroke="currentColor"
                                                      className="size-6 text-blue-600 cursor-pointer"
                                                      onClick={() =>{
-                                                         setTrainerob(dta)
+                                                         setTraineeob(dta)
                                                          handleClickUpdate();
                                                      }
 
@@ -191,39 +166,19 @@ const Trainees = () => {
             </div>
 
             <Dialog
-                open={open}
-                onClose={handleClose}
-                PaperProps={{
-                    component: 'form',
-                    onSubmit: (event) => {
-                        event.preventDefault();
-                        const formData = new FormData(event.currentTarget);
-                        const formJson = Object.fromEntries(formData.entries());
-                        const email = formJson.email;
-                        console.log(email);
-                        handleClose();
-                    },
-                }}
-            >
-                {/* <TrainersAddForm onTrainerAdd={handleTrainerAdd} onTrainerCancel={handleTrainerCancel}/> */}
-            </Dialog>
-
-            <Dialog
                 open={update}
-                onClose={handleClose}
+                onClose={handleUpdateClose}
                 PaperProps={{
                     component: 'form',
                     onSubmit: (event) => {
                         event.preventDefault();
                         const formData = new FormData(event.currentTarget);
                         const formJson = Object.fromEntries(formData.entries());
-                        const email = formJson.email;
-                        console.log(email);
-                        handleClose();
+                        handleUpdateClose();
                     },
                 }}
             >
-                {/* <TrainersUpdateForm trainerob={trainerob} onTrainerUpdate={handleTrainerUpdate} onTrainerCancel={handleTrainerCancel}/> */}
+                 <TraineesUpdateForm traineeob={traineeob} onTraineeUpdate={handleClickUpdate} onTraineeCancel={handleUpdateClose}/>
             </Dialog>
 
         </div>
