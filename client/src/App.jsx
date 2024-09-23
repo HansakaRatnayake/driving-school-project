@@ -39,6 +39,7 @@ import UserForm from "./modules/User/UserForm.jsx";
 import TraineesAddForm from "./modules/Trainees/TraineesAddForm.jsx";
 import TraineesUpdateForm from "./modules/Trainees/TraineesUpdateForm.jsx";
 import TrainersAddForm from "./modules/Trainers/TrainersAddForm.jsx";
+import AdminRoutes from "./AdminRoutes.jsx";
 
 export const UserContext = createContext(null);
 
@@ -98,7 +99,7 @@ const App = () => {
             />
 
             {/* Admin Routes */}
-            <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>}>
+            <Route path="/admin" element={<AdminRoutes><Admin /></AdminRoutes>}>
               <Route path="" element={<Dashboard />} />
               <Route path="user" element={<User />} />
               <Route path="user-add" element={<UserForm />} />

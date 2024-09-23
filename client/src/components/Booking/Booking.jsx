@@ -24,12 +24,12 @@ const Booking = () => {
 
   return (
     <div
-      className='bg-cover bg-center text-black min-h-screen p-6'
+      className='bg-cover bg-center text-black h-[calc(100vh-76px)] p-6'
       style={{ backgroundImage: `url(${backgroundImg})` }}
     >
       {/* Date and Time Picker Section */}
       <div className="text-center mb-16">
-        <div className="bg-white bg-opacity-70 hover:bg-opacity-200  p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
+        <div className="bg-white hover:bg-opacity-200 p-8 rounded-lg shadow-lg max-w-3xl mx-auto">
           <Typography variant="h6" gutterBottom>
             Select Date & Time
           </Typography>

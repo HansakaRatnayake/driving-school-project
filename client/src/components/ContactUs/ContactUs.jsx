@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa';
 import conGif from './cont.gif'; 
 import axios from 'axios';
+import toast from "react-hot-toast";
 
 const ContactUs = () => {
   const [values, setValues] = useState({
     name: '',
     email: '',
     address: '',
-    contact_num: '',
+    contact: '',
     message: '',
   });
 
@@ -25,13 +26,16 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3000/contactus', values)
+    console.log(values);
+    axios.post('http://localhost:3000/api/contactus', values)
       .then((result) => {
         console.log(result);
-        navigate('/home');
-        alert('Subission Successful')
+        toast.success("Your Response Was Successfully Submitted");
       })
-      .catch((error) => console.error('Error submitting form:', error));
+      .catch((error) => {
+        toast.error(error)
+        console.error('Error submitting form:', error)
+      });
   };
 
   return (
@@ -142,7 +146,7 @@ const ContactUs = () => {
                   placeholder="Your Contact Number"
                   className="w-full bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   aria-label="Contact Number"
-                  name="contact_num"
+                  name="contact"
                   onChange={handleChange}
                 />
               </div>
