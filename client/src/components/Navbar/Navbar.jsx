@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { BiSolidSun, BiSolidMoon } from 'react-icons/bi';
 import { HiMenuAlt1, HiMenuAlt3 } from 'react-icons/hi';
 import ResponsiveMenu from './ResponsiveMenu';
@@ -24,11 +24,16 @@ const handleLogout = () => {
 
 const Navbar = ({ theme, setTheme }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const [admin, setAdmin] = useState(false);
+
   const {user} = useContext(UserContext);
 
-  //const loggeduser = JSON.parse(localStorage.getItem("auth_user"));
+    const loggeduser = JSON.parse(localStorage.getItem("auth_user"));
 
-
+    useEffect(() => {
+        const hasUserRole = loggeduser?.role?.name === "ADMIN";
+        setAdmin(hasUserRole);
+    },[]);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -71,7 +76,7 @@ const Navbar = ({ theme, setTheme }) => {
             {user ?
                 <div className='text-black mt-1'>
 
-                    <div className="dropdown">
+                    <div className="dropdown dropdown-end">
                         <div tabIndex={0} className="size-6 dark:text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                                  stroke="currentColor" className="size-6">
@@ -83,7 +88,9 @@ const Navbar = ({ theme, setTheme }) => {
                             className="dropdown-content menu bg-base-100 dark:bg-black dark:text-white rounded-box z-[1] w-52 p-2 shadow">
                             <li><Link to="profile">
                                 <div>Profile</div>
-                            </Link></li>
+                            </Link>
+                            </li>
+                            {admin ? <li><Link to="admin"><div>Admin</div></Link></li>:<></>}
                             <li>
                                 <div onClick={() => document.getElementById('my_modal_1').showModal()}>Logout</div>
                             </li>

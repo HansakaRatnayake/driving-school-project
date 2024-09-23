@@ -98,7 +98,7 @@ const App = () => {
             />
 
             {/* Admin Routes */}
-            <Route path="/admin" element={<Admin />}>
+            <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>}>
               <Route path="" element={<Dashboard />} />
               <Route path="user" element={<User />} />
               <Route path="user-add" element={<UserForm />} />
