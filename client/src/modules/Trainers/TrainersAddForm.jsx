@@ -180,7 +180,7 @@ const TrainersAddForm = ({onTrainerAdd, onTrainerCancel}) => {
                                     </div>
 
                                 ) : (
-                                    <div className="size-40 bg-black rounded-full overflow-hidden">
+                                    <div className="size-40 bg-white rounded-full overflow-hidden flex justify-center items-center">
                                         
                                             <img src={photoPreview} alt="profilepic"/>
                                 

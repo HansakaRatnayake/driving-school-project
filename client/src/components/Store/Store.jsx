@@ -28,7 +28,7 @@ const Store = () => {
         id:datum._id,
         productName:datum.name,
         price:datum.price,
-        productImage:datum.image,
+        productImage:datum.photo,
         duration:datum.duration,
         description:datum.description,
         trainer:datum.trainer.map(t=>t.name)
@@ -63,7 +63,7 @@ const Store = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
         {products.map((product) => (
           <div key={product.id} className="relative dark:bg-gray-800 dark:text-white bg-white shadow-md rounded-md overflow-hidden flex justify-center items-center flex-col p-4">
-            <img src='' className="w-[70%] h-48 object-cover" alt={product.productName} />
+            <img src={`data:image/png;base64,${product.productImage}`} className="w-full h-full object-cover" alt={product.productName} />
   
             <div className="p-4 w-full text-center flex justify-center items-center">
               <div className="w-full flex flex-col justify-start items-center">
