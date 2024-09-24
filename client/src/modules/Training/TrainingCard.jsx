@@ -26,13 +26,15 @@ const handleDelete = trainingId => {
     }
 }
 
-function TrainingCard({ _id, name, price, duration, photo, trainers, description}) {
+function TrainingCard({ _id, name, price, duration, photo, trainer, description}) {
+    console.log(trainer);
+    
     
 
     return (
         <div className='flex w-full h-auto p-4 shadow-md'>
             <TrainingImage photo={photo}/>
-            <TrainingData name={name} price={price} duration={duration} trainers={trainers} description={description}/>
+            <TrainingData name={name} price={price} duration={duration} trainer={trainer} description={description}/>
             <ActionButtons _id={_id} name={name}/>
         </div>
     );
@@ -48,7 +50,7 @@ function TrainingImage({photo}) {
 }
 
 
-function TrainingData({name, price, duration, description, trainers}) {
+function TrainingData({name, price, duration, description, trainer}) {
     return (
         <div className="flex flex-col w-[60%] h-[180px] pl-6 gap-3">
             <div className="font-bold text-xl ">{name}</div>
@@ -60,19 +62,16 @@ function TrainingData({name, price, duration, description, trainers}) {
 
             <div className="font-medium text-[14px]  h-[180px]2">
                 <span>Trainers : </span>
-                {/*{trainers.map((dat,i) => {*/}
-                {/*    return <span key={i}>{<Person4Icon/>}{dat.name}</span>*/}
-                {/*})}*/}
+                {trainer.map((dat,i) => {
+                 return <span key={i}>{<Person4Icon/>}{dat.name}</span>
+                })}
 
             </div>
 
             <div className="font-medium text-[14px] mb-1 flex gap-6">
                 <span>
                 Description :
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid rerum, 
-                    amet nostrum quibusdam debitis omnis sit libero accusantium deleniti expedita iusto 
-                    obcaecati odio quis quam consequatur perferendis. Perferendis, aperiam nisi?
-                </p>
+                <p>{description}</p>
 
                 </span>
             </div>
