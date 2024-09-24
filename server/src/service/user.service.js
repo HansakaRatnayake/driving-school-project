@@ -6,7 +6,13 @@ const { createUser, findAllUsers, findUserByUsername, updateUser, deleteUser } =
 
 const create = async (user, image) => {
 
+    if(user.training.length > 0){
+        const trainingObjectIDArray = user.training.map(tr => new ObjectId(tr));
+        user.training = trainingObjectIDArray;
+    }
+
     try {
+        
         const resData = await createUser({...user, photo:image?image.buffer:''});
         return {
             data: "User Successfully Registerd",

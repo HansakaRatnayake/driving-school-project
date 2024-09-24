@@ -26,21 +26,23 @@ const handleDelete = trainingId => {
     }
 }
 
-function TrainingCard({ _id, name, price, duration, image, trainers, description}) {
+function TrainingCard({ _id, name, price, duration, photo, trainers, description}) {
+    
 
     return (
         <div className='flex w-full h-auto p-4 shadow-md'>
-            <TrainingImage image={image}/>
+            <TrainingImage photo={photo}/>
             <TrainingData name={name} price={price} duration={duration} trainers={trainers} description={description}/>
             <ActionButtons _id={_id} name={name}/>
         </div>
     );
 }
 
-function TrainingImage({image}) {
+function TrainingImage({photo}) {
+    
     return (
-        <div className="w-[15%] h-[180px] border-blue-500 border-2 flex">
-            <img src={btoa(String.fromCharCode(...new Uint8Array(image)))} alt="image"/>
+        <div className="w-[15%] h-[180px] flex justify-center items-center">
+            <img className='w-full flex justify-center items-start' src={`data:image/png;base64,${photo}`} alt="image"/>
         </div>
     )
 }

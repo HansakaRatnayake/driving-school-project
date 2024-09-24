@@ -4,10 +4,18 @@ const {createTraining,findAllTrainings,deleteTraining,updateTraining} = training
 
  
 const create = async (training, image) => {
+    console.log(training);
+    
+
+    // if(training.trainer.length > 0){
+    //     console.log(training.trainer);
+    //     const trainerObjectIDArray = training.trainer.map(tr => new ObjectId(tr));
+    //     training.trainer = trainerObjectIDArray;
+    // }
 
     try{
 
-        const resData = await createTraining({...training,image:image?image.buffer:''});
+        const resData = await createTraining({...training,photo:image?image.buffer:''});
         return {
             data:"Training Successfully Registerd",
             statuscode:201
@@ -29,7 +37,18 @@ const findAll = async (queryparamobject) => {
     if(name && name.trim() !== '') query.name = { $regex: name, $options: 'i' };
 
     try{
-        const resData = await findAllTrainings(query);
+        const temp = await findAllTrainings(query);
+
+        const resData = temp.map(training => {
+            return{
+                _id : training._id,
+                name : training.name,
+                price : training.price,
+                duration : training.duration,
+                photo : training.photo.toString('base64'),
+                trainer : training.trainer
+            }
+        })
         return {
             data:resData,
             statuscode:201

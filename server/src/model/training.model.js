@@ -18,9 +18,8 @@ const trainingSchema = new mongoose.Schema({
         required:true,
         trim:true
     },
-    image:{
-        type:Buffer,
-        default:""
+    photo:{
+        type:Buffer
     },
     trainer:[{
         type:mongoose.Schema.Types.ObjectId,
