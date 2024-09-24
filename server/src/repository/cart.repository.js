@@ -2,6 +2,9 @@ const Cart = require('../model/cart.model');
 
  
      const createCart = async (cart) => {
+
+        console.log(cart);
+        
         
         try{
 
