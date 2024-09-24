@@ -20,7 +20,7 @@ const INITIAL_FORM_STATE = {
     duration: '',
     image: '',
     //trainer
-    //description
+    description:''
 
 };
 
@@ -74,6 +74,7 @@ function TrainingForm() {
         formdata.append('price',values.price);
         formdata.append('duration',values.duration);
         formdata.append('photo',photo);
+        formdata.append('description',values.description);
         formdata.append('trainer',[values.trainer._id]);
     
     
@@ -121,6 +122,10 @@ function TrainingForm() {
                                     label="Trainer"
                                     options={trainers}
                                 />
+                            </Grid2>
+
+                            <Grid2 item size={12}>
+                                <TextFieldCustom name="description" label="Description" multiline={true} type="text"/>
                             </Grid2>
 
                             <label className="form-control w-full mt-2 ">

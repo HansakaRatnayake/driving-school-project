@@ -21,6 +21,9 @@ const trainingSchema = new mongoose.Schema({
     photo:{
         type:Buffer
     },
+    description:{
+        type:String
+    },
     trainer:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Trainer"

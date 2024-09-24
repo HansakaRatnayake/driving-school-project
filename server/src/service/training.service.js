@@ -46,7 +46,8 @@ const findAll = async (queryparamobject) => {
                 price : training.price,
                 duration : training.duration,
                 photo : training.photo.toString('base64'),
-                trainer : training.trainer
+                trainer : training.trainer,
+                description: training.description
             }
         })
         return {

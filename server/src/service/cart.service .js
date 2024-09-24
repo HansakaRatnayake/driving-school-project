@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
 const Cart = require('../model/cart.model');
 const cartRepo = require('../repository/cart.repository');
 const {createCart,findAllCarts,deleteCart} = cartRepo;
@@ -21,11 +23,23 @@ const create = async (cart) => {
 
 const findAll = async (queryparamobject) => {
 
-    const {training} = queryparamobject;
+    const {training, user} = queryparamobject;
 
     const query = {};
 
     if(training && training.trim() !== '') query.training = { $regex: training, $options: 'i' };
+    if(user && user.trim() !== '') {
+        if(ObjectId.isValid(user)) {
+            query.user = new ObjectId(user);
+        }else{
+            return {
+                data: "Invalid ObjectId",
+                statuscode: 404
+            }
+        }
+       
+    }
+
  
 
     try{

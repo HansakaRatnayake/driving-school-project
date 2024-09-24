@@ -40,7 +40,7 @@ const Navbar = ({ theme, setTheme }) => {
   };
 
   return (
-      <nav className="shadow-md bg-white dark:bg-dark dark:text-white duration-300 h-20">
+      <nav className="shadow-md bg-white dark:bg-dark dark:text-white duration-300 h-20 z-50">
         <div className="container mx-auto p-4 flex justify-between items-center">
           {/* Logo */}
           <Link to="/home">

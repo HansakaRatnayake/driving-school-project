@@ -2,7 +2,7 @@ import React from 'react'
 import { useField } from 'formik';
 import {TextField} from "@mui/material";
 
-const TextFieldCustom = ({name,...otherProps}) => {
+const TextFieldCustom = ({name, multiline = false, rows = 5,...otherProps}) => {
 
     const [field, mata] = useField(name);
 
@@ -12,7 +12,10 @@ const TextFieldCustom = ({name,...otherProps}) => {
         fullWidth: true,
         variant: 'outlined',
         size:"medium",
-        margin:"dense"
+        margin:"dense",
+        multiline,
+        row:multiline?rows:undefined
+
         // InputProps: {
         //   style: {
         //     height: '50px', // Set your custom height here

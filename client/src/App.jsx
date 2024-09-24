@@ -81,7 +81,7 @@ const App = () => {
         <div className="w-[100vw] h-[100vh] flex flex-col overflow-y-hidden">
         
         {/* Navbar remains fixed at the top */}
-        <Navbar theme={theme} setTheme={setTheme} />
+        <Navbar className=" z-50" theme={theme} setTheme={setTheme} />
 
         {/* Scrollable content area */}
         <div style={{ flex: 1, overflowY: 'auto', height: 'calc(100vh - 64px)' }}>
