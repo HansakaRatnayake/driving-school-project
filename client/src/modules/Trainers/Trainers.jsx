@@ -9,6 +9,7 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import TrainersUpdateForm from "./TrainersUpdateForm.jsx";
 
 
+
 const BaseUrl = "http://localhost:3000/api/trainers";
 
 const Trainers = () => {
@@ -65,14 +66,30 @@ const Trainers = () => {
         console.log(newtrainer);
         setTrainers([...trainers, newtrainer]);
         setOpen(false);
+        console.log(trainers);
+        
         
     }
 
     const handleTrainerUpdate = (newtrainer) => {
         console.log(newtrainer);
-        //setTrainers([...trainers, newtrainer]);
-        setOpen(false);
+        const selectedtrainer= trainers.find(tr => tr._id == newtrainer._id);
+        console.log(selectedtrainer);
+        
+        
+        selectedtrainer.name = newtrainer.name;
+        selectedtrainer.email = newtrainer.email;
+        selectedtrainer.nic = newtrainer.nic;
+        selectedtrainer.mobile = newtrainer.mobile;
+        selectedtrainer.yoexperience = newtrainer.yoexperience;
+        selectedtrainer.gender = newtrainer.gender;
+        selectedtrainer.photo = newtrainer.photo;
 
+        const temp = trainers;
+        setTrainers([]);
+        setTrainers(temp);
+        setOpen(false);
+        console.log(trainers);
     }
 
     const handleTrainerCancel = (trainer) => {

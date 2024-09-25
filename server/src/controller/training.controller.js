@@ -19,7 +19,8 @@ const findAllTrainings = async (req, res, next) => {
 
   const updateTraining = async (req, res) => {
       const updatedTraining = req.body;
-      const responseData = await update(updatedTraining);
+      const image = req.file; 
+      const responseData = await update(updatedTraining, image);
       res.status(responseData.statuscode).json(responseData.data);
  
   }

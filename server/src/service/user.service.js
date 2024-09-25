@@ -6,7 +6,7 @@ const { createUser, findAllUsers, findUserByUsername, updateUser, deleteUser } =
 
 const create = async (user, image) => {
 
-    if(user.training.length > 0){
+    if(user.training && user.training.length > 0){
         const trainingObjectIDArray = user.training.map(tr => new ObjectId(tr));
         user.training = trainingObjectIDArray;
     }

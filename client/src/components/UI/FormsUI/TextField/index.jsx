@@ -14,14 +14,12 @@ const TextFieldCustom = ({name, multiline = false, rows = 5,...otherProps}) => {
         size:"medium",
         margin:"dense",
         multiline,
-        row:multiline?rows:undefined
-
-        // InputProps: {
-        //   style: {
-        //     height: '50px', // Set your custom height here
-        //   },
-        // }
-        
+        row:multiline?rows:undefined,
+        InputProps: {
+          style: {
+            textAlign: 'left', // Align text to the left
+          }
+        }
     }
 
     if(mata && mata.touched && mata.error){

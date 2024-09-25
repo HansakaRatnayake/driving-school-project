@@ -71,7 +71,7 @@ const TrainersUpdateForm = ({trainerob,onTrainerUpdate, onTrainerCancel}) => {
         if(trainerob){
 
             console.log(photo);
-        
+            setImage(photo)
             setPhotoPreview(photo);
             setshowUpload(false);
 
@@ -87,7 +87,7 @@ const TrainersUpdateForm = ({trainerob,onTrainerUpdate, onTrainerCancel}) => {
 
     const handlePhotoChange = (event) => {
         setImage(event.target.files[0]);
-        setshowUpload(!showUpload);
+        setshowUpload(false);
         handlePhotoPreview(event.target.files[0])
     }
 
@@ -100,6 +100,8 @@ const TrainersUpdateForm = ({trainerob,onTrainerUpdate, onTrainerCancel}) => {
     }
 
     const handleSubmit = (values, {resetForm}) => {
+        console.log(values);
+        
 
         const formdata = new FormData();
         formdata.append('_id',_id);
@@ -109,9 +111,10 @@ const TrainersUpdateForm = ({trainerob,onTrainerUpdate, onTrainerCancel}) => {
         formdata.append('mobile',values.mobile);
         formdata.append('yoexperience',values.yoexperience);
         formdata.append('gender',values.gender._id);
-        formdata.append('photo',photo);
+        formdata.append('photo',image);
 
         const obj = {
+            _id,
             name:values.name,
             email:values.email,
             nic:values.nic,
@@ -124,6 +127,7 @@ const TrainersUpdateForm = ({trainerob,onTrainerUpdate, onTrainerCancel}) => {
         onTrainerUpdate(obj);
         resetForm();
         setshowUpload(!showUpload);
+        handleCancle();
 
         axios.put(`${BaseUrl}`,formdata)
             .then(res => {
@@ -195,9 +199,9 @@ const TrainersUpdateForm = ({trainerob,onTrainerUpdate, onTrainerCancel}) => {
                                     </div>
 
                                 ) : (
-                                    <div className="size-40 bg-black rounded-full overflow-hidden">
+                                    <div className="size-40 bg-black rounded-full overflow-hidden flex justify-center items-center">
 
-                                        <img src={photoPreview.split(',')[0] > 0 ? photoPreview : `data:image/png;base64,${photoPreview}` } alt="profilepic"/>
+                                        <img src={photoPreview.split(',').includes('data:image/png;base64') ? photoPreview : `data:image/png;base64,${photoPreview}` } alt="profilepic"/>
 
                                     </div>
                                 )

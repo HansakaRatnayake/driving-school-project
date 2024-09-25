@@ -19,7 +19,7 @@ const router = express.Router();
 
 router.get('/', findAllTrainings);
 router.post('/',upload.single('photo'), saveTraining);
-router.put('/',  updateTraining);
+router.put('/', upload.single('photo'),  updateTraining);
 router.delete('/:trainingId',  deleteTraining);
 
 module.exports = router;

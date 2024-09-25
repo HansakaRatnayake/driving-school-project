@@ -27,10 +27,7 @@ const handleDelete = trainingId => {
 }
 
 function TrainingCard({ _id, name, price, duration, photo, trainer, description}) {
-    console.log(trainer);
     
-    
-
     return (
         <div className='flex w-full h-auto p-4 shadow-md'>
             <TrainingImage photo={photo}/>
@@ -41,10 +38,12 @@ function TrainingCard({ _id, name, price, duration, photo, trainer, description}
 }
 
 function TrainingImage({photo}) {
+    console.log(photo);
+    
     
     return (
         <div className="w-[15%] h-[180px] flex justify-center items-center">
-            <img className='w-full flex justify-center items-start' src={`data:image/png;base64,${photo}`} alt="image"/>
+            <img className='w-full flex justify-center items-start' src={photo.split(',').includes('data:image/png;base64') ? photo : `data:image/png;base64,${photo}` } alt="image"/>
         </div>
     )
 }
@@ -135,7 +134,7 @@ function ActionButtons({_id,name}) {
                     },
                 }}
             >
-                <TrainingUpdateForm trainingob={trainingob}/>
+                <TrainingUpdateForm trainingob={trainingob} onTrainerCancel={handleUpdateClose}/>
             </Dialog>
 
 
