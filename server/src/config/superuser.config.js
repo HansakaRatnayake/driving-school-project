@@ -10,7 +10,7 @@ const createSuperUserAdmin = async () => {
         const status = await UserStatus.findOne({name:"Active"});
 
 
-        if(!await User.findOne({role:'66e7b89264fb00056bdbd118'})) {
+        if(!await User.findOne({role:role._id})) {
             const superuser = new User({
                 firstname:'Super',
                 lastname:'Admin',
