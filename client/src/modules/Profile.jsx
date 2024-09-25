@@ -4,12 +4,18 @@ import axios from "axios";
 import defaults from '../assets/default.png';
 
 const BaseUrl = "http://localhost:3000/api/users";
+const BookingUrl = "http://localhost:3000/api/bookings";
+const TrainingUrl = "http://localhost:3000/api/trainings";
+const TrainerUrl = "http://localhost:3000/api/trainers";
 
 const Profile = () => {
 
     const [user,setUser] = useState(null);
+    const [bookingsar,setBookingsar] = useState([]);
     const [bookings,setBookings] = useState([]);
+    const [trainingsar,setTrainingsar] = useState([]);
     const [trainings,setTrainings] = useState([]);
+    const [trainers,setTrainers] = useState([]);
 
     const loggeduser = JSON.parse(localStorage.getItem("auth_user"));
 
@@ -19,16 +25,29 @@ const Profile = () => {
         axios.get(`${BaseUrl}?username=${usernames}`)
             .then(res => {
                 setUser(res.data[0]);
-                // console.log(res.data[0]);
+            }).catch(err => console.log(err))
+
+        axios.get(`${BookingUrl}`)
+            .then(res => {
+                setBookings(res.data);
+            }).catch(err => console.log(err))
+
+        axios.get(`${TrainingUrl}`)
+            .then(res => {
+                setTrainings(res.data);
+            }).catch(err => console.log(err))
+
+        axios.get(`${TrainerUrl}`)
+            .then(res => {
+                setTrainers(res.data);
             }).catch(err => console.log(err))
 
         if(user?.booking){
-            setBookings(user.booking)
+            setBookingsar(user.booking)
         }
         
         if(user?.training){
-
-            setTrainings(user.training);
+            setTrainingsar(user.training);
         }
 
     },[]);
@@ -108,17 +127,19 @@ const Profile = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {trainings  ? (
-                                trainings.map((data,i) =>{
-                                    return <tr>
+                            {trainingsar  ? (
+                                trainingsar.map((data,i) =>{
+
+                                    const training = trainings.find(t => t._id === data); // Find the matching training object
+                                    return <tr key={i}>
                                     <th>
                                         <label>
                                             <input type="checkbox" className="checkbox"/>
                                         </label>
                                     </th>
-                                    <td>{data.name}</td>
-                                    <td>{data.price}</td>
-                                    <td>{data.duration}</td>
+                                    <td>{training?.name}</td>
+                                    <td>{training?.price}</td>
+                                    <td>{training?.duration}</td>
                                 </tr>
                                 })
                             
@@ -147,16 +168,19 @@ const Profile = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {bookings  ? (
-                                bookings.map((data,i) =>{
-                                    return <tr>
+                            {bookingsar  ? (
+                                bookingsar.map((data,i) =>{
+                                    const booking = bookings.find(t => t._id === data); // Find the matching booking object
+                                    const trainer = trainers.find(b => b._id === booking.trainer); // Find the matching trainer object
+
+                                    return <tr key={i}>
                                     <th>
                                         <label>
                                             <input type="checkbox" className="checkbox"/>
                                         </label>
                                     </th>
-                                    <td>{data.traier.name}</td>
-                                    <td>{data.bookingdate}</td>
+                                    <td>{trainer?.name}</td>
+                                    <td>{ new Date(booking?.bookingdate).toLocaleDateString() }</td>
                                 </tr>
                                 })
                             

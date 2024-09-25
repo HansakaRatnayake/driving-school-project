@@ -11,7 +11,7 @@ const cartSchema = new mongoose.Schema({
     training:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Training",
-        unique:true
+        // unique:true
     }]
 });
 
