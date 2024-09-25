@@ -5,7 +5,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import * as Yup from "yup";
 import {useNavigate} from "react-router-dom";
 import {Form, Formik} from "formik";
-import {Grid2} from "@mui/material";
+import {duration, Grid2} from "@mui/material";
 import TextFieldCustom from "../../components/UI/FormsUI/TextField/index.jsx";
 import SelectCustom from "../../components/UI/FormsUI/Select/index.jsx";
 import ButtonCustom from "../../components/UI/FormsUI/Button/index.jsx";
@@ -36,7 +36,7 @@ const FORM_VALIDATION = Yup.object().shape({
         .required('Required'),
 });
 
-function TrainingForm() {
+function TrainingForm({onTrainingAdd, onTrainerCancel}) {
 
     const [trainers,setTrainers] = useState([]);
     const [photo,setPhoto] = useState(null);
@@ -76,6 +76,19 @@ function TrainingForm() {
         formdata.append('photo',photo);
         formdata.append('description',values.description);
         formdata.append('trainer',[values.trainer._id]);
+
+        const obj = {
+            name:values.name,
+            price:values.price,
+            duration:values.duration,
+            photo:photoPreview,
+            description:values.description,
+            trainer:[values.trainer]
+
+        }
+
+        onTrainingAdd(obj);
+        handleCancle();
     
     
         axios.post(`${BaseUrl}`,formdata)
@@ -88,6 +101,11 @@ function TrainingForm() {
                 toast.error(err.message);
             });
     }
+
+    const handleCancle = () => {
+        onTrainerCancel(false);
+    }
+
 
   return (
     <div>
@@ -165,7 +183,7 @@ function TrainingForm() {
                             </Grid2>
 
                             <Grid2 item size={6}>
-                                <Button variant="contained" size="small" fullWidth="true" className="w-full">
+                                <Button variant="contained" size="small" fullWidth="true" className="w-full" onClick={handleCancle}>
                                     Clear
                                 </Button>
 

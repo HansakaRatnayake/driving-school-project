@@ -65,7 +65,7 @@ const findAll = async (queryparamobject) => {
 }
 
 
-const update = async (training) => {   
+const update = async (training, image) => {   
 
     try{
         const resData = await updateTraining(training);

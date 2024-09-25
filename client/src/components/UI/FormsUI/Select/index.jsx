@@ -15,6 +15,8 @@ const SelectCustom = ({
     
   const handleChange = event => {
         const { value } = event.target;
+        console.log(value);
+        
         const selectedOption = options.find(option => option._id === value); 
         setFieldValue(name, selectedOption);
 

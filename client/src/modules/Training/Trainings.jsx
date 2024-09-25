@@ -35,6 +35,16 @@ const Trainings = () => {
             .catch(err => console.log(err))
     }, []);
 
+    const handleUserAdd = (newTrainingData)=>{
+        setTraining([...training, newTrainingData]);
+
+    }
+
+    const handleAddClose = (action)=>{
+        setOpen(action);
+
+    }
+
 
 
 
@@ -87,7 +97,7 @@ const Trainings = () => {
                 },
                 }}
             >
-                <TrainingForm/>
+                <TrainingForm onTrainingAdd={handleUserAdd} onTrainerCancel={handleAddClose}/>
             </Dialog>
 
         </div>

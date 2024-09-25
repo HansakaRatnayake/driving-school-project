@@ -60,6 +60,14 @@ const findAll = async (queryparamobject) => {
 
 const update = async (trainer, image) => {
 
+    if(typeof trainer.photo == 'string'){
+        console.log(typeof trainer.photo);
+        
+
+        const base64Data = trainer.photo.replace(/^data:image\/\w+;base64,/, '');
+        image = Buffer.from(base64Data, 'base64').toString('binary');
+    }
+
     try{
         const resData = await updateTrainer({...trainer, photo:image?image.buffer:''});
         return {
