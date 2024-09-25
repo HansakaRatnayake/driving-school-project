@@ -36,11 +36,11 @@ const userSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"Training"
     }],
-    booking:{
+    booking:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Booking"
 
-    },
+    }],
     role:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Role",
