@@ -40,16 +40,18 @@ const Dashboard = () => {
         setUserCount(totalUsers);
         setTraineeCount(totalTrainees);
 
-        countUp(0, totalUsers, setDisplayUserCount);
-        countUp(0, totalTrainees, setDisplayTraineeCount);
+        countUp(-1, totalUsers, setDisplayUserCount);
+        countUp(-1, totalTrainees, setDisplayTraineeCount);
       })
       .catch(err => console.log(err));
 
     axios.get('http://localhost:3000/api/trainings')
       .then(res => {
         const totalTrainings = res.data.length;
+        console.log(totalTrainings);
+        
         setTrainingCount(totalTrainings);
-        countUp(0, totalTrainings, setDisplayTrainingCount);
+        countUp(-1, totalTrainings, setDisplayTrainingCount);
       })
       .catch(err => console.log(err));
 
@@ -57,7 +59,7 @@ const Dashboard = () => {
       .then(res => {
         const totalTrainers = res.data.length;
         setTrainerCount(totalTrainers);
-        countUp(0, totalTrainers, setDisplayTrainerCount);
+        countUp(-1, totalTrainers, setDisplayTrainerCount);
       })
       .catch(err => console.log(err));
 
