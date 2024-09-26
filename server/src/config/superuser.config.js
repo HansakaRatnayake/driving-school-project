@@ -6,6 +6,8 @@ const createSuperUserAdmin = async () => {
 
     try {
 
+        
+
         const role = await Role.findOne({name:"SUPER_ADMIN"});
         const status = await UserStatus.findOne({name:"Active"});
 
