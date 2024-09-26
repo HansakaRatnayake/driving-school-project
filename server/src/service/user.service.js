@@ -56,7 +56,7 @@ const findAll = async (queryparamobject) => {
                 firstname : user.firstname,
                 lastname:user.lastname,
                 username:user.username,
-                photo:user.photo.toString('base64'),
+                photo:user.photo?.toString('base64'),
                 userstatus:user.userstatus,
                 training:user.training,
                 booking:user.booking,
