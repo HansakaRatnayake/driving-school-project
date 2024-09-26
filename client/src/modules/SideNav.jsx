@@ -3,10 +3,10 @@ import {Link} from "react-router-dom";
 
 const SideNav = () => {
     return (
-        <div className="w-64 h-screen bg-black px-4 py-10">
+        <div className="w-64 h-screen bg-[#1E4263] px-4 py-10">
             <div className="w-full">
                 <Link to="">
-                <div className="w-full h-10 bg-gray-900 text-white rounded-md hover:bg-gray-800 flex items-center gap-2 shadow-2xl">
+                <div className="w-full h-12 bg-[#385a79] text-white rounded-md hover:bg-[#32516e]  flex items-center gap-2 shadow-2xl">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                          stroke="currentColor" className="size-6 ml-16">
                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -17,7 +17,7 @@ const SideNav = () => {
                 </Link>
 
                 <Link to="user">
-                <div className="w-full h-10 bg-gray-900  text-white rounded-md hover:bg-gray-800 flex items-center gap-2 mt-4 shadow-2xl">
+                <div className="w-full h-12 bg-[#385a79]  text-white rounded-md hover:bg-[#32516e]  flex items-center gap-2 mt-4 shadow-2xl">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                          stroke="currentColor" className="size-6 ml-16">
                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -28,7 +28,7 @@ const SideNav = () => {
                 </Link>
 
                 <Link to="trainings">
-                <div className="w-full h-10 bg-gray-900  text-white rounded-md hover:bg-gray-800 flex items-center gap-2 mt-4 shadow-2xl">
+                <div className="w-full h-12 bg-[#385a79]  text-white rounded-md hover:bg-[#32516e] flex items-center gap-2 mt-4 shadow-2xl">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                          stroke="currentColor" className="size-6 ml-16">
                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -41,7 +41,7 @@ const SideNav = () => {
                 </Link>
 
                 <Link to="trainers">
-                <div className="w-full h-10 bg-gray-900  text-white rounded-md hover:bg-gray-800 flex items-center gap-2 mt-4 shadow-2xl">
+                <div className="w-full h-12 bg-[#385a79]  text-white rounded-md hover:bg-[#32516e] flex items-center gap-2 mt-4 shadow-2xl">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                          stroke="currentColor" className="size-6 ml-16">
                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -53,7 +53,7 @@ const SideNav = () => {
                 </Link>
 
                 <Link to="trainee">
-                <div className="w-full h-10 bg-gray-900  text-white rounded-md hover:bg-gray-800 flex items-center gap-2 mt-4 shadow-2xl">
+                <div className="w-full h-12 bg-[#385a79]  text-white rounded-md hover:bg-[#32516e] flex items-center gap-2 mt-4 shadow-2xl">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                          stroke="currentColor" className="size-6 ml-16">
                         <path strokeLinecap="round" strokeLinejoin="round"
