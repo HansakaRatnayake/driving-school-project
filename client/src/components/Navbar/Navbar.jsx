@@ -32,7 +32,7 @@ const Navbar = ({ theme, setTheme }) => {
   const loggeduser = JSON.parse(localStorage.getItem("auth_user"));
 
   useEffect(() => {
-      const hasUserRole = loggeduser?.role?.name === "ADMIN";
+      const hasUserRole = loggeduser?.role?.name === "ADMIN" || loggeduser?.role?.name === "SUPER_ADMIN";
       setAdmin(hasUserRole);
   },[]);
 

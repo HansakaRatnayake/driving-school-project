@@ -33,7 +33,9 @@ const LogIn = () => {
         setUser(JSON.stringify(result.data));
         navigate('/');
         toast.success("Welcome Back " + result.data.firstname + "!");
-
+        setTimeout(()=>{
+          window.location.reload()
+        },1000);
         })
       .catch(error => {
         console.error(error.message);

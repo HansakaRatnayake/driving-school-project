@@ -63,7 +63,7 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.pre('save', async function (next) {
-    if (this.isModified('photo')) return next();
+    if (this.photo == null) return next();
     this.photo = fs.readFileSync(imagePath);
     next();
 });

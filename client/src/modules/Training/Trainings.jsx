@@ -8,6 +8,8 @@ import Dialog from '@mui/material/Dialog';
 import TrainingForm from './TrainingForm';
 import axios from "axios";
 import TrainingUpdateForm from "./TrainingUpdateForm.jsx";
+import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
 
 const BaseUrl = "http://localhost:3000/api/trainings";
 
@@ -56,14 +58,22 @@ const Trainings = () => {
                 </div>
                 <div className="w-full flex mt-8 pl-10 pr-10">
                     <div className="w-2/4">
-                    <Box
-                        component="form"
-                        sx={{ '& > :not(style)': { width: '30ch'} }}
-                        noValidate
-                        autoComplete="off"
-                    >
-                        <TextField id="outlined-basic" label="Filter by name" variant="outlined" />
-                    </Box>
+                    
+                         <TextField
+                        label="Search Trainings"
+                        variant="outlined"
+                        fullWidth
+                    
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                        className="search-bar"
+                    />
+  
                     </div>
                     
                     <div className="flex w-2/4 justify-end  items-center ">
