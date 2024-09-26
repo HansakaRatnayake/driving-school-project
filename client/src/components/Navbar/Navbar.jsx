@@ -6,6 +6,8 @@ import { FaRegUser, FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom'; 
 import { UserContext } from '../../App';
 import {logout} from "../../hooks/Logout.js";
+import { Button } from '@mui/material';
+import Dialog from "@mui/material/Dialog";
 
 // Navigation Links Array
 export const NavLinks = [
@@ -17,27 +19,42 @@ export const NavLinks = [
   { id: '6', name: 'CONTACT US', link: '/contactus' },
 ];
 
+
 //logout
-const handleLogout = () => {
-    logout();
-}
+
 
 const Navbar = ({ theme, setTheme }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [admin, setAdmin] = useState(false);
+  const [open, setOpen] = useState(false);
+  let {user} = useContext(UserContext);
 
-  const {user} = useContext(UserContext);
+  const loggeduser = JSON.parse(localStorage.getItem("auth_user"));
 
-    const loggeduser = JSON.parse(localStorage.getItem("auth_user"));
-
-    useEffect(() => {
-        const hasUserRole = loggeduser?.role?.name === "ADMIN";
-        setAdmin(hasUserRole);
-    },[]);
+  useEffect(() => {
+      const hasUserRole = loggeduser?.role?.name === "ADMIN";
+      setAdmin(hasUserRole);
+  },[]);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
+
+  const handleLogout = () => {
+    logout();
+    setAdmin(false);
+    user = null;
+    handleClose();
+    window.location.reload();
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+      setOpen(false);
+  }
 
   return (
       <nav className="shadow-md bg-white dark:bg-dark dark:text-white duration-300 h-20 z-50">
@@ -74,7 +91,7 @@ const Navbar = ({ theme, setTheme }) => {
 
             {/* User Login Icon */}
             {user ?
-                <div className='text-black mt-1'>
+                (<div className='text-black mt-1'>
 
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} className="size-6 dark:text-white">
@@ -92,15 +109,17 @@ const Navbar = ({ theme, setTheme }) => {
                             </li>
                             {admin ? <li><Link to="admin"><div>Admin</div></Link></li>:<></>}
                             <li>
-                                <div onClick={() => document.getElementById('my_modal_1').showModal()}>Logout</div>
+                                <div onClick={handleClickOpen}>Logout</div>
                             </li>
                         </ul>
                     </div>
 
-                </div> :
+                </div>) :
+                (
                 <Link to="/login" className="text-2xl">
                     {theme === 'dark' ? <FaRegUser/> : <FaUser/>}
                 </Link>
+                )
             }
 
 
@@ -112,29 +131,25 @@ const Navbar = ({ theme, setTheme }) => {
         </div>
 
         {/*LogOut Message*/}
-        <dialog id="my_modal_1" className="modal">
-          <div className="size-96 bg-white rounded-2xl flex flex-col justify-center items-center">
-              <div className="flex flex-col justify-center items-center">
-                  <span className="text-2xl font-bold mt-2">Logout</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                       stroke="currentColor" className="size-32 text-red-500 mt-2">
-                      <path strokeLinecap="round" strokeLinejoin="round"
-                            d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/>
-                  </svg>
+        <Dialog 
+        
+        open={open}
+        onClose={handleClose}
+        >
+          <div className="w-[35rem] h-[10rem] px-6 py-4  bg-white rounded-md flex flex-col justify-between items-start ">
+             
+                  <span className="text-2xl font-bold">Logout</span>
 
+                  <p >Are you sure to logout from this account?</p>
 
-                  <div className="mt-2">
-                      <p className="font-bold">Are Your Sure want to Logout ?</p>
+                  <div className="w-full flex justify-end items-center gap-4 ">
+                    <Button variant='outlined' color='error' onClick={handleClose} >Cancel</Button>
+                    <Button variant='contained' color='error'  onClick={handleLogout}>Logout</Button>
                   </div>
-
-              </div>
-              <form className="flex justify-center items-center mt-4 gap-4">
-                  <button className="btn bg-red-400" onClick={handleLogout}>Logout</button>
-                  <button className="btn">Cancel</button>
-              </form>
+      
 
           </div>
-        </dialog>
+        </Dialog>
 
           {/* Mobile Responsive Menu */}
           <ResponsiveMenu showMenu={showMenu}/>
