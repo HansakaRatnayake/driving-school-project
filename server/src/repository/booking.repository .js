@@ -27,7 +27,7 @@ const Booking = require('../model/booking.model');
      const findAllBookings = async(searchQuery) => {
         try{
 
-            return await Booking.find(searchQuery).exec();
+            return await Booking.find(searchQuery).populate('user', 'username').populate('trainer', 'name').exec();
 
         }catch(error){
             

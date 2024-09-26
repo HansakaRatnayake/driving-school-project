@@ -52,7 +52,7 @@ const Trainings = () => {
         <div className='p-10'>
             <div className="w-full flex-col">
                 <div className="flex">
-                    <span className="font-bold text-3xl">Training Details</span> 
+                    <span className="font-bold text-3xl">Training Details Managment</span> 
                 </div>
                 <div className="w-full flex mt-8 pl-10 pr-10">
                     <div className="w-2/4">

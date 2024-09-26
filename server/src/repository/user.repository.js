@@ -54,24 +54,7 @@ const User = require('../model/user.model');
         }
     }
 
-    const countUser = async () => {
-        try{
-            return await User.countDocuments({});
-        }catch(err){
-            throw new Error(`Error while counting users: ${error.message}`);
-
-        }
-    }
-
-    const countUser = async () => {
-        try{
-            return await User.countDocuments({});
-        }catch(err){
-            throw new Error(`Error while counting users: ${error.message}`);
-
-        }
-    }
-
+  
 
 
     module.exports = {
