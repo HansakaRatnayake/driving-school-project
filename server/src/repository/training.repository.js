@@ -27,8 +27,8 @@ const Training = require('../model/training.model');
 
     const updateTraining = async (training) => {
         try{
-            const {name,price,duration,image,trainer} = training 
-            return await Training.updateOne({_id:training._id}, {$set:{name,price,duration,image,trainer}});
+            const {name,price,duration,image,trainer,description} = training 
+            return await Training.updateOne({_id:training._id}, {$set:{name,price,duration,image,trainer,description}});
 
         }catch(error){
             throw new Error(`Error while updating training: ${error.message}`);

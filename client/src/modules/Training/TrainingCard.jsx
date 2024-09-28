@@ -92,6 +92,11 @@ function ActionButtons({_id,name}) {
         setUpdateOpen(false);
     };
 
+    const handleUpdate = (updateTrining) => {
+        console.log(updateTrining);
+        
+    }
+
     useEffect(() => {
         axios.get(`${BaseUrl}?name=${name}`)
             .then(res =>{
@@ -134,7 +139,7 @@ function ActionButtons({_id,name}) {
                     },
                 }}
             >
-                <TrainingUpdateForm trainingob={trainingob} onTrainerCancel={handleUpdateClose}/>
+                <TrainingUpdateForm trainingob={trainingob} onTrainerCancel={handleUpdateClose} onTrainingUpdate={handleUpdate}/>
             </Dialog>
 
 
