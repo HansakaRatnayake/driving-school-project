@@ -1,6 +1,6 @@
 const Training = require('../model/training.model');
 const trainingRepo = require('../repository/training.repository');
-const {createTraining,findAllTrainings,deleteTraining,updateTraining} = trainingRepo;
+const {createTraining,findAllTrainings,deleteTraining,updateTraining,findTriningById} = trainingRepo;
 
  
 const create = async (training, image) => {
@@ -25,6 +25,32 @@ const create = async (training, image) => {
             data:"Training Registraion Error: "+err.message,
             statuscode:500
            }
+    }
+}
+
+const findById = async (id) => {
+
+    try{
+        const temp = await findTriningById(id);
+        const resData = {
+            _id : temp._id,
+            name : temp.name,
+            price : temp.price,
+            duration : temp.duration,
+            photo : temp.photo.toString('base64'),
+            trainer : temp.trainer,
+            description: temp.description
+        };
+        return {
+            data:resData,
+            statuscode:201
+        };
+
+    }catch(err){
+        return {
+            data:"Error while fetching trainings: "+err.message,
+            statuscode:500
+        }
     }
 }
 
@@ -108,6 +134,7 @@ const remove = async (trainingId) => {
 module.exports = {
     create,
     findAll,
+    findById,
     update,
     remove
 }

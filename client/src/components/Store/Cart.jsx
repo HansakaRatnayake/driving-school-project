@@ -7,9 +7,35 @@ import Button from '@mui/material/Button';
 import {Form, Formik} from "formik";
 import TextFieldCustom from "../../components/UI/FormsUI/TextField/index.jsx";
 import ButtonCustom from "../../components/UI/FormsUI/Button/index.jsx";
+import * as Yup from "yup";
+import { loadStripe } from '@stripe/stripe-js';
 
 
 const CartUrl = 'http://localhost:3000/api/cart';
+
+const stripePromise = loadStripe('pk_test_51Q3rmXJgNExUpVvTIpHNAAZ7cIpLDaVzrdUG1a7FVfvKxmm0BCDK7CkV9tqY88bRTP5K52RjkTd3mS6RcCR2f02j00flCf096j');
+
+const INITIAL_FORM_STATE = {
+    cardholdername: '',
+    cardnumber: '',
+    expiredate: '',
+    cvv:''
+};
+
+const FORM_VALIDATION = Yup.object().shape({
+    cardholdername: Yup.string()
+        // .matches(/^[A-Z][a-z]*(?: [A-Z][a-z]*)*$/,"Invalid Name")
+        .required('Required'),
+    cardnumber: Yup.number().integer()
+        .typeError("Invalid CardNumber")
+        .required('Required'),
+    expiredate: Yup.date()
+        .typeError("Invalid expire date")
+        .required('Required'),
+    cvv:Yup.number().integer()
+        // .matches(/^[0-9]{3}$/,"Invalid CVV")
+        .required('Required')
+});
 
 const Cart = () => {
     const [cart, setCart] = useState([]);
@@ -17,6 +43,8 @@ const Cart = () => {
     const loggeduser = JSON.parse(localStorage.getItem("auth_user")); // Get logged user info
     const userId = loggeduser?._id;
     const navigate = useNavigate();
+    const [sessionId, setSessionId] = useState(null);
+    const [totalAmount, setTotalAmount] = useState(null);
 
     useEffect(() => {
 
@@ -49,10 +77,40 @@ const Cart = () => {
             });
     };
 
+    const deleteAllById = (userId) => {
+        axios.delete('http://localhost:3000/api/cart/deleteall'+userId)
+            .then(() => {
+                toast.success("Training Successfully Removed")
+            })
+            .catch(error => {
+                toast.error('Error removing from cart');
+                console.error('Error removing from cart:', error);
+            });
+    }
+
+    const handleCheckout = async () => {
+        const res = await axios.post('http://localhost:3000/api/payments/create-checkout-session', {amount:totalPrice});
+        const stripe = await stripePromise;
+        const { id } = res.data;
+        setSessionId(id);
+      
+        // Redirect to Stripe Checkout
+        stripe.redirectToCheckout({ sessionId: id })
+        .then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+            
+        })
+    };
+
+ 
     const totalPrice = cart.reduce((total, item) => {
         const training = trainings.find(t => t._id === item?.training[0]?._id);
         return total + (training?.price || 0);
     }, 0);
+
+
 
     return (
         <div className="p-6 px-56">
@@ -60,7 +118,7 @@ const Cart = () => {
             <div className="w-full flex justify-between items-center">
                 <h1 className="font-bold text-2xl mb-4">Your Cart</h1>
                 <Button
-                    variant='outlined'
+                    variant='outlined'create-checkout-session
                     color='secondary'
                     className="mt-4 px-4 py-2 bg-blue-600 text-white rounded"
                     onClick={() => navigate('/storepage')}
@@ -109,14 +167,14 @@ const Cart = () => {
                     </div>
                     <div className="w-full h-[75%] flex flex-col justify-start items-start mt-10 gap-8">
                         <span className='font-semibold'>Payment Details</span>
-                        <Formik>
+                        <Formik >
                             <Form>
                                     <TextFieldCustom name="cardholdername" label="Card Holder Name"/>
                                             
                                     <TextFieldCustom name="cardnumber" label="Card Number"/>
                                                                                                                         
                                     <div className="w-full flex justify-center items-center gap-4">
-                                        <TextFieldCustom name="ecpiredate" label="Expire Date"/>
+                                        <TextFieldCustom name="expiredate" label="Expire Date"/>
                                         <TextFieldCustom name="cvv" label="CVV"/>
                                     </div>
 
@@ -130,6 +188,7 @@ const Cart = () => {
                         <Button 
                             variant='contained'
                             color='primary'
+                            onClick={handleCheckout}
                         >
                             Checkout
                          </Button>

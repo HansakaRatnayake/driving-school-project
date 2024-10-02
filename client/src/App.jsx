@@ -40,6 +40,8 @@ import TraineesAddForm from "./modules/Trainees/TraineesAddForm.jsx";
 import TraineesUpdateForm from "./modules/Trainees/TraineesUpdateForm.jsx";
 import TrainersAddForm from "./modules/Trainers/TrainersAddForm.jsx";
 import AdminRoutes from "./AdminRoutes.jsx";
+import PaymentSuccess from './components/Payment/PaymentSuccess.jsx';
+import PaymentCancel from './components/Payment/PaymentCancel.jsx';
 
 export const UserContext = createContext(null);
 
@@ -133,6 +135,8 @@ const App = () => {
             <Route path="/landing" element={<Landing />} />
             <Route path="/assesment" element={<Assesment />} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/payment/success" element={<PaymentSuccess />} />
+            <Route path="/payment/cancel" element={<PaymentCancel />} />
           </Routes>
         </div>
         </div>

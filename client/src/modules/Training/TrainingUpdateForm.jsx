@@ -111,7 +111,6 @@ const TrainingUpdateForm = ({trainingob, onTrainingUpdate, onTrainerCancel}) => 
         axios.put(`${BaseUrl}`,formdata)
             .then(res => {
                 console.log(res);
-                window.location.reload();
                 toast.success("Training Successfully Updated");
             })
             .catch(err => {
