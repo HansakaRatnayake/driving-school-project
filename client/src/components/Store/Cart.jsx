@@ -44,6 +44,7 @@ const Cart = () => {
     const userId = loggeduser?._id;
     const navigate = useNavigate();
     const [sessionId, setSessionId] = useState(null);
+    const [totalAmount, setTotalAmount] = useState(null);
 
     useEffect(() => {
 
@@ -76,14 +77,31 @@ const Cart = () => {
             });
     };
 
+    const deleteAllById = (userId) => {
+        axios.delete('http://localhost:3000/api/cart/deleteall'+userId)
+            .then(() => {
+                toast.success("Training Successfully Removed")
+            })
+            .catch(error => {
+                toast.error('Error removing from cart');
+                console.error('Error removing from cart:', error);
+            });
+    }
+
     const handleCheckout = async () => {
-        const res = await axios.post('http://localhost:3000/api/payments/create-checkout-session', {_id:cart[0].training[0]._id});
+        const res = await axios.post('http://localhost:3000/api/payments/create-checkout-session', {amount:totalPrice});
         const stripe = await stripePromise;
         const { id } = res.data;
         setSessionId(id);
       
         // Redirect to Stripe Checkout
-        await stripe.redirectToCheckout({ sessionId: id });
+        stripe.redirectToCheckout({ sessionId: id })
+        .then(res => {
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+            
+        })
     };
 
  

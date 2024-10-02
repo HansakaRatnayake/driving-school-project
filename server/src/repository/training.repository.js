@@ -14,6 +14,18 @@ const Training = require('../model/training.model');
     }
 
 
+    const findTriningById = async(id)=>{
+        try{
+
+            return await Training.findById(id);
+
+        }catch(error){
+            
+            throw new Error(`Error while find a training: ${error.message}`);
+        }
+    }
+
+
      const findAllTrainings = async(searchQuery) => {
         try{
 
@@ -46,4 +58,4 @@ const Training = require('../model/training.model');
     }
 
 
-    module.exports = {createTraining,findAllTrainings,updateTraining,deleteTraining};
+    module.exports = {createTraining,findAllTrainings,updateTraining,deleteTraining,findTriningById};

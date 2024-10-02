@@ -1,5 +1,6 @@
 const paymentService = require('../service/payment.service');
 const Training = require('../model/training.model');
+const TrainingService = require('../service/training.service')
 const {create,findAll} = paymentService;
 const stripe = require('stripe')('sk_test_51Q3rmXJgNExUpVvTkpwogFk8CWrNK6BnAkdEdaRp0oPfrCWluFpR6Tppj1PHgf805W7P5XjPpaO55lnIjpzXYR1B00LFkG9aYW')
 
@@ -22,19 +23,19 @@ const createCheckoutSession = async (req, res) => {
    
       
 
-      const selectedtraining = await Training.findOne({_id:req.body._id});
-    
-      
+      // const selectedtraining = await TrainingService.findById(req.body._id);
+      // console.log(selectedtraining);
 
       const product = await stripe.products.create({
-            name: selectedtraining.name
+            name: 'Total amount',
+            images:['https://www.apaservices.org/images/title-payment-platform_tcm9-282170_w1024_n.jpg']
       });
 
       console.log(product);
       
       const price = await stripe.prices.create({
             product: product.id,
-            unit_amount: selectedtraining.price*100,
+            unit_amount: req.body.amount*100,
             currency: 'lkr',
       });
 
