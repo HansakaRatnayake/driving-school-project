@@ -13,7 +13,7 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const CartUrl = 'http://localhost:3000/api/cart';
 
-const stripePromise = loadStripe('pk_test_51Q3rmXJgNExUpVvTIpHNAAZ7cIpLDaVzrdUG1a7FVfvKxmm0BCDK7CkV9tqY88bRTP5K52RjkTd3mS6RcCR2f02j00flCf096j');
+const stripePromise = loadStripe('your-publishable-key');
 
 const INITIAL_FORM_STATE = {
     cardholdername: '',
@@ -161,26 +161,13 @@ const Cart = () => {
                 </div>
                 <div className="w-1/3 h-[40rem] shadow-md rounded-md flex flex-col p-6">
 
-                    <div className="w-full h-[15%]  bg-slate-100 text-gray-500  rounded-md flex justify-center items-center hover:bg-slate-300 hover:text-gray-700 cursor-pointer">
-                        Select Card Option
+                    <div className="w-full h-[15%]  bg-slate-100 text-gray-500  rounded-md flex justify-center items-center">
+                    
                 
                     </div>
                     <div className="w-full h-[75%] flex flex-col justify-start items-start mt-10 gap-8">
-                        <span className='font-semibold'>Payment Details</span>
-                        <Formik >
-                            <Form>
-                                    <TextFieldCustom name="cardholdername" label="Card Holder Name"/>
-                                            
-                                    <TextFieldCustom name="cardnumber" label="Card Number"/>
-                                                                                                                        
-                                    <div className="w-full flex justify-center items-center gap-4">
-                                        <TextFieldCustom name="expiredate" label="Expire Date"/>
-                                        <TextFieldCustom name="cvv" label="CVV"/>
-                                    </div>
 
-
-                            </Form>
-                        </Formik>
+                        <img src="https://www.apaservices.org/images/title-payment-platform_tcm9-282170_w1024_n.jpg" alt="photo" />
 
                     </div>
                     <div className="w-full h-[10%] p-4 text-center font-bold flex justify-between items-center">
