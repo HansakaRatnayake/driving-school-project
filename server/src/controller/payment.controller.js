@@ -2,7 +2,7 @@ const paymentService = require('../service/payment.service');
 const Training = require('../model/training.model');
 const TrainingService = require('../service/training.service')
 const {create,findAll} = paymentService;
-const stripe = require('stripe')('sk_test_51Q3rmXJgNExUpVvTkpwogFk8CWrNK6BnAkdEdaRp0oPfrCWluFpR6Tppj1PHgf805W7P5XjPpaO55lnIjpzXYR1B00LFkG9aYW')
+const stripe = require('stripe')('your-stripe-secret-key')
 
  
 const savePayment = async (req, res, next) => {
