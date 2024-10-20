@@ -3,11 +3,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import toast from "react-hot-toast";
-import Button from '@mui/material/Button';
-import {Form, Formik} from "formik";
-import TextFieldCustom from "../../components/UI/FormsUI/TextField/index.jsx";
-import ButtonCustom from "../../components/UI/FormsUI/Button/index.jsx";
-import * as Yup from "yup";
+import Button from '@mui/material/Button'; 
 import { loadStripe } from '@stripe/stripe-js';
 
 
@@ -15,27 +11,6 @@ const CartUrl = 'http://localhost:3000/api/cart';
 
 const stripePromise = loadStripe('your-publishable-key');
 
-const INITIAL_FORM_STATE = {
-    cardholdername: '',
-    cardnumber: '',
-    expiredate: '',
-    cvv:''
-};
-
-const FORM_VALIDATION = Yup.object().shape({
-    cardholdername: Yup.string()
-        // .matches(/^[A-Z][a-z]*(?: [A-Z][a-z]*)*$/,"Invalid Name")
-        .required('Required'),
-    cardnumber: Yup.number().integer()
-        .typeError("Invalid CardNumber")
-        .required('Required'),
-    expiredate: Yup.date()
-        .typeError("Invalid expire date")
-        .required('Required'),
-    cvv:Yup.number().integer()
-        // .matches(/^[0-9]{3}$/,"Invalid CVV")
-        .required('Required')
-});
 
 const Cart = () => {
     const [cart, setCart] = useState([]);
