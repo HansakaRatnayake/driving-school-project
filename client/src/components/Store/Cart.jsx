@@ -9,7 +9,7 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const CartUrl = 'http://localhost:3000/api/cart';
 
-const stripePromise = loadStripe('your-publishable-key');
+const stripePromise = loadStripe('pk_test_51Q5WEh1lKESxr1OEceMFhQ8MgIqdmwXJMVV1UsiZNI6GMiWCS4hjJYyqTDAO78d9N0hrsuVZwm2ydGIToIqd78vx006jfMVc3Q');
 
 
 const Cart = () => {

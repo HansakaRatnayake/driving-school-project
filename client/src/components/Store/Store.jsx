@@ -59,14 +59,27 @@ const Store = () => {
             training: [product]
         }
 
-        axios.post('http://localhost:3000/api/cart', obj)
+        const isProd = cart.some(cartItem => 
+            cartItem.training.some(trainingItem => trainingItem._id === product)
+        );
+        console.log(cart);
+        
+
+        if(!isProd){
+            axios.post('http://localhost:3000/api/cart', obj)
             .then(() => {
+                setCart(prevCart => [...prevCart, { training: [{ _id: product}],
+                }]);
                 toast.success("Successfully Added to Cart");
             })
             .catch(error => {
                 toast.error('Error adding to cart:')
                 console.error('Error adding to cart:', error)
             });
+        }else{
+            toast.error('Training Already Exist in Cart');
+            console.error('Training Already Exist in Cart');
+        } 
     };
 
     return (
